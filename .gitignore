@@ -7,3 +7,4 @@ dist/
 *.bak
 *.tmp
 .env
+demo_data/

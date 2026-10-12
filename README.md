@@ -87,6 +87,13 @@ MEAL_PLANNER_LIVE_LLM=1 pytest tests/test_live_claude.py   # optional: real `cla
 python benchmarks/bench_planner.py 100 200 300             # optional: optimizer benchmark on synthetic data
 ```
 
+Start the Web UI and open http://127.0.0.1:5000 :
+
+```bash
+python app.py           # your data in ./data
+python app.py --demo    # invented demo data in ./demo_data (100 dishes, typical rules); ./data is not touched
+```
+
 AI features call the Claude Code CLI (`claude -p`) using your own Claude subscription. Install the standalone CLI, run `claude` once to log in, and make sure `ANTHROPIC_API_KEY` is not set. See `docs/architecture.md` §12 for the recorded technology decisions.
 
 ## Project Status

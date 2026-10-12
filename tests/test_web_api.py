@@ -1,0 +1,244 @@
+"""JSON API tests (Flask test client, fake LLM, synthetic data in a temporary directory)."""
+
+import pytest
+
+from fakes import FakeLLM, result
+from meal_planner.demo import synthetic_catalogue, write_catalogue
+from meal_planner.llm import LLMError
+from meal_planner.models import Constraint, ConstraintsFile
+from meal_planner.settings import Settings, save_settings
+from meal_planner.web import create_app
+from meal_planner.yaml_io import write_yaml_atomic
+
+START = "2026-10-19"
+RULES = [
+    ("每顿4个菜", {"type": "dish_count", "min": 4, "max": 4}),
+    ("每顿一个汤", {"type": "dish_type_count", "dish_type": "soup", "min": 1, "max": 1}),
+    ("两周内不重复", {"type": "exact_repeat_window", "weeks": 2}),
+]
+
+
+@pytest.fixture
+def data_dir(tmp_path):
+    data = tmp_path / "data"
+    write_catalogue(synthetic_catalogue(100), data)
+    constraints = [
+        Constraint(constraint_id=f"C{n:03d}", description=d, scope=["menu_generation", "menu_adjustment"],
+                   strictness="hard", source="persistent", execution=e, parse_status="executable")
+        for n, (d, e) in enumerate(RULES, start=1)
+    ]
+    write_yaml_atomic(data / "constraints.yaml", ConstraintsFile(constraints=constraints).model_dump(mode="json"))
+    save_settings(data, Settings(planner=Settings().planner.model_copy(update={"time_limit_s": 10})))
+    return data
+
+
+@pytest.fixture
+def llm():
+    return FakeLLM()
+
+
+@pytest.fixture
+def client(data_dir, llm):
+    return create_app(data_dir, llm_factory=lambda settings, task: llm).test_client()
+
+
+def ok(response, status=200):
+    assert response.status_code == status, response.get_json()
+    return response.get_json()
+
+
+def test_index_page(client):
+    response = client.get("/")
+    assert response.status_code == 200 and "<html" in response.get_data(as_text=True)
+
+
+def test_writes_require_json(client, data_dir):
+    before = (data_dir / "constraints.yaml").read_bytes()
+    response = client.post("/api/constraints", data={"description": "x"})
+    assert response.status_code == 415
+    assert (data_dir / "constraints.yaml").read_bytes() == before
+
+
+# --- Ingredients ---------------------------------------------------------------
+
+
+def test_ingredient_crud(client):
+    new = {"ingredient_id": "ing_okra", "name_zh": "秋葵", "category": "vegetable", "kcal_per_100g": 33}
+    ok(client.post("/api/ingredients", json=new), 201)
+    duplicate = client.post("/api/ingredients", json=new)
+    assert duplicate.status_code == 400 and "duplicate ingredient_id 'ing_okra'" in duplicate.get_json()["issues"][0]
+
+    edited = ok(client.put("/api/ingredients/ing_okra", json=new | {"notes": "嫩的好吃", "ingredient_id": "ing_x"}))
+    assert edited["ingredient_id"] == "ing_okra" and edited["notes"] == "嫩的好吃"
+    ok(client.delete("/api/ingredients/ing_okra"))
+    assert client.delete("/api/ingredients/ing_okra").status_code == 404
+
+
+def test_ingredient_in_use_cannot_be_deleted(client):
+    response = client.delete("/api/ingredients/ing_tofu")
+    assert response.status_code == 400 and any("ing_tofu" in i for i in response.get_json()["issues"])
+
+
+# --- Dishes, candidates and review ------------------------------------------------
+
+
+DISH = {
+    "name_zh": "清炒秋葵", "dish_type": "vegetarian", "servings": 2,
+    "ingredients": [{"ingredient_id": "ing_cabbage", "quantity": 300, "unit": "g"}],
+    "steps": ["洗净", "清炒"], "style": {"main_ingredients": ["ing_cabbage"], "cooking_method": "stir_fry"},
+}
+
+
+def test_manual_dish_is_approved_and_server_sets_provenance(client):
+    created = ok(client.post("/api/dishes", json=DISH | {"source": "ai_generated", "review_status": "pending"}), 201)
+    assert (created["dish_id"], created["source"], created["review_status"]) == ("dish_0101", "manual", "approved")
+    assert created["calories"]["known_kcal"] > 0
+
+    edited = ok(client.put("/api/dishes/dish_0101", json=DISH | {"name_zh": "清炒包菜"}))
+    assert edited["name_zh"] == "清炒包菜" and edited["source"] == "manual" and edited["updated_at"]
+
+
+def test_dish_with_unknown_ingredient_is_refused(client):
+    bad = DISH | {"ingredients": [{"ingredient_id": "ing_durian", "quantity": 1, "unit": "g"}]}
+    response = client.post("/api/dishes", json=bad)
+    assert response.status_code == 400 and "ing_durian" in response.get_json()["issues"][0]
+
+
+def test_generate_then_review_candidates(client, llm):
+    draft = DISH | {"name_zh": "白菜豆腐汤", "dish_type": "soup", "style": {"main_ingredients": ["ing_cabbage"], "cooking_method": "boil", "flavours": ["light"]}}
+    llm.response = {"dishes": [draft, draft | {"name_zh": "怪汤", "dish_type": "meat"}]}
+
+    generated = ok(client.post("/api/candidates/generate", json={"requests": [{"dish_type": "soup", "count": 2, "reason": "缺汤"}]}))
+    assert [d["name_zh"] for d in generated["added"]] == ["白菜豆腐汤"]
+    assert generated["rejected"][0][0] == "怪汤"
+
+    pending = ok(client.get("/api/pending"))["pending"]
+    ok(client.post("/api/review", json={"decisions": [{"dish_id": pending[0]["dish_id"], "action": "approve"}]}))
+    assert pending[0]["dish_id"] in {d["dish_id"] for d in ok(client.get("/api/dishes"))}
+
+
+def test_candidate_count_is_limited(client):
+    response = client.post("/api/candidates/generate", json={"requests": [{"dish_type": "soup", "count": 500}]})
+    assert response.status_code == 400
+
+
+def test_llm_failure_is_reported(client, llm):
+    llm.error = LLMError("Claude Code CLI not found")
+    response = client.post("/api/candidates/generate", json={"requests": [{"dish_type": "soup", "count": 2}]})
+    assert response.status_code == 502 and "not found" in response.get_json()["issues"][0]
+
+
+# --- Constraints ---------------------------------------------------------------------
+
+
+def test_persistent_constraint_lifecycle(client, llm):
+    added = ok(client.post("/api/constraints", json={"description": "每顿至少一个素菜"}), 201)
+    assert (added["constraint_id"], added["parse_status"]) == ("C004", "unparsed")
+
+    llm.response = {"results": [result("C004", execution={"type": "dish_type_count", "dish_type": "vegetarian", "min": 1})]}
+    parsed = ok(client.post("/api/constraints/parse"))
+    assert parsed[-1]["parse_status"] == "executable"
+
+    edited = ok(client.put("/api/constraints/C004", json={"strictness": "soft", "active": False}))
+    assert (edited["strictness"], edited["active"]) == ("soft", False)
+    ok(client.delete("/api/constraints/C004"))
+    assert client.put("/api/constraints/C004", json={"active": True}).status_code == 404
+
+
+def test_task_constraints_are_parsed_but_not_saved(client, llm, data_dir):
+    before = (data_dir / "constraints.yaml").read_bytes()
+    llm.response = {"results": [result("T001", execution={"type": "dish_type_count", "dish_type": "soup", "min": 2, "max": 2})]}
+
+    parsed = ok(client.post("/api/task-constraints/parse", json={"task": "menu_generation", "items": [{"description": "这次两个汤"}]}))
+
+    assert parsed[0]["constraint_id"] == "T001" and parsed[0]["scope"] == ["menu_generation"]
+    assert (data_dir / "constraints.yaml").read_bytes() == before
+    effective = ok(client.post("/api/constraints/effective", json={"task": "menu_generation", "task_constraints": parsed}))
+    assert not effective["ready"] and effective["issues"][0]["kind"] == "conflict"
+
+    with_override = parsed[0] | {"overrides": ["C002"]}
+    effective = ok(client.post("/api/constraints/effective", json={"task": "menu_generation", "task_constraints": [with_override]}))
+    assert effective["ready"]
+    assert {c["constraint_id"]: c["status"] for c in effective["constraints"]}["C002"] == "overridden"
+
+
+def test_task_constraint_for_the_wrong_task_is_refused(client):
+    adjustment_only = Constraint(constraint_id="T001", description="x", scope=["menu_adjustment"], strictness="hard",
+                                 source="task").model_dump(mode="json")
+    response = client.post("/api/constraints/effective", json={"task": "menu_generation", "task_constraints": [adjustment_only]})
+    assert response.status_code == 400
+
+
+# --- Menus ---------------------------------------------------------------------------
+
+
+DINERS = [{"description": "成年女性", "count": 3}, {"description": "6岁儿童", "count": 1}]
+
+
+def test_plan_save_and_reload_menu(client):
+    planned = ok(client.post("/api/menus/plan", json={"start_date": START}))
+    assert planned["status"] == "feasible" and len(planned["dinners"]) == 20
+    assert all(r["status"] == "passed" for r in planned["report"]["results"])
+
+    dinners = [{"date": d["date"], "dish_ids": [x["dish_id"] for x in d["dishes"]]} for d in planned["dinners"]]
+    saved = ok(client.post("/api/menus", json={"start_date": START, "diners": DINERS, "dinners": dinners, "change_note": "第一版"}), 201)
+    assert saved == {"menu_id": "M001", "version": 1, "status": "feasible"}
+
+    [row] = ok(client.get("/api/menus"))
+    assert row["menu_id"] == "M001" and row["status"] == "feasible"
+    menu = ok(client.get("/api/menus/M001?version=1"))
+    assert menu["dinners"][0]["dishes"][0]["name_zh"] and menu["dinners"][0]["known_kcal"] is not None
+    assert client.get("/api/menus/M001?version=9").status_code == 404
+
+
+def test_saved_menu_is_revalidated_by_the_server(client):
+    planned = ok(client.post("/api/menus/plan", json={"start_date": START}))
+    first = planned["dinners"][0]["dishes"][0]["dish_id"]
+    tampered = [{"date": d["date"], "dish_ids": [first]} for d in planned["dinners"]]  # 1 dish per dinner, repeated
+
+    saved = ok(client.post("/api/menus", json={"start_date": START, "diners": DINERS, "dinners": tampered}), 201)
+
+    assert saved["status"] == "best_effort"
+    menu = ok(client.get(f"/api/menus/{saved['menu_id']}"))
+    assert menu["validation_report"]["status"] == "best_effort"
+
+
+def test_unknown_dish_cannot_be_saved(client):
+    planned = ok(client.post("/api/menus/plan", json={"start_date": START}))
+    dinners = [{"date": d["date"], "dish_ids": ["dish_9999"]} for d in planned["dinners"]]
+    response = client.post("/api/menus", json={"start_date": START, "diners": DINERS, "dinners": dinners})
+    assert response.status_code == 400
+
+
+@pytest.mark.parametrize("start", ["2026-10-20", "next monday"])
+def test_start_date_must_be_a_monday(client, start):
+    response = client.post("/api/menus/plan", json={"start_date": start})
+    assert response.status_code == 400
+
+
+def test_blocked_plan_explains_why(client):
+    unparsed = Constraint(constraint_id="T001", description="少点油", scope=["menu_generation"], strictness="hard", source="task")
+    planned = ok(client.post("/api/menus/plan", json={"start_date": START, "task_constraints": [unparsed.model_dump(mode="json")]}))
+    assert planned["status"] == "blocked" and "not parsed" in planned["messages"][0]
+
+
+def test_default_diners(client):
+    ok(client.put("/api/preferences/diners", json={"diners": DINERS}))
+    assert ok(client.get("/api/preferences"))["default_diners"] == DINERS
+    assert client.put("/api/preferences/diners", json={"diners": [{"description": "x", "count": 0}]}).status_code == 400
+
+
+# --- Settings ------------------------------------------------------------------------
+
+
+def test_settings_round_trip_and_validation(client):
+    current = ok(client.get("/api/settings"))
+    current["models"]["constraint_parsing"] = "opus"
+    assert ok(client.put("/api/settings", json=current))["models"]["constraint_parsing"] == "opus"
+    current["similarity_weights"]["cuisine"] = -1
+    assert client.put("/api/settings", json=current).status_code == 400
+
+
+def test_vocab(client):
+    vocab = ok(client.get("/api/vocab"))
+    assert vocab["dish_types"] == ["vegetarian", "mixed", "meat", "soup"]

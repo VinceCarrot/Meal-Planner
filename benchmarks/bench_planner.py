@@ -11,11 +11,10 @@ import time
 from datetime import date
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "tests"))
-
-from synthetic import synthetic_catalogue  # noqa: E402
+from meal_planner.demo import synthetic_catalogue  # noqa: E402
 
 from meal_planner.constraints import build_effective_set  # noqa: E402
+from meal_planner.demo import synthetic_catalogue  # noqa: E402
 from meal_planner.models import Constraint  # noqa: E402
 from meal_planner.plan_context import make_context  # noqa: E402
 from meal_planner.planner import plan_menu  # noqa: E402

@@ -163,6 +163,8 @@ This plan is a proposed sequence. Adjust it based on implementation findings wit
 
 ## Phase 6 — Local Web UI and Menu Generation Workflow
 
+**Status:** completed 2026-10-12 (pending the user's manual UI check). See `architecture.md` §11.1.
+
 ### Tasks
 
 - Build UI for diner composition, dish count/composition, persistent constraints, and task-level constraints.

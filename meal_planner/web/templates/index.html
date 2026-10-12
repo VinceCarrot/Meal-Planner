@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>家庭晚餐计划</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='modules/plan/plan.css') }}">
+</head>
+<body>
+    <header class="topbar">
+        <h1>家庭晚餐计划</h1>
+        <span class="topbar-note">本地运行 · 数据保存在本机</span>
+    </header>
+    <div class="layout">
+        {% include 'modules/sidebar.html' %}
+        <main class="content">
+            {% include 'modules/plan.html' %}
+            {% include 'modules/menus.html' %}
+            {% include 'modules/constraints.html' %}
+            {% include 'modules/dishes.html' %}
+            {% include 'modules/review.html' %}
+            {% include 'modules/ingredients.html' %}
+            {% include 'modules/settings.html' %}
+        </main>
+    </div>
+    <div id="busy" class="busy" hidden><div class="busy-box"><div class="spinner"></div><span id="busy_text">处理中…</span></div></div>
+    <div id="toast" class="toast" hidden></div>
+    <div id="modal" class="modal" hidden><div class="modal-box" id="modal_box"></div></div>
+    <script type="module" src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

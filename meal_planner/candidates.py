@@ -130,7 +130,7 @@ def generate_candidates(
         return cat, GenerationResult((), (("(all)", "output has no 'dishes' list"),))
 
     existing = {d.name_zh for d in cat.dishes.dishes + cat.pending_dishes.dishes}
-    next_number = _next_dish_number(cat)
+    next_number = next_dish_number(cat)
     ingredient_ids = {i.ingredient_id for i in view.ingredients()}
     ingredients = {i.ingredient_id: i for i in view.ingredients()}
     added, rejected = [], []
@@ -182,7 +182,7 @@ def _problem(dish, request, exclusions, ingredient_ids, ingredients, existing) -
     return None
 
 
-def _next_dish_number(cat: Catalogue) -> int:
+def next_dish_number(cat: Catalogue) -> int:
     numbers = [int(d.dish_id.split("_")[1]) for d in cat.dishes.dishes + cat.pending_dishes.dishes]
     return max(numbers, default=0) + 1
 

@@ -4,7 +4,7 @@ from datetime import date
 
 import pytest
 
-from synthetic import synthetic_catalogue
+from meal_planner.demo import synthetic_catalogue
 from meal_planner.constraints import build_effective_set
 from meal_planner.models import Constraint, Dinner
 from meal_planner.plan_context import make_context

@@ -3,7 +3,7 @@ from datetime import date
 import pytest
 
 from fakes import FakeLLM
-from synthetic import synthetic_catalogue, write_catalogue
+from meal_planner.demo import synthetic_catalogue, write_catalogue
 from meal_planner.candidates import (
     CandidateRequest,
     generate_candidates,

@@ -540,6 +540,51 @@ Its business logic, implementation code, domain models, UI styling, and product 
 
 The final Web UI architecture must be adapted to this project's requirements and confirmed technology stack.
 
+### 11.1 Implemented structure (Phase 6)
+
+```text
+app.py                         start the server: python app.py [--demo] [port]  (127.0.0.1 only)
+meal_planner/menus.py          menu workflow without HTTP: task-constraint input, history, plan, save
+meal_planner/demo.py           invented demo/test catalogue; --demo writes it to ./demo_data (git-ignored)
+meal_planner/web/
+  app.py                       create_app(data_dir, llm_factory): blueprints and JSON error handling
+  helpers.py, serialize.py     request helpers; JSON views of domain objects
+  api/                         one blueprint per feature; every endpoint is one business operation
+    constraints.py  dishes.py  ingredients.py  menus.py  settings.py
+  templates/index.html         shell page assembled from templates/modules/<page>.html
+  static/js/                   app.js (navigation), api.js, ui.js, menu_view.js, dish_editor.js, nav.js
+  static/modules/<page>/       one ES module per page: plan, menus, constraints, dishes, review, ingredients, settings
+```
+
+Rules:
+
+- **No generic file writes.** All writes go through the validated services from Phases 1–5. There is no generic file-write endpoint.
+- **Ingredients.** The ingredient endpoints are for the user. AI workflows never call HTTP endpoints; they use `ReadOnlyCatalogue` tools.
+- **Request format.** Write requests must be JSON. Browsers cannot send JSON cross-site without a CORS preflight, and CORS is not enabled.
+- **Data is reloaded per request.** Each request reloads the YAML data. The data is small, and direct file edits are picked up immediately.
+- **Planning is stateless.** The client keeps the parsed task constraints and the proposed dinners. When saving, the server validates the dinners again, and the stored report is always computed on the server.
+- **Slow calls.** Claude calls and solving are synchronous requests. The page shows a blocking "working" overlay; no job queue was needed for one local user.
+- **Untrusted text.** All dynamic text is inserted with `textContent`, never `innerHTML`, because names and recipes may come from AI output.
+- **Error handling.** Errors return `{error, issues}`. `DataError` and invalid input give 400; Claude call failures give 502.
+
+Main endpoints:
+
+| Area | Endpoints |
+|---|---|
+| Menus | `POST /api/menus/plan`, `POST /api/menus`, `GET /api/menus`, `GET /api/menus/<id>?version=` |
+| Constraints | `GET/POST /api/constraints`, `PUT/DELETE /api/constraints/<id>`, `POST /api/constraints/parse`, `POST /api/task-constraints/parse`, `POST /api/constraints/effective` |
+| Dishes | `GET/POST /api/dishes`, `PUT /api/dishes/<id>`, `GET /api/pending`, `POST /api/review`, `POST /api/candidates/generate` |
+| Ingredients | `GET/POST /api/ingredients`, `PUT/DELETE /api/ingredients/<id>` |
+| Settings and preferences | `GET/PUT /api/settings`, `GET /api/vocab`, `GET /api/preferences`, `PUT /api/preferences/diners` |
+
+Frontend verification so far:
+
+- API tests with the Flask test client.
+- A static check of module imports and element IDs.
+- An HTTP smoke run of the demo server.
+
+Automated browser testing was not available in the development environment; the UI is checked manually.
+
 The adapted Web UI structure is recorded in ADR-006 (§12).
 
 ## 12. Architecture Decision Records

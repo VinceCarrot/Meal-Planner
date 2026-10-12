@@ -3,7 +3,7 @@ from datetime import date, timedelta
 
 import pytest
 
-from synthetic import synthetic_catalogue
+from meal_planner.demo import synthetic_catalogue
 from meal_planner import planner
 from meal_planner.checks import check_count, exclusion_hits
 from meal_planner.constraint_types import DishCount, DishTypeCount, IngredientExclusion
