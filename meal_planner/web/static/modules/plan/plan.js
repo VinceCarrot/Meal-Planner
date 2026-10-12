@@ -1,48 +1,39 @@
 // Menu generation: diners, persistent + task constraints, planning, saving.
 
 import { get, post, put } from '../../js/api.js';
-import { h, fill, badge, label, describeExecution, showError, showMessage, toast, nextMonday } from '../../js/ui.js';
+import { h, fill, label, showError, showMessage, toast, nextMonday } from '../../js/ui.js';
 import { statusBanner, menuGrid, reportTable } from '../../js/menu_view.js';
+import { constraintTable, taskConstraintEditor } from '../../js/task_constraints.js';
 import { openPage } from '../../js/nav.js';
 
 const TASK = 'menu_generation';
-const state = {
-  diners: [],
-  inputs: [''], // task constraint texts
-  parsed: [], // parsed task constraints (Constraint objects)
-  parsedFrom: null, // inputs the parsed list was made from
-  persistent: [],
-  result: null,
-};
-let root;
+const state = { diners: [], persistent: [], result: null, startDate: null };
 let els;
+let editor;
 
 export async function showPlan() {
-  if (!root) build();
+  if (!els) build();
   try {
     state.persistent = (await get('/api/constraints')).filter((c) => c.active && c.scope.includes(TASK));
     if (!state.diners.length) state.diners = (await get('/api/preferences')).default_diners;
   } catch (err) {
     showError(els.status, err);
   }
+  editor.setPersistent(state.persistent);
   renderDiners();
-  renderPersistent();
-  renderTaskConstraints();
+  fill(els.persistent, state.persistent.length ? constraintTable(state.persistent) : h('p', { class: 'hint' }, '还没有适用于生成菜单的长期约束。'));
 }
 
 function build() {
-  root = document.getElementById('plan_root');
+  editor = taskConstraintEditor({ task: TASK, placeholder: '例如：这次每顿都要有鱼；这次不要汤' });
   els = {
     status: h('div'),
     start: h('input', { type: 'date', value: nextMonday() }),
     diners: h('div'),
     persistent: h('div'),
-    inputs: h('div'),
-    parsed: h('div'),
-    effective: h('div'),
     result: h('div'),
   };
-  fill(root,
+  fill(document.getElementById('plan_root'),
     els.status,
     h('div', { class: 'panel' },
       h('h3', {}, '基本信息'),
@@ -56,20 +47,12 @@ function build() {
       h('p', { class: 'hint' }, '在“长期约束”页可以增删和修改。')),
     h('div', { class: 'panel' },
       h('h3', {}, '本次附加约束（只用于这一次生成，不会保存为长期约束）'),
-      els.inputs,
-      h('div', { class: 'row' },
-        h('button', { onclick: () => { state.inputs.push(''); renderInputs(); } }, '+ 添加一条'),
-        h('button', { onclick: parseTaskConstraints }, '用 Claude 解析附加约束')),
-      els.parsed,
-      els.effective),
+      editor.element),
     h('div', { class: 'row' },
       h('button', { class: 'primary', onclick: plan }, '生成菜单'),
       h('span', { class: 'hint' }, '求解通常需要几秒到半分钟。')),
     els.result);
-  renderInputs();
 }
-
-// --- Diners --------------------------------------------------------------------
 
 function renderDiners() {
   fill(els.diners,
@@ -84,6 +67,7 @@ function renderDiners() {
 }
 
 async function saveDefaultDiners() {
+  fill(els.status);
   try {
     await put('/api/preferences/diners', { diners: state.diners });
     toast('已保存为默认就餐者');
@@ -92,106 +76,14 @@ async function saveDefaultDiners() {
   }
 }
 
-// --- Constraints -----------------------------------------------------------------
-
-function constraintRows(list, { editable = false } = {}) {
-  return h('table', {},
-    h('tr', {}, ['ID', '描述', '类型', '状态', '解释 / 说明', editable ? '本次替代长期约束' : null, editable ? '' : null]
-      .filter((t) => t !== null).map((t) => h('th', {}, t))),
-    list.map((c, i) => h('tr', {},
-      h('td', {}, c.constraint_id),
-      h('td', {}, c.description),
-      h('td', {}, editable
-        ? h('select', { onchange: (e) => { c.strictness = e.target.value; checkEffective(); } },
-          ['hard', 'soft'].map((s) => h('option', { value: s, selected: c.strictness === s }, label('strictness', s))))
-        : label('strictness', c.strictness)),
-      h('td', {}, badge(c.parse_status)),
-      h('td', {}, describeExecution(c.execution), c.parse_notes ? h('div', { class: 'hint' }, c.parse_notes) : null),
-      editable ? h('td', {}, overrideSelect(c)) : null,
-      editable ? h('td', {}, h('button', { class: 'small danger', onclick: () => { state.parsed.splice(i, 1); renderParsed(); checkEffective(); } }, '移除')) : null)));
-}
-
-function overrideSelect(c) {
-  return h('div', {}, state.persistent.map((p) => h('label', { title: p.description },
-    h('input', {
-      type: 'checkbox',
-      checked: c.overrides.includes(p.constraint_id),
-      onchange: (e) => {
-        c.overrides = e.target.checked ? [...c.overrides, p.constraint_id] : c.overrides.filter((x) => x !== p.constraint_id);
-        checkEffective();
-      },
-    }), p.constraint_id)));
-}
-
-function renderPersistent() {
-  fill(els.persistent, state.persistent.length ? constraintRows(state.persistent) : h('p', { class: 'hint' }, '还没有长期约束。'));
-}
-
-function renderInputs() {
-  fill(els.inputs, state.inputs.map((text, i) => h('div', { class: 'row' },
-    h('input', { value: text, style: 'flex:1', placeholder: '例如：这次每顿都要有鱼；这次不要汤', oninput: (e) => { state.inputs[i] = e.target.value; renderTaskConstraints(); } }),
-    h('button', { class: 'small danger', onclick: () => { state.inputs.splice(i, 1); renderInputs(); renderTaskConstraints(); } }, '删除'))));
-}
-
-const inputTexts = () => state.inputs.map((t) => t.trim()).filter(Boolean);
-const parsedIsCurrent = () => JSON.stringify(inputTexts()) === JSON.stringify(state.parsedFrom || []);
-
-function renderTaskConstraints() {
-  if (!parsedIsCurrent() && state.parsed.length) {
-    fill(els.parsed, h('div', { class: 'message warning' }, '附加约束的文字已修改，请重新解析。'));
-    fill(els.effective);
-    return;
-  }
-  renderParsed();
-}
-
-function renderParsed() {
-  fill(els.parsed, state.parsed.length ? constraintRows(state.parsed, { editable: true }) : null);
-}
-
-async function parseTaskConstraints() {
-  fill(els.status);
-  const texts = inputTexts();
-  if (!texts.length) {
-    state.parsed = [];
-    state.parsedFrom = [];
-    renderParsed();
-    return checkEffective();
-  }
-  try {
-    state.parsed = await post('/api/task-constraints/parse', { task: TASK, items: texts.map((d) => ({ description: d })) }, '正在用 Claude 解析附加约束…');
-    state.parsedFrom = texts;
-    renderParsed();
-    await checkEffective();
-  } catch (err) {
-    showError(els.status, err);
-  }
-}
-
-async function checkEffective() {
-  try {
-    const eff = await post('/api/constraints/effective', { task: TASK, task_constraints: state.parsed });
-    fill(els.effective, eff.issues.length
-      ? h('div', { class: 'message warning' }, '生成前需要处理：',
-        h('ul', {}, eff.issues.map((i) => h('li', {}, `${i.constraint_ids.join('、')}：${i.message}`))),
-        h('div', { class: 'hint' }, '冲突可以通过勾选“本次替代长期约束”明确处理，或修改约束文字后重新解析。'))
-      : h('div', { class: 'message info' }, '约束检查通过，可以生成菜单。'));
-  } catch (err) {
-    fill(els.effective);
-    showError(els.effective, err);
-  }
-}
-
-// --- Planning and saving -------------------------------------------------------------
-
 async function plan() {
   fill(els.status);
-  if (inputTexts().length && !parsedIsCurrent()) {
-    showMessage(els.status, 'warning', '请先解析本次附加约束。');
+  if (editor.problem()) {
+    showMessage(els.status, 'warning', editor.problem());
     return;
   }
   try {
-    state.result = await post('/api/menus/plan', { start_date: els.start.value, task_constraints: state.parsed }, '正在生成菜单…');
+    state.result = await post('/api/menus/plan', { start_date: els.start.value, task_constraints: editor.parsed() }, '正在生成菜单…');
     state.startDate = els.start.value;
     renderResult();
   } catch (err) {
@@ -233,7 +125,7 @@ async function generateFor(gap) {
   try {
     const result = await post('/api/candidates/generate', {
       requests: [{ dish_type: gap.dish_type, count: gap.suggested_count, reason: gap.description }],
-      task_constraints: state.parsed,
+      task_constraints: editor.parsed(),
     }, '正在用 Claude 生成候选菜（可能需要一两分钟）…');
     toast(`已生成 ${result.added.length} 道候选菜，${result.rejected.length} 道未通过校验`);
     openPage('review');
@@ -250,7 +142,7 @@ async function save(changeNote) {
       start_date: state.startDate,
       diners: state.diners,
       dinners: r.dinners.map((d) => ({ date: d.date, dish_ids: d.dishes.map((x) => x.dish_id) })),
-      task_constraints: state.parsed,
+      task_constraints: editor.parsed(),
       change_note: changeNote,
     });
     toast(`已保存为 ${saved.menu_id}（第 ${saved.version} 版，${label('status', saved.status)}）`);

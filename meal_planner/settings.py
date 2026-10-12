@@ -51,6 +51,8 @@ class PlannerSettings(Record):
     penalty_meal_similarity: int = Field(100, ge=0)  # x normalized score, per similar dinner pair
     penalty_disliked: int = Field(200, ge=0)  # per serving of a dish with dislike feedback
     repair_max_steps: int = Field(50, ge=0)
+    # Menu adjustment: cost of replacing a dish of the existing menu inside a wider adjustment scope.
+    penalty_change: int = Field(300, ge=0)
 
 
 class CandidateSettings(Record):

@@ -21,8 +21,8 @@ export function statusBanner(status, messages = []) {
 
 // `dinners`: [{date, dishes: [{dish_id, name_zh, dish_type}], known_kcal, kcal_complete}]
 // `onDish(dinner, dish)`: optional click handler (used to pick a dish to replace).
-// `highlight`: optional set of "date|dish_id" strings to mark.
-export function menuGrid(dinners, { onDish, highlight } = {}) {
+// `highlight`: optional set of "date|dish_id" strings to mark as changed; `target`: one "date|dish_id".
+export function menuGrid(dinners, { onDish, highlight, target } = {}) {
   const weeks = [];
   for (let i = 0; i < dinners.length; i += 5) weeks.push(dinners.slice(i, i + 5));
   return h('table', { class: 'menu-grid' },
@@ -32,7 +32,11 @@ export function menuGrid(dinners, { onDish, highlight } = {}) {
       week.map((dinner) => h('td', {},
         h('div', { class: 'menu-date' }, `${dinner.date.slice(5)} ${weekday(dinner.date)}`),
         h('ul', { class: 'menu-dishes' }, dinner.dishes.map((dish) => h('li', {
-          class: [onDish ? 'pickable' : '', highlight && highlight.has(`${dinner.date}|${dish.dish_id}`) ? 'changed' : ''].join(' '),
+          class: [
+            onDish ? 'pickable' : '',
+            highlight && highlight.has(`${dinner.date}|${dish.dish_id}`) ? 'changed' : '',
+            target === `${dinner.date}|${dish.dish_id}` ? 'target' : '',
+          ].join(' '),
           title: dish.dish_id,
           onclick: onDish ? () => onDish(dinner, dish) : null,
         }, dishTypeTag(dish.dish_type), dish.name_zh))),

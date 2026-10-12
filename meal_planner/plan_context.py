@@ -38,12 +38,14 @@ class PlanContext:
 
 
 def make_context(
-    catalogue: Catalogue, settings: Settings, start_date: date, history: Sequence[Dinner] = ()
+    catalogue: Catalogue, settings: Settings, start_date: date, history: Sequence[Dinner] = (), menu_id: str | None = None
 ) -> PlanContext:
+    """`menu_id`: the menu being adjusted, whose `this_menu` dislike feedback also applies."""
     disliked = {
         f.dish_id
         for f in catalogue.preferences.feedback
-        if f.kind == "dislike" and f.scope in (FeedbackScope.FUTURE_MENUS, FeedbackScope.PERSISTENT)
+        if f.kind == "dislike"
+        and (f.scope in (FeedbackScope.FUTURE_MENUS, FeedbackScope.PERSISTENT) or (menu_id and f.menu_id == menu_id))
     }
     return PlanContext(
         start_date=start_date,

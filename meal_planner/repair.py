@@ -32,7 +32,9 @@ def repair_meal_similarity(
     effective: EffectiveConstraintSet,
     dinners: Sequence[Dinner],
     editable: Callable[[date, str], bool] = lambda d, k: True,
+    allowed: Callable[[date, str], bool] = lambda d, k: True,
 ) -> tuple[list[Dinner], RepairStats]:
+    """`editable(date, dish)`: may this served dish be replaced; `allowed(date, dish)`: may it be served there."""
     started = time.monotonic()
     current = list(dinners)
     report = validate_menu(current, ctx, effective)
@@ -43,7 +45,7 @@ def repair_meal_similarity(
 
     steps = 0
     while steps < ctx.settings.repair_max_steps:
-        improved = _first_improvement(ctx, effective, current, report, rules, editable)
+        improved = _first_improvement(ctx, effective, current, report, rules, editable, allowed)
         if improved is None:
             break
         current, report = improved
@@ -56,7 +58,7 @@ def _key(report: ValidationReport) -> tuple[int, int]:
     return hard_violations + len(report.structural_errors), report.penalty_total
 
 
-def _first_improvement(ctx, effective, current, report, rules, editable):
+def _first_improvement(ctx, effective, current, report, rules, editable, allowed):
     best_key = _key(report)
     for day in _dates_to_change(ctx, current, rules):
         index = next(n for n, d in enumerate(current) if d.date == day)
@@ -66,7 +68,7 @@ def _first_improvement(ctx, effective, current, report, rules, editable):
                 continue
             dish_type = ctx.dishes[dish_id].dish_type
             for candidate in sorted(ctx.dishes):
-                if ctx.dishes[candidate].dish_type != dish_type or candidate in dinner.dish_ids:
+                if ctx.dishes[candidate].dish_type != dish_type or candidate in dinner.dish_ids or not allowed(day, candidate):
                     continue
                 ids = dinner.dish_ids[:pos] + (candidate,) + dinner.dish_ids[pos + 1:]
                 trial = current[:index] + [Dinner(date=day, dish_ids=ids)] + current[index + 1:]

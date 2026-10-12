@@ -60,11 +60,20 @@ def solve(
     *,
     fixed: Mapping[date, Sequence[str]] | None = None,
     free_dates: set[date] | None = None,
+    banned: set[tuple[date, str]] | None = None,
+    prefer: Mapping[date, Sequence[str]] | None = None,
     time_limit_s: float | None = None,
 ) -> SolverResult:
-    """Solve the plan. `fixed` dishes are forced; dates outside `free_dates` get only their fixed dishes."""
+    """Solve the plan.
+
+    `fixed` dishes are forced; dates outside `free_dates` get only their fixed dishes;
+    `banned` (date, dish) pairs are never chosen; dropping a `prefer` dish costs
+    `penalty_change` points (used to keep an existing menu where possible).
+    """
     started = time.monotonic()
     fixed = fixed or {}
+    banned = banned or set()
+    prefer = prefer or {}
     for dish_id in {k for ks in fixed.values() for k in ks}:
         if dish_id not in ctx.dishes:
             raise ValueError(f"fixed dish '{dish_id}' is not an approved dish")
@@ -85,6 +94,14 @@ def solve(
             for k in dishes:
                 if k not in fixed.get(d, ()):
                     m.add(x[i, k] == 0)
+        for k in dishes:
+            if (d, k) in banned:
+                m.add(x[i, k] == 0)
+        for k in prefer.get(d, ()):
+            if (i, k) in x and (d, k) not in banned:
+                dropped = m.new_bool_var(f"dropped_{i}_{k}")
+                m.add(dropped + x[i, k] == 1)
+                terms.append((ctx.settings.penalty_change, dropped))
         terms += [(ctx.settings.penalty_disliked, x[i, k]) for k in dishes if k in ctx.disliked]
 
     for c in constraints:

@@ -475,6 +475,38 @@ The synthetic catalogue is much less similar than a real one is likely to be: on
 
 A pairwise model, with one variable per (similar dish pair × day pair), found better solutions in the 100-dish stress case. However, it found no solution at all for 300 dishes within 30 s, and it was not repeatable. The aggregated model was chosen.
 
+### 6.11.1 Implementation (Phase 7)
+
+`adjust.propose_replacement(ctx, effective, menu, date, dish)` tries four scopes in order and stops at the first one that the validator accepts as `feasible` or `feasible_with_unresolved`.
+
+| Scope | What may change |
+|---|---|
+| `dish` | Only the target dish is replaced; the rest of its dinner and all other dinners are fixed. |
+| `dinner` | The target dinner may be rebuilt. |
+| `week` | The target's plan week may change. |
+| `menu` | The whole menu may change. |
+
+- **Dates outside the scope** keep exactly their dishes.
+- **Inside a wider scope**, existing dishes are preferred: each dropped dish costs `planner.penalty_change` points (default 300), and the repair step may not touch them.
+- **The replaced dish** is banned on its date.
+- **Diagnosis.** Infeasibility diagnosis (relaxation candidates) runs only at the `menu` scope.
+- **Blocked.** A `blocked` result (constraint problems) stops immediately, because widening the scope cannot help.
+- **Explanation.** Every attempted scope is reported with its status and reason.
+
+Adjustment uses the persistent constraints scoped to `menu_adjustment` plus its own task constraints (scope `menu_adjustment` only; generation-task constraints are refused). History from other saved menus is included for repeat checks.
+
+`adjust.save_adjusted_version` stores a confirmed proposal:
+
+- The dinners are validated again on the server.
+- The result is stored as version `latest + 1`, with `based_on_version`, a required change note, the constraint snapshot and the report.
+- Earlier versions are never modified.
+- Optional dislike feedback is recorded in `preferences.yaml` with scope `this_menu`, `future_menus` or `persistent`:
+  - `this_menu`: the dislike penalty applies only when adjusting that menu.
+  - `future_menus` and `persistent`: the penalty applies to every later plan.
+  - A dislike never deletes the dish.
+
+The menu page shows each version's changes relative to the version it was based on.
+
 ## 7. Deterministic Validation
 
 The final validator is independent of the LLM and returns machine-readable results per constraint, such as:
@@ -801,3 +833,21 @@ The vocabulary is an initial draft and can be extended through a code change.
 - Rejected candidates are final records.
 - Invalid AI drafts are rejected rather than auto-corrected.
 - Edits cannot change provenance.
+
+### ADR-019 Menu adjustment policy — Default (2026-10-12)
+
+**Scope order.** Scopes are tried as dish → dinner → week → whole menu, stopping at the first scope the validator accepts.
+
+**Keeping existing dishes.** Inside a wider scope, existing dishes are kept unless a hard constraint needs them changed:
+
+- Each dropped dish costs 300 points (`planner.penalty_change`).
+- The repair step cannot replace them.
+
+**Feedback scopes:**
+
+- `this_menu`: applies only while adjusting that menu.
+- `future_menus` and `persistent`: a soft penalty in all later plans. They are currently treated the same; the distinction is kept for a future "one-off vs. permanent" policy.
+
+**Not supported yet:** feedback for a named diner, which the requirements list as "if supported".
+
+**Saving.** Proposals are never saved automatically. Saving requires a change note and creates a new immutable version.

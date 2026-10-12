@@ -5,11 +5,14 @@ from datetime import date
 from flask import Blueprint, request
 
 from ...catalogue import DataError, DataIssue
+from ...adjust import menu_changes, propose_replacement, save_adjusted_version
 from ...menus import plan_new_menu, prepare, save_new_menu, task_constraints_from_input
 from ...models import Diner, PreferencesFile
-from ...vocab import TaskScope
+from ...vocab import FeedbackScope, TaskScope
 from ..helpers import NotFound, body, dump, load, settings
-from ..serialize import dinners_from_input, menu_view, plan_view
+from ..serialize import changes_view, dinners_from_input, menu_view, plan_view, proposal_view
+
+ADJ = TaskScope.MENU_ADJUSTMENT
 
 bp = Blueprint("menus", __name__)
 
@@ -71,12 +74,51 @@ def list_menus():
 def get_menu(menu_id):
     store, cat = load()
     versions = store.menu_versions(menu_id)
+    menu = _version(store, cat, menu_id, request.args.get("version", type=int))
+    view = menu_view(menu, cat, versions)
+    if menu.based_on_version:
+        base = store.load_menu(cat, menu_id, menu.based_on_version)
+        view["changes"] = changes_view(menu_changes(base.dinners, menu.dinners), {d.dish_id: d for d in cat.dishes.dishes})
+    return view
+
+
+def _version(store, cat, menu_id, version):
+    versions = store.menu_versions(menu_id)
     if not versions:
         raise NotFound(f"菜单 {menu_id} 不存在")
-    version = request.args.get("version", type=int)
     if version is not None and version not in versions:
         raise NotFound(f"菜单 {menu_id} 没有版本 {version}")
-    return menu_view(store.load_menu(cat, menu_id, version), cat, versions)
+    return store.load_menu(cat, menu_id, version)
+
+
+@bp.post("/menus/<menu_id>/adjust/propose")
+def propose_adjustment(menu_id):
+    """Propose replacing one dish; nothing is saved."""
+    store, cat = load()
+    data = body()
+    base = _version(store, cat, menu_id, data.get("version"))
+    task_constraints = task_constraints_from_input(data.get("task_constraints", []), ADJ, cat)
+    ctx, effective = prepare(store, cat, settings(), base.start_date, task_constraints, ADJ, exclude_menu=menu_id)
+    proposal = propose_replacement(ctx, effective, base, date.fromisoformat(data["date"]), str(data["dish_id"]))
+    return proposal_view(proposal, ctx.dishes, effective)
+
+
+@bp.post("/menus/<menu_id>/adjust/save")
+def save_adjustment(menu_id):
+    """Save confirmed dinners as a new version (validated again) and record optional dislike feedback."""
+    store, cat = load()
+    data = body()
+    base = _version(store, cat, menu_id, int(data["version"]))
+    task_constraints = task_constraints_from_input(data.get("task_constraints", []), ADJ, cat)
+    ctx, effective = prepare(store, cat, settings(), base.start_date, task_constraints, ADJ, exclude_menu=menu_id)
+    note = str(data.get("change_note") or "").strip()
+    if not note:
+        raise DataError([DataIssue("request", "change_note", "请填写这次修改的原因")])
+    feedback = data.get("feedback")
+    if feedback:
+        feedback = (str(feedback["dish_id"]), FeedbackScope(feedback["scope"]), feedback.get("note") or None)
+    menu, report = save_adjusted_version(store, cat, ctx, effective, base, dinners_from_input(data["dinners"]), note, feedback)
+    return {"menu_id": menu.menu_id, "version": menu.version, "status": report.status.value}, 201
 
 
 @bp.get("/preferences")

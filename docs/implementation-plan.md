@@ -186,6 +186,8 @@ This plan is a proposed sequence. Adjust it based on implementation findings wit
 
 ## Phase 7 — Menu Adjustment and History
 
+**Status:** completed 2026-10-12 (pending the user's manual UI check). Code in `meal_planner/adjust.py`, adjustment endpoints in `web/api/menus.py`, UI on the menu page; see `architecture.md` §6.11.1 and ADR-019.
+
 ### Tasks
 
 - Implement feedback input with scope: current menu, future plans, or named diner if supported.

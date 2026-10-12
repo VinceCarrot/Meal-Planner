@@ -242,3 +242,44 @@ def test_settings_round_trip_and_validation(client):
 def test_vocab(client):
     vocab = ok(client.get("/api/vocab"))
     assert vocab["dish_types"] == ["vegetarian", "mixed", "meat", "soup"]
+
+
+# --- Menu adjustment -------------------------------------------------------------------
+
+
+def _saved_menu(client):
+    planned = ok(client.post("/api/menus/plan", json={"start_date": START}))
+    dinners = [{"date": d["date"], "dish_ids": [x["dish_id"] for x in d["dishes"]]} for d in planned["dinners"]]
+    ok(client.post("/api/menus", json={"start_date": START, "diners": DINERS, "dinners": dinners}), 201)
+    return dinners
+
+
+def test_propose_and_save_adjustment(client):
+    dinners = _saved_menu(client)
+    target = {"date": dinners[3]["date"], "dish_id": dinners[3]["dish_ids"][1]}
+
+    proposal = ok(client.post("/api/menus/M001/adjust/propose", json={"version": 1, **target}))
+    assert proposal["status"] == "feasible" and proposal["scope"] == "dish"
+    [change] = proposal["changes"]
+    assert change["date"] == target["date"] and [d["dish_id"] for d in change["removed"]] == [target["dish_id"]]
+
+    new_dinners = [{"date": d["date"], "dish_ids": [x["dish_id"] for x in d["dishes"]]} for d in proposal["dinners"]]
+    saved = ok(client.post("/api/menus/M001/adjust/save", json={
+        "version": 1, "dinners": new_dinners, "change_note": "换掉不喜欢的菜",
+        "feedback": {"dish_id": target["dish_id"], "scope": "future_menus", "note": "太油"},
+    }), 201)
+    assert saved == {"menu_id": "M001", "version": 2, "status": "feasible"}
+
+    v2 = ok(client.get("/api/menus/M001"))
+    assert v2["based_on_version"] == 1 and v2["changes"][0]["date"] == target["date"]
+    assert ok(client.get("/api/menus/M001?version=1"))["dinners"][3]["dishes"][1]["dish_id"] == target["dish_id"]
+    feedback = ok(client.get("/api/preferences"))["feedback"]
+    assert [(f["dish_id"], f["scope"], f["note"]) for f in feedback] == [(target["dish_id"], "future_menus", "太油")]
+
+
+def test_adjustment_requires_a_reason_and_a_real_target(client):
+    dinners = _saved_menu(client)
+    assert client.post("/api/menus/M001/adjust/propose", json={"date": dinners[0]["date"], "dish_id": "dish_9999"}).status_code == 400
+    response = client.post("/api/menus/M001/adjust/save", json={"version": 1, "dinners": dinners, "change_note": " "})
+    assert response.status_code == 400 and "原因" in response.get_json()["issues"][0]
+    assert client.post("/api/menus/M404/adjust/propose", json={"date": START, "dish_id": "dish_0001"}).status_code == 404

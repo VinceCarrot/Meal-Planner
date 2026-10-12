@@ -62,7 +62,7 @@ def prepare(
     task_constraints: Sequence[Constraint], task: TaskScope, exclude_menu: str | None = None,
 ) -> tuple[PlanContext, EffectiveConstraintSet]:
     history = menu_history(store, cat, start_date, exclude_menu)
-    ctx = make_context(cat, settings, start_date, history)
+    ctx = make_context(cat, settings, start_date, history, menu_id=exclude_menu)
     return ctx, build_effective_set(cat.constraints.constraints, task_constraints, task)
 
 

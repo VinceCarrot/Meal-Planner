@@ -66,7 +66,11 @@ def plan_menu(
     *,
     fixed: Mapping[date, Sequence[str]] | None = None,
     free_dates: set[date] | None = None,
+    banned: set[tuple[date, str]] | None = None,
+    prefer: Mapping[date, Sequence[str]] | None = None,
+    diagnose: bool = True,
 ) -> PlanResult:
+    """`diagnose`: when the model is infeasible, re-solve without each hard constraint to name the culprits."""
     if not effective.ready:
         return PlanResult(PlanStatus.BLOCKED, messages=tuple(f"{', '.join(i.constraint_ids)}: {i.message}" for i in effective.issues))
     constraints = list(effective.constraints)
@@ -77,13 +81,14 @@ def plan_menu(
     if gaps:
         return PlanResult(PlanStatus.INFEASIBLE, messages=tuple(g.describe() for g in gaps), gaps=tuple(gaps))
 
-    result = solve(ctx, constraints, fixed=fixed, free_dates=free_dates)
+    result = solve(ctx, constraints, fixed=fixed, free_dates=free_dates, banned=banned, prefer=prefer)
     if result.status == "infeasible":
-        candidates = _relaxation_candidates(ctx, constraints, fixed, free_dates)
+        candidates = _relaxation_candidates(ctx, constraints, fixed, free_dates, banned) if diagnose else []
         message = (
             "no menu satisfies all hard constraints; relaxing any one of these would allow a plan: " + ", ".join(candidates)
             if candidates
-            else "no menu satisfies all hard constraints together; no single constraint is solely responsible"
+            else "no menu satisfies all hard constraints together"
+            + ("; no single constraint is solely responsible" if diagnose else "")
         )
         return PlanResult(PlanStatus.INFEASIBLE, messages=(message,), relaxation_candidates=tuple(candidates), solver=result)
     if result.dinners is None:
@@ -93,12 +98,16 @@ def plan_menu(
             solver=result,
         )
 
-    fixed = fixed or {}
+    fixed, prefer, banned = fixed or {}, prefer or {}, banned or set()
 
     def editable(day: date, dish_id: str) -> bool:
-        return (free_dates is None or day in free_dates) and dish_id not in fixed.get(day, ())
+        kept = tuple(fixed.get(day, ())) + tuple(prefer.get(day, ()))
+        return (free_dates is None or day in free_dates) and dish_id not in kept
 
-    dinners, stats = repair_meal_similarity(ctx, effective, result.dinners, editable)
+    def allowed(day: date, dish_id: str) -> bool:
+        return (day, dish_id) not in banned
+
+    dinners, stats = repair_meal_similarity(ctx, effective, result.dinners, editable, allowed)
     report = validate_menu(dinners, ctx, effective)
     return PlanResult(report.status, dinners=tuple(dinners), report=report, solver=result, repair=stats)
 
@@ -135,7 +144,7 @@ def capacity_gaps(ctx: PlanContext, constraints: Sequence[Constraint]) -> list[C
     return gaps
 
 
-def _relaxation_candidates(ctx, constraints, fixed, free_dates) -> list[str]:
+def _relaxation_candidates(ctx, constraints, fixed, free_dates, banned) -> list[str]:
     """Hard constraints whose removal alone makes the model feasible (each re-solve is time-limited)."""
     candidates = []
     for c in constraints:
@@ -143,6 +152,6 @@ def _relaxation_candidates(ctx, constraints, fixed, free_dates) -> list[str]:
             continue
         others = [o for o in constraints if o is not c]
         quick = replace(ctx, settings=ctx.settings.model_copy(update={"time_limit_s": DIAGNOSIS_TIME_LIMIT_S}))
-        if solve(quick, others, fixed=fixed, free_dates=free_dates).status in ("optimal", "feasible"):
+        if solve(quick, others, fixed=fixed, free_dates=free_dates, banned=banned).status in ("optimal", "feasible"):
             candidates.append(c.constraint_id)
     return candidates

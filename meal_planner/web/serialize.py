@@ -96,3 +96,27 @@ def menu_view(menu: MenuVersion, cat: Catalogue, versions: list[int]) -> dict:
 
 def dinners_from_input(raw: list[dict]) -> list[Dinner]:
     return [Dinner.model_validate(d) for d in raw]
+
+
+SCOPE_ORDER = ("dish", "dinner", "week", "menu")
+
+
+def changes_view(changes, dishes: dict) -> list[dict]:
+    return [
+        {"date": c.date.isoformat(), "removed": [_dish_ref(i, dishes) for i in c.removed], "added": [_dish_ref(i, dishes) for i in c.added]}
+        for c in changes
+    ]
+
+
+def proposal_view(proposal, dishes: dict, effective: EffectiveConstraintSet) -> dict:
+    report = proposal.report
+    return {
+        "status": proposal.status.value,
+        "scope": proposal.scope,
+        "attempts": [{"scope": a.scope, "status": a.status.value, "message": a.message} for a in proposal.attempts],
+        "dinners": dinners_view(proposal.dinners or (), dishes, report.calories if report else None),
+        "changes": changes_view(proposal.changes, dishes),
+        "report": report.model_dump(mode="json") if report else None,
+        "penalty_total": report.penalty_total if report else None,
+        "effective": effective_view(effective),
+    }
