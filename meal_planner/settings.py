@@ -35,11 +35,30 @@ DEFAULT_MODELS = {
 }
 
 
+class PlannerSettings(Record):
+    """Optimizer configuration (ADR-017). Penalties are points in one weighted objective."""
+
+    time_limit_s: float = Field(30, gt=0)
+    workers: int = Field(8, ge=1)
+    # Used when a similarity constraint gives no max_similarity. Provisional (ADR-017):
+    # to be calibrated on the real catalogue.
+    default_dish_similarity_threshold: float = Field(0.5, gt=0, le=1)
+    default_meal_similarity_threshold: float = Field(0.5, gt=0, le=1)
+    penalty_soft_count: int = Field(100, ge=0)  # per dish outside a soft count range, per dinner
+    penalty_soft_exclusion: int = Field(100, ge=0)  # per serving of a soft-excluded dish
+    penalty_soft_repeat: int = Field(50, ge=0)  # per pair of servings inside a soft repeat window
+    penalty_dish_similarity: int = Field(100, ge=0)  # x similarity, per similar dish pair in the window
+    penalty_meal_similarity: int = Field(100, ge=0)  # x normalized score, per similar dinner pair
+    penalty_disliked: int = Field(200, ge=0)  # per serving of a dish with dislike feedback
+    repair_max_steps: int = Field(50, ge=0)
+
+
 class Settings(Record):
     schema_version: Literal[1] = 1
     llm_backend: Literal["claude_cli"] = "claude_cli"
     models: dict[LLMTask, str | None] = Field(default_factory=lambda: dict(DEFAULT_MODELS))
     similarity_weights: SimilarityWeights = SimilarityWeights()
+    planner: PlannerSettings = PlannerSettings()
 
     def model_for(self, task: LLMTask) -> str | None:
         return self.models.get(task, DEFAULT_MODELS[task])

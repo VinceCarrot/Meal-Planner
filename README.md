@@ -84,6 +84,7 @@ conda activate meal-planner
 pip install -e ".[dev]"
 pytest                                         # never calls a real model
 MEAL_PLANNER_LIVE_LLM=1 pytest tests/test_live_claude.py   # optional: real `claude -p` calls on your subscription
+python benchmarks/bench_planner.py 100 200 300             # optional: optimizer benchmark on synthetic data
 ```
 
 AI features call the Claude Code CLI (`claude -p`) using your own Claude subscription. Install the standalone CLI, run `claude` once to log in, and make sure `ANTHROPIC_API_KEY` is not set. See `docs/architecture.md` §12 for the recorded technology decisions.

@@ -74,12 +74,9 @@ def test_repeat_window_boundaries(offsets, weeks, repeated_days):
     assert [r.days_apart for r in repeats] == repeated_days
 
 
-def test_repeats_are_reported_between_consecutive_servings():
-    repeats = find_repeats(_dinners(0, 2, 4), 1)
-    assert [(r.first, r.second) for r in repeats] == [
-        (MONDAY, MONDAY + timedelta(days=2)),
-        (MONDAY + timedelta(days=2), MONDAY + timedelta(days=4)),
-    ]
+def test_every_pair_inside_the_window_is_reported():
+    repeats = find_repeats(_dinners(0, 2, 4, 9), 1)
+    assert [(r.first.day, r.second.day) for r in repeats] == [(19, 21), (19, 23), (21, 23), (23, 28)]
 
 
 def test_repeats_across_previous_menu_history():

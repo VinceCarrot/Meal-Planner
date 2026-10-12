@@ -408,6 +408,46 @@ Reuse the same constraint registry, validators, similarity engine, and optimizer
 6. Preserve unrelated approved dishes whenever possible.
 7. Show the proposed diff and validation report before committing the new version.
 
+### 6.12 Implementation (Phase 4)
+
+Modules:
+
+- `plan_context.py`: the inputs of one run (approved dishes only, ingredients, settings, earlier menus, disliked dishes) and a dish-similarity cache.
+- `solver.py`: the CP-SAT model.
+- `repair.py`: local repair of whole-meal similarity.
+- `validator.py`: the independent final validator.
+- `planner.py`: the orchestration and the infeasibility explanations.
+
+Flow of `plan_menu`:
+
+1. **Blocked.** The effective constraint set must be ready, and a `dish_count` with a minimum must exist. Otherwise the result is `blocked`, with the reasons.
+2. **Capacity check.** This proves catalogue shortfalls without solving. For each hard count minimum it compares servings needed (`20 × min`) with eligible dishes × the maximum uses per dish allowed by the strictest hard repeat window. Eligible means approved and not hard-excluded. A shortfall gives `infeasible` with a `CatalogueGap` that says how many more dishes of which type are needed; this is the input for Phase 5 candidate generation.
+3. **CP-SAT.** The model has one boolean per (date, eligible dish).
+   - Hard rules become constraints.
+   - Soft rules become penalty terms with the weights in `settings.planner` (ADR-017).
+   - Dish similarity is modelled per (day pair, dish) with an enforcement literal: when dish *a* is served on day *i*, a penalty variable covers all similar dishes on day *j*.
+   - Whole-meal similarity is not modelled.
+4. **Proven infeasible.** Each hard constraint is dropped in turn and the model re-solved (10 s each). The constraints whose removal alone allows a plan are reported as relaxation candidates. Nothing is relaxed automatically.
+5. **No solution within the time limit.** The result is `no_solution_found`, never `infeasible`.
+6. **Repair.** Deterministic first-improvement local search on the dinners in the worst meal-similarity violations. It replaces one dish with another of the same type, and keeps a change only if the validator reports fewer hard violations, or the same number with a lower total penalty. Fixed dishes and dates outside `free_dates` are never changed.
+7. **Validation.** The independent validator sets the final status. The solver result is only a candidate.
+
+Planning inputs also support `fixed` (dishes forced on given dates) and `free_dates` (other dates keep only their fixed dishes), for local adjustment in Phase 7.
+
+Benchmark (`benchmarks/bench_planner.py`, synthetic catalogue, typical rules: 4 dishes, 1 soup, ≥1 meat, ≥1 vegetarian, no repeat within 2 weeks, soft dish and meal similarity within 1 week; 8 workers; 2026-10-12):
+
+| Dishes | Threshold 0.5 | Threshold 0.3 | Threshold 0.2 (stress) |
+|---|---|---|---|
+| 100 | optimal, 2.6 s | optimal, 3.1 s | time limit, penalty 762 after repair |
+| 200 | optimal, 4.5 s | optimal, 6.6 s | optimal, 9.7 s |
+| 300 | optimal, 5.8 s | optimal, 11.4 s | optimal, 15.5 s |
+
+All runs gave the same menu on repeated runs.
+
+The synthetic catalogue is much less similar than a real one is likely to be: only 0.3% of dish pairs score above 0.5. Thresholds and solve times must be re-checked on the real catalogue.
+
+A pairwise model, with one variable per (similar dish pair × day pair), found better solutions in the 100-dish stress case. However, it found no solution at all for 300 dishes within 30 s, and it was not repeatable. The aggregated model was chosen.
+
 ## 7. Deterministic Validation
 
 The final validator is independent of the LLM and returns machine-readable results per constraint, such as:
@@ -651,5 +691,26 @@ The vocabulary is an initial draft and can be extended through a code change.
 - **Repetition window.** "Not repeated within N weeks" means that two servings of the same dish must be at least `N × 7` calendar days apart.
   - With `N = 1`, a dish may return on the same weekday of the next week.
   - With `N = 4`, a dish appears at most once in the plan.
-  - Each violation is reported as a pair of consecutive servings.
+  - Every pair of servings inside the window is reported, and each pair counts once in soft penalties.
 - **Meal-size normalization.** The normalized whole-meal score is `total / max(size_a, size_b)`, so extra unmatched dishes count as dissimilar. `mean_matched` (`total / matched pairs`) is reported alongside it.
+
+### ADR-017 Optimizer — Confirmed solver, Default parameters (2026-10-12)
+
+- **Solver.** OR-Tools CP-SAT, approved by the user.
+- **Hybrid approach.** CP-SAT with dish-level penalties is followed by deterministic local repair for whole-meal similarity. The benchmark showed the CP-SAT part is fast enough at 100–300 dishes. The repair layer is kept because whole-meal similarity is not modelled in CP-SAT.
+- **Single objective.** One weighted objective, with penalties in points (`settings.planner`):
+
+  | Term | Points |
+  |---|---|
+  | Soft count deviation | 100 per dish per dinner |
+  | Soft exclusion | 100 per serving |
+  | Soft repeat | 50 per pair |
+  | Dish similarity | 100 × score per similar pair |
+  | Meal similarity | 100 × normalized score per similar dinner pair |
+  | Disliked dish (`future_menus` / `persistent` feedback) | 200 per serving |
+
+  The report lists penalties per constraint. Staged or lexicographic optimization was not needed so far.
+- **Similarity thresholds.** When a constraint gives no `max_similarity`, the defaults are 0.5 for dishes and 0.5 for meals. These are provisional and must be calibrated on the real catalogue.
+- **Similarity pairs.** Similarity terms skip pairs of the same dish; serving the same dish twice is repetition. Dish similarity with earlier menus is not modelled yet.
+- **Repeatable search.** Deterministic search uses `interleave_search` with `max_deterministic_time` = `time_limit_s` (default 30). The wall-clock limit is 3× that, as a safety net. The same input gives the same menu.
+- **Dislike feedback.** It is a soft penalty, not an exclusion, so a small catalogue does not become infeasible.

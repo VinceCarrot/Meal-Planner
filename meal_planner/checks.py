@@ -56,19 +56,18 @@ class Repeat:
 
 
 def find_repeats(dinners: Sequence[Dinner], weeks: int) -> list[Repeat]:
-    """Pairs of dinners that serve the same dish less than `weeks` * 7 days apart.
+    """Every pair of servings of the same dish less than `weeks` * 7 days apart.
 
     The window slides over calendar days: with weeks=1 a dish may return on the
     same weekday of the next week, but not earlier. `dinners` may include earlier
     menus so that repetition across plans is detected too.
     """
     window_days = weeks * 7
-    last_seen: dict[str, date] = {}
+    served: dict[str, list[date]] = {}
     repeats = []
     for dinner in sorted(dinners, key=lambda d: d.date):
         for dish_id in dinner.dish_ids:
-            previous = last_seen.get(dish_id)
-            if previous is not None and (dinner.date - previous).days < window_days:
-                repeats.append(Repeat(dish_id, previous, dinner.date))
-            last_seen[dish_id] = dinner.date
+            earlier = served.setdefault(dish_id, [])
+            repeats += [Repeat(dish_id, e, dinner.date) for e in earlier if (dinner.date - e).days < window_days]
+            earlier.append(dinner.date)
     return repeats

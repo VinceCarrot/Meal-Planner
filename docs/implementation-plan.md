@@ -107,6 +107,8 @@ This plan is a proposed sequence. Adjust it based on implementation findings wit
 
 ## Phase 4 — Optimizer Prototype
 
+**Status:** completed 2026-10-12. Code in `meal_planner/` (`plan_context`, `solver`, `repair`, `validator`, `planner`); benchmark in `benchmarks/bench_planner.py`; see `architecture.md` §6.12 and ADR-017.
+
 ### Tasks
 
 - Create a benchmark catalogue and a 20-dinner test problem.
