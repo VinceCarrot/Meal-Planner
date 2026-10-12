@@ -8,6 +8,8 @@ This plan is a proposed sequence. Adjust it based on implementation findings wit
 
 ## Phase 0 — Repository and Technology Decisions
 
+**Status:** completed 2026-10-12. Decisions in `architecture.md` §12.
+
 ### Tasks
 
 - Inspect the existing repository and document the current environment.
@@ -24,6 +26,8 @@ This plan is a proposed sequence. Adjust it based on implementation findings wit
 - No unresolved decision is silently represented as confirmed.
 
 ## Phase 1 — YAML Schemas and Repositories
+
+**Status:** completed 2026-10-12. Code in `meal_planner/` (`models`, `catalogue`, `store`, `readonly`, `yaml_io`); tests in `tests/`.
 
 ### Tasks
 

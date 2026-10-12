@@ -76,52 +76,41 @@ The LLM must not bypass application permissions or write canonical YAML directly
 
 ## 4. Data Storage
 
-YAML is the initial source of truth. A possible layout is:
+YAML is the source of truth. Layout (implemented in Phase 1):
 
 ```text
 data/
-  ingredients.yaml
-  dishes.yaml
-  pending_dishes.yaml
-  constraints.yaml
-  preferences.yaml
+  ingredients.yaml        user-owned master data; AI read-only
+  dishes.yaml             approved dishes only
+  pending_dishes.yaml     AI-generated / imported candidates (pending or rejected)
+  constraints.yaml        persistent constraints only
+  preferences.yaml        default diners and scoped feedback
   menus/
-    <menu_id>.yaml
-    history/
-      <menu_id>/
-        <version_id>.yaml
+    <menu_id>/
+      v001.yaml           one immutable file per menu version
+      v002.yaml
 ```
 
-The exact split can be adjusted as data grows. Keep schemas versioned so future migrations are possible.
+The authoritative schemas are the pydantic models in `meal_planner/models.py`; every file carries `schema_version: 1` so that future migrations are possible. Cross-file rules (unique IDs, ingredient references, which review status belongs in which file, feedback and menu references) are in `meal_planner/catalogue.py`. All problems found while loading are reported together, each with file, record ID and field, for example `dishes.yaml: dishes[dish_0003].dish_type: Field required`.
+
+Menu versions are never overwritten. The latest version is the current menu; a new version records `based_on_version` and `change_note`. This replaces the earlier proposal of a current-menu file plus a separate history directory (see ADR-009).
 
 ### 4.1 Ingredient Records
 
-Suggested fields:
+- `ingredient_id` (`ing_<slug>`), `name_zh`, optional `name_en`, `aliases`, `notes`.
+- `category`: fixed enum `vegetable`, `meat`, `poultry`, `seafood`, `egg`, `soy`, `mushroom`, `grain`, `seasoning`, `other` (ADR-010).
+- Optional `kcal_per_100g` and `grams_per_unit` (for example `{个: 150}`) (ADR-008).
 
-- `ingredient_id`: stable ID.
-- `name_zh`, `name_en`.
-- Optional aliases.
-- Optional category.
-- Optional nutrition facts and unit basis, if available.
-- Optional user-maintained notes.
-
-AI may read this file but may not mutate it. The backend should expose read-only ingredient tools to AI workflows. User edits should pass through a separate explicit UI/API operation.
+AI may read this file but may not mutate it. Enforcement is structural (ADR-012): AI workflows receive only `ReadOnlyCatalogue`, which holds an in-memory snapshot, has no reference to the data directory or `DataStore`, and returns immutable records or copies. Only `DataStore.save_ingredients` writes the file, and it is called only for an explicit user edit.
 
 ### 4.2 Dish Records
 
-Suggested fields:
-
-- `dish_id`.
-- `name_zh`, `name_en`.
-- `dish_type`: business role/category such as vegetarian, mixed meat-and-vegetable, major meat dish, or soup.
-- `ingredients`: list of `{ingredient_id, quantity, unit}`.
-- `servings` or yield basis.
-- `steps`.
-- Optional calorie estimate and estimation basis.
-- `style`: main ingredients, cooking method, flavour, cuisine, core ingredient combination, and other supported features.
-- `source`: manual, AI-generated, or video-imported.
-- `review_status`: pending, approved, or rejected.
-- Optional confidence/uncertainty and timestamps.
+- `dish_id` (`dish_<nnnn>`), `name_zh`, optional `name_en`.
+- `dish_type`: `vegetarian`, `mixed`, `meat`, `soup` (ADR-007).
+- `ingredients`: lines of `{ingredient_id, quantity, unit, note}`. `quantity` is optional (for example "适量" goes in `note`), but a quantity requires a unit. A line may instead carry `unmatched_name` for an ingredient that is not in the catalogue yet; this is allowed only in pending dishes and must be resolved before approval.
+- Optional `servings`, `steps`, `calories_kcal` with `calorie_basis` (`computed` or `estimated`).
+- `style`: `main_ingredients` (ingredient IDs), `cooking_method`, `flavours`, free-text `cuisine` (ADR-011).
+- `source` (`manual`, `ai_generated`, `video_imported`), optional `source_url`, `review_status`, `uncertainty_notes`, timestamps.
 
 Do not conflate dish role with similarity features. Use stable IDs for references.
 
@@ -504,3 +493,63 @@ Follows the structural approach of the reference repository (§11), adapted to t
 
 - Stable IDs use readable prefixes: `ing_<slug>` for ingredients, `dish_<nnnn>` for dishes, `C<nnn>` for constraints. Final formats are fixed in the Phase 1 schemas.
 - Application-owned YAML files are written atomically (temporary file plus `os.replace`). The previous version is kept as a `.bak` file.
+
+### ADR-009 Menu version layout — Confirmed (2026-10-12)
+
+- Each menu version is its own immutable file: `data/menus/<menu_id>/v<NNN>.yaml`.
+- The highest version is the current menu.
+- Version numbers must be consecutive, and an existing version cannot be overwritten.
+
+### ADR-010 Ingredient categories — Confirmed (2026-10-12)
+
+- `category` is a fixed enum, so that exclusion constraints such as "no seafood" can be evaluated: `vegetable`, `meat`, `poultry`, `seafood`, `egg`, `soy`, `mushroom`, `grain`, `seasoning`, `other`.
+
+### ADR-011 Dish style vocabulary — Confirmed (2026-10-12)
+
+`cooking_method` and `flavours` use fixed vocabularies so that similarity comparisons are consistent. `cuisine` is free text.
+
+`cooking_method` values:
+
+- `stir_fry` (炒、爆、干煸)
+- `steam` (蒸)
+- `braise` (红烧、焖、烧)
+- `stew` (炖、煲)
+- `boil` (煮、汆、白灼)
+- `deep_fry` (炸)
+- `pan_fry` (煎)
+- `roast` (烤)
+- `cold_mix` (凉拌)
+- `other`
+
+`flavours` values:
+
+- `light` (清淡)
+- `salty_savory` (咸鲜)
+- `soy_sauce` (酱香)
+- `sweet_sour` (酸甜)
+- `sour` (酸)
+- `sweet` (甜)
+- `spicy` (辣)
+- `numbing_spicy` (麻辣)
+- `garlicky` (蒜香)
+- `fish_fragrant` (鱼香)
+- `other`
+
+The vocabulary is an initial draft and can be extended through a code change.
+
+### ADR-012 Ingredient write protection — Default (Phase 1)
+
+- `DataStore` is the only component that writes data files.
+- `DataStore` is used only by application services acting on explicit user requests.
+- AI-facing code receives `ReadOnlyCatalogue` instead of `DataStore`.
+- Tests check the following:
+  - The view exposes only read operations and cannot gain attributes.
+  - Returned records are immutable or copies.
+  - Using the view leaves `ingredients.yaml` unchanged.
+- Phase 2 tool definitions must be built only from `ReadOnlyCatalogue`.
+
+### ADR-013 Data files in git — Confirmed (2026-10-12)
+
+- `data/` is committed to git for now, which gives backup and history.
+- To stop uploading personal data later, add `data/` to `.gitignore`.
+- Tests use only `tests/fixtures/` copied to temporary directories.

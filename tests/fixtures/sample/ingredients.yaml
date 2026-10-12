@@ -1,0 +1,54 @@
+schema_version: 1
+ingredients:
+  - ingredient_id: ing_tomato
+    name_zh: 番茄
+    name_en: Tomato
+    aliases: [西红柿]
+    category: vegetable
+    kcal_per_100g: 18
+    grams_per_unit: {个: 150}
+  - ingredient_id: ing_egg
+    name_zh: 鸡蛋
+    name_en: Egg
+    category: egg
+    kcal_per_100g: 144
+    grams_per_unit: {个: 50}
+  - ingredient_id: ing_pork_belly
+    name_zh: 五花肉
+    name_en: Pork belly
+    category: meat
+    kcal_per_100g: 395
+  - ingredient_id: ing_chicken_thigh
+    name_zh: 鸡腿肉
+    name_en: Chicken thigh
+    category: poultry
+    kcal_per_100g: 181
+  - ingredient_id: ing_shrimp
+    name_zh: 虾仁
+    name_en: Shrimp
+    category: seafood
+    kcal_per_100g: 99
+  - ingredient_id: ing_tofu
+    name_zh: 豆腐
+    name_en: Tofu
+    category: soy
+    kcal_per_100g: 82
+  - ingredient_id: ing_bok_choy
+    name_zh: 青菜
+    name_en: Bok choy
+    category: vegetable
+    kcal_per_100g: 13
+  - ingredient_id: ing_potato
+    name_zh: 土豆
+    name_en: Potato
+    category: vegetable
+    kcal_per_100g: 77
+  - ingredient_id: ing_seaweed
+    name_zh: 紫菜
+    name_en: Dried seaweed
+    category: vegetable
+  - ingredient_id: ing_soy_sauce
+    name_zh: 生抽
+    name_en: Light soy sauce
+    category: seasoning
+    kcal_per_100g: 63

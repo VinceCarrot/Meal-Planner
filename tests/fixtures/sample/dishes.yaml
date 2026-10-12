@@ -1,0 +1,82 @@
+schema_version: 1
+dishes:
+  - dish_id: dish_0001
+    name_zh: 番茄炒蛋
+    name_en: Tomato and egg stir-fry
+    dish_type: vegetarian
+    ingredients:
+      - {ingredient_id: ing_tomato, quantity: 2, unit: 个}
+      - {ingredient_id: ing_egg, quantity: 3, unit: 个}
+    servings: 4
+    steps: [鸡蛋打散炒熟盛出, 番茄炒软后加入鸡蛋翻炒]
+    calories_kcal: 270
+    calorie_basis: computed
+    style:
+      main_ingredients: [ing_tomato, ing_egg]
+      cooking_method: stir_fry
+      flavours: [sweet_sour]
+      cuisine: home_style
+    source: manual
+    review_status: approved
+  - dish_id: dish_0002
+    name_zh: 红烧肉
+    name_en: Red-braised pork belly
+    dish_type: meat
+    ingredients:
+      - {ingredient_id: ing_pork_belly, quantity: 500, unit: g}
+      - {ingredient_id: ing_soy_sauce, note: 适量}
+    servings: 4
+    steps: [五花肉焯水, 炒糖色后加入生抽和水小火焖煮]
+    style:
+      main_ingredients: [ing_pork_belly]
+      cooking_method: braise
+      flavours: [soy_sauce, sweet]
+    source: manual
+    review_status: approved
+  - dish_id: dish_0003
+    name_zh: 清炒青菜
+    dish_type: vegetarian
+    ingredients:
+      - {ingredient_id: ing_bok_choy, quantity: 400, unit: g}
+    style:
+      main_ingredients: [ing_bok_choy]
+      cooking_method: stir_fry
+      flavours: [light]
+    source: manual
+    review_status: approved
+  - dish_id: dish_0004
+    name_zh: 土豆烧鸡
+    dish_type: mixed
+    ingredients:
+      - {ingredient_id: ing_chicken_thigh, quantity: 400, unit: g}
+      - {ingredient_id: ing_potato, quantity: 300, unit: g}
+    style:
+      main_ingredients: [ing_chicken_thigh, ing_potato]
+      cooking_method: braise
+      flavours: [salty_savory]
+    source: manual
+    review_status: approved
+  - dish_id: dish_0005
+    name_zh: 紫菜蛋花汤
+    dish_type: soup
+    ingredients:
+      - {ingredient_id: ing_seaweed, quantity: 5, unit: g}
+      - {ingredient_id: ing_egg, quantity: 1, unit: 个}
+    style:
+      main_ingredients: [ing_seaweed, ing_egg]
+      cooking_method: boil
+      flavours: [light]
+    source: manual
+    review_status: approved
+  - dish_id: dish_0006
+    name_zh: 虾仁豆腐
+    dish_type: mixed
+    ingredients:
+      - {ingredient_id: ing_shrimp, quantity: 200, unit: g}
+      - {ingredient_id: ing_tofu, quantity: 300, unit: g}
+    style:
+      main_ingredients: [ing_shrimp, ing_tofu]
+      cooking_method: braise
+      flavours: [salty_savory]
+    source: manual
+    review_status: approved

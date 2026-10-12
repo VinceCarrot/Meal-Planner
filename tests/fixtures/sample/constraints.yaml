@@ -1,0 +1,22 @@
+schema_version: 1
+constraints:
+  - constraint_id: C001
+    description: 每顿饭恰好一个汤
+    scope: [menu_generation, menu_adjustment]
+    strictness: hard
+    source: persistent
+    execution: {type: dish_type_count, dish_type: soup, min: 1, max: 1}
+    parse_status: executable
+  - constraint_id: C002
+    description: 两周内不要重复同一道菜
+    scope: [menu_generation, menu_adjustment]
+    strictness: hard
+    source: persistent
+    parse_status: unparsed
+  - constraint_id: C003
+    description: 口味别太单调
+    scope: [menu_generation]
+    strictness: soft
+    source: persistent
+    parse_status: needs_clarification
+    parse_notes: 需要说明“单调”的含义，例如同一周内相同口味的次数上限

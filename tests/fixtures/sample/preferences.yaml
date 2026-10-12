@@ -1,0 +1,10 @@
+schema_version: 1
+default_diners:
+  - {description: 成年女性, count: 3}
+  - {description: 6岁儿童, count: 1}
+feedback:
+  - feedback_id: F001
+    dish_id: dish_0002
+    kind: dislike
+    scope: future_menus
+    note: 太油腻

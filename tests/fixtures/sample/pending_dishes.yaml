@@ -1,0 +1,22 @@
+schema_version: 1
+dishes:
+  - dish_id: dish_0101
+    name_zh: 番茄豆腐汤
+    dish_type: soup
+    ingredients:
+      - {ingredient_id: ing_tomato, quantity: 1, unit: 个}
+      - {ingredient_id: ing_tofu, quantity: 200, unit: g}
+    calories_kcal: 190
+    calorie_basis: estimated
+    source: ai_generated
+    review_status: pending
+    uncertainty_notes: 份量为估计值
+  - dish_id: dish_0102
+    name_zh: 香菇炒青菜
+    dish_type: vegetarian
+    ingredients:
+      - {ingredient_id: ing_bok_choy, quantity: 300, unit: g}
+      - {unmatched_name: 香菇, quantity: 6, unit: 朵}
+    source: video_imported
+    source_url: https://www.example.com/video/123
+    review_status: pending

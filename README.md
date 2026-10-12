@@ -48,16 +48,16 @@ Translate approved menu recipes into English and export a printable PDF. Page la
 
 ## Data Ownership
 
-The following is the proposed initial data layout:
+Data layout (schemas in `meal_planner/models.py`, details in `docs/architecture.md` §4):
 
 - `data/ingredients.yaml`: user-maintained ingredient master data; AI has read-only access.
 - `data/dishes.yaml`: approved dish catalogue.
 - `data/pending_dishes.yaml`: candidate dishes awaiting review.
 - `data/constraints.yaml`: persistent constraints and their structured interpretations.
 - `data/preferences.yaml`: user preferences and scoped feedback, where applicable.
-- `data/menus/`: saved menus, versions, and adjustment history.
+- `data/menus/<menu_id>/v<NNN>.yaml`: immutable menu versions with change notes.
 
-The exact file splitting and schemas may be refined during implementation. YAML is preferred over SQL for the initial data volume.
+The `data/` directory is currently tracked in git as a backup; tests never read or write it except to check that the shipped files are valid.
 
 ## Architecture Principles
 
