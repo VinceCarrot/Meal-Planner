@@ -10,6 +10,8 @@ requires-python = ">=3.11"
 dependencies = [
     "pyyaml>=6.0",    # YAML data files
     "pydantic>=2.0",  # schema validation for YAML records and LLM output (ADR-002)
+    "mcp>=2,<3",      # serves application tools to `claude -p` agent calls (ADR-005); 2.x API
+    "uvicorn",        # runs the local MCP endpoint during an agent call
 ]
 
 [project.optional-dependencies]

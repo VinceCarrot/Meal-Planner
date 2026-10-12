@@ -124,10 +124,16 @@ def test_unmatched_ingredient_not_allowed_in_approved_dish(store, data_dir):
 
 
 def test_task_constraint_not_allowed_in_persistent_file(store, data_dir):
-    edit_yaml(data_dir / "constraints.yaml", lambda d: d["constraints"][0].update(source="task"))
-    assert _issues(store) == ["constraints.yaml: constraints[C001]: only persistent constraints are stored here"]
+    edit_yaml(data_dir / "constraints.yaml", lambda d: d["constraints"][0].update(constraint_id="T001", source="task"))
+    assert _issues(store) == ["constraints.yaml: constraints[T001]: only persistent constraints are stored here"]
 
 
 def test_feedback_must_reference_approved_dish(store, data_dir):
     edit_yaml(data_dir / "preferences.yaml", lambda d: d["feedback"][0].update(dish_id="dish_0101"))
     assert _issues(store) == ["preferences.yaml: feedback[F001]: unknown approved dish 'dish_0101'"]
+
+
+def test_exclusion_constraint_must_reference_known_ingredients(store, data_dir):
+    execution = {"type": "ingredient_exclusion", "ingredient_ids": ["ing_durian"]}
+    edit_yaml(data_dir / "constraints.yaml", lambda d: d["constraints"][1].update(execution=execution, parse_status="executable"))
+    assert _issues(store) == ["constraints.yaml: constraints[C002]: unknown ingredient_id 'ing_durian'"]

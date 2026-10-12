@@ -82,7 +82,8 @@ The `data/` directory is currently tracked in git as a backup; tests never read 
 conda create -n meal-planner python=3.11
 conda activate meal-planner
 pip install -e ".[dev]"
-pytest
+pytest                                         # never calls a real model
+MEAL_PLANNER_LIVE_LLM=1 pytest tests/test_live_claude.py   # optional: real `claude -p` calls on your subscription
 ```
 
 AI features call the Claude Code CLI (`claude -p`) using your own Claude subscription. Install the standalone CLI, run `claude` once to log in, and make sure `ANTHROPIC_API_KEY` is not set. See `docs/architecture.md` §12 for the recorded technology decisions.

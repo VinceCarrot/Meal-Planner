@@ -187,15 +187,40 @@ Prefer versioned writes rather than destructive in-place replacement. Use safe/a
 
 ### 5.2 Constraint Registry
 
-A registry should define, for each executable constraint type:
-- Parameter schema.
-- Applicable task scopes.
-- Supported strictness modes.
-- Validator or objective contribution.
-- Required catalogue fields and tools.
-- User-facing explanation format.
+Implemented in `meal_planner/constraint_types.py`. Each executable type is a typed parameter model selected by its `type` field; `Constraint.execution` must match one of them, so a YAML file or parser result with an unknown type or invalid parameters is rejected.
+
+| Type | Parameters | Meaning |
+|---|---|---|
+| `dish_count` | `min`, `max` | Dishes per dinner, soup included |
+| `dish_type_count` | `dish_type`, `min`, `max` | Dishes of one type per dinner |
+| `ingredient_exclusion` | `ingredient_ids`, `categories` | Dishes containing these are not used |
+| `exact_repeat_window` | `weeks` (1–4) | Same dish not repeated within the window |
+| `dish_similarity` | `max_similarity` (optional), `window_weeks` | Discourage similar dishes |
+| `meal_similarity` | `max_similarity` (optional), `window_weeks` | Discourage similar whole dinners |
+
+Every type supports both `hard` and `soft` strictness. Calorie constraints are not registered (ADR-008). Validators and optimizer contributions for each type are added in Phases 3–4.
 
 Do not interpret arbitrary LLM-generated code as a constraint implementation. Adding a new executable constraint type requires reviewed application code and tests.
+
+### 5.2.1 Parsing, Task Constraints and the Effective Set (implemented in Phase 2)
+
+- `constraint_parser.parse_constraints` sends the rules, the type descriptions and the ingredient list to the model as one structured call and validates every result itself:
+  - A result that is missing, duplicated, malformed, of an unknown type, or `executable` without parameters leaves the constraint `unparsed`, with the reason recorded in `parse_notes`. There is no retry.
+  - A reference to an unknown ingredient ID turns the result into `needs_clarification`.
+  - `conflict` is never accepted from the model.
+- The parser proposes `strictness`. New constraints start as `hard` before parsing, so that nothing is relaxed silently. The user can change strictness afterwards.
+- Persistent constraints are added, edited, removed and parsed through `constraints.py`. Changing the description resets the constraint to `unparsed`.
+- Task constraints use IDs `T001`, `T002`, … and the scope of exactly one task (generation or adjustment). They are never saved to `constraints.yaml`. A task constraint replaces a persistent one only when it lists that constraint in `overrides`.
+- `build_effective_set(persistent, task_constraints, task)` does the following:
+  - selects the active persistent constraints for the task;
+  - applies explicit overrides;
+  - reports blocking issues: `unparsed`, `needs_clarification`, `unknown_override`, and `conflict`.
+- Conflicts are detected deterministically:
+  - disjoint `dish_count` ranges;
+  - disjoint `dish_type_count` ranges for the same type;
+  - per-type minimums that add up to more than a total maximum.
+  
+  Conflicts are reported, never resolved automatically. `unsupported` constraints do not block planning but are listed so that they can be reported.
 
 ### 5.3 Constraint Execution Model
 
@@ -466,7 +491,14 @@ The user may later switch the invocation method (for example to the Anthropic AP
 - The backend is selected by configuration.
 - Tests use a fake backend and never call a real model.
 - Permission enforcement does not depend on the backend. The tool set given to AI contains only read operations; every write goes through application services after validation.
-- Exact signatures, and how the CLI backend exposes application tools (expected: an MCP server passed with `--mcp-config`, with built-in tools disabled), are finalized and verified in Phase 2.
+- Implemented in Phase 2 (`meal_planner/llm/`). `Tool` is a name, a description, and a type-annotated Python function; backends derive input schemas from the function signature. `create_backend(name)` selects the backend.
+- `claude -p` backend (`llm/claude_cli.py`), verified against the real CLI on 2026-10-12:
+  - Each call runs in an empty temporary directory, so the project's `CLAUDE.md` is not loaded.
+  - Isolation flags: `--tools ""` (no built-in file or shell tools), `--setting-sources ""`, `--strict-mcp-config`, `--no-session-persistence`.
+  - Output is enforced with `--json-schema`, and the backend reads the `structured_output` field. Pydantic's `discriminator` keyword is removed first, because the CLI's strict schema check rejects it.
+  - For agent calls, the tools are served from the application process over a local MCP streamable-HTTP endpoint (package `mcp` 2.x, run with `uvicorn`). The CLI is passed `--mcp-config` and `--allowedTools mcp__app__<tool>`. The endpoint exists only for the duration of the call.
+  - Model: the CLI default for the account unless `model` is passed (`--model`).
+  - Any CLI failure, timeout, or missing structured output raises `LLMError`. The backend does not retry.
 
 ### ADR-006 Web UI structure — Confirmed (2026-10-12)
 
@@ -553,3 +585,19 @@ The vocabulary is an initial draft and can be extended through a code change.
 - `data/` is committed to git for now, which gives backup and history.
 - To stop uploading personal data later, add `data/` to `.gitignore`.
 - Tests use only `tests/fixtures/` copied to temporary directories.
+
+### ADR-014 Model per LLM task — Confirmed (2026-10-12)
+
+- `data/settings.yaml` (`meal_planner/settings.py`) stores the backend and one model per LLM task.
+- Initial assignment:
+
+  | Task | Model | Reason |
+  |---|---|---|
+  | `constraint_parsing` | `sonnet` | Short structured task: faster and uses less quota |
+  | `translation` | `sonnet` | Same as above |
+  | `dish_generation` | account default (Opus) | Harder generation task |
+  | `video_extraction` | account default (Opus) | Harder generation task |
+
+- `null` means the backend default. Model names are passed to the backend unchanged; for `claude_cli` they are `--model` values.
+- The user switches models from the Web UI (Phase 6), which edits this file.
+- A missing file means all defaults; a missing task entry falls back to that task's default.

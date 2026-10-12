@@ -6,17 +6,32 @@ Unknown fields are rejected so that typos in hand-edited YAML are reported.
 """
 
 from datetime import date, datetime, timedelta
-from enum import StrEnum
 from typing import Annotated, Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
+from .constraint_types import Execution
+from .vocab import (
+    IngredientCategory,
+    DishType,
+    CookingMethod,
+    Flavour,
+    DishSource,
+    ReviewStatus,
+    CalorieBasis,
+    TaskScope,
+    Strictness,
+    ConstraintSource,
+    ParseStatus,
+    FeedbackScope,
+    IngredientId,
+)
+
 SCHEMA_VERSION = 1
 DINNERS_PER_MENU = 20
 
-IngredientId = Annotated[str, Field(pattern=r"^ing_[a-z0-9_]+$")]
 DishId = Annotated[str, Field(pattern=r"^dish_\d{4,}$")]
-ConstraintId = Annotated[str, Field(pattern=r"^C\d{3,}$")]
+ConstraintId = Annotated[str, Field(pattern=r"^[CT]\d{3,}$")]  # C: persistent, T: task-scoped
 FeedbackId = Annotated[str, Field(pattern=r"^F\d{3,}$")]
 MenuId = Annotated[str, Field(pattern=r"^M\d{3,}$")]
 NonEmptyStr = Annotated[str, Field(min_length=1)]
@@ -24,103 +39,6 @@ NonEmptyStr = Annotated[str, Field(min_length=1)]
 
 class Record(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
-
-
-# --- Controlled vocabularies -------------------------------------------------
-
-
-class IngredientCategory(StrEnum):
-    VEGETABLE = "vegetable"
-    MEAT = "meat"
-    POULTRY = "poultry"
-    SEAFOOD = "seafood"
-    EGG = "egg"
-    SOY = "soy"
-    MUSHROOM = "mushroom"
-    GRAIN = "grain"
-    SEASONING = "seasoning"
-    OTHER = "other"
-
-
-class DishType(StrEnum):
-    VEGETARIAN = "vegetarian"
-    MIXED = "mixed"
-    MEAT = "meat"
-    SOUP = "soup"
-
-
-class CookingMethod(StrEnum):
-    STIR_FRY = "stir_fry"  # 炒、爆、干煸
-    STEAM = "steam"  # 蒸
-    BRAISE = "braise"  # 红烧、焖、烧
-    STEW = "stew"  # 炖、煲
-    BOIL = "boil"  # 煮、汆、白灼
-    DEEP_FRY = "deep_fry"  # 炸
-    PAN_FRY = "pan_fry"  # 煎
-    ROAST = "roast"  # 烤
-    COLD_MIX = "cold_mix"  # 凉拌
-    OTHER = "other"
-
-
-class Flavour(StrEnum):
-    LIGHT = "light"  # 清淡
-    SALTY_SAVORY = "salty_savory"  # 咸鲜
-    SOY_SAUCE = "soy_sauce"  # 酱香
-    SWEET_SOUR = "sweet_sour"  # 酸甜
-    SOUR = "sour"  # 酸
-    SWEET = "sweet"  # 甜
-    SPICY = "spicy"  # 辣
-    NUMBING_SPICY = "numbing_spicy"  # 麻辣
-    GARLICKY = "garlicky"  # 蒜香
-    FISH_FRAGRANT = "fish_fragrant"  # 鱼香
-    OTHER = "other"
-
-
-class DishSource(StrEnum):
-    MANUAL = "manual"
-    AI_GENERATED = "ai_generated"
-    VIDEO_IMPORTED = "video_imported"
-
-
-class ReviewStatus(StrEnum):
-    PENDING = "pending"
-    APPROVED = "approved"
-    REJECTED = "rejected"
-
-
-class CalorieBasis(StrEnum):
-    COMPUTED = "computed"  # derived from ingredient data
-    ESTIMATED = "estimated"  # entered or estimated without full ingredient data
-
-
-class TaskScope(StrEnum):
-    MENU_GENERATION = "menu_generation"
-    MENU_ADJUSTMENT = "menu_adjustment"
-
-
-class Strictness(StrEnum):
-    HARD = "hard"
-    SOFT = "soft"
-
-
-class ConstraintSource(StrEnum):
-    PERSISTENT = "persistent"
-    TASK = "task"
-
-
-class ParseStatus(StrEnum):
-    UNPARSED = "unparsed"  # entered but not yet parsed
-    EXECUTABLE = "executable"
-    APPROXIMATED = "approximated"
-    NEEDS_CLARIFICATION = "needs_clarification"
-    UNSUPPORTED = "unsupported"
-    CONFLICT = "conflict"
-
-
-class FeedbackScope(StrEnum):
-    THIS_MENU = "this_menu"
-    FUTURE_MENUS = "future_menus"
-    PERSISTENT = "persistent"
 
 
 # --- Ingredients -------------------------------------------------------------
@@ -208,16 +126,20 @@ class DishesFile(Record):
 # --- Constraints -------------------------------------------------------------
 
 
+_NO_EXECUTION = (ParseStatus.UNPARSED, ParseStatus.NEEDS_CLARIFICATION, ParseStatus.UNSUPPORTED)
+
+
 class Constraint(Record):
     constraint_id: ConstraintId
     description: NonEmptyStr  # original natural-language text, never discarded
     scope: Annotated[tuple[TaskScope, ...], Field(min_length=1)]
     strictness: Strictness
     source: ConstraintSource
-    # Typed parameters are validated against the constraint registry (Phase 2).
-    execution: dict[str, Any] | None = None
+    execution: Execution | None = None  # typed parameters from the constraint registry
     parse_status: ParseStatus = ParseStatus.UNPARSED
     parse_notes: str | None = None  # limitation, ambiguity or conflict explanation
+    # Task constraints only: persistent constraints this one explicitly replaces for the task.
+    overrides: tuple[ConstraintId, ...] = ()
     active: bool = True
     created_at: datetime | None = None
     updated_at: datetime | None = None
@@ -226,9 +148,15 @@ class Constraint(Record):
     def _check(self):
         if len(set(self.scope)) != len(self.scope):
             raise ValueError("scope contains duplicates")
-        evaluable = self.parse_status in (ParseStatus.EXECUTABLE, ParseStatus.APPROXIMATED)
-        if evaluable and not (self.execution and "type" in self.execution):
-            raise ValueError(f"parse_status '{self.parse_status}' requires execution with a 'type'")
+        prefix = "C" if self.source == ConstraintSource.PERSISTENT else "T"
+        if not self.constraint_id.startswith(prefix):
+            raise ValueError(f"{self.source} constraint IDs start with '{prefix}'")
+        if self.overrides and self.source != ConstraintSource.TASK:
+            raise ValueError("only task constraints can override other constraints")
+        if self.parse_status in (ParseStatus.EXECUTABLE, ParseStatus.APPROXIMATED) and self.execution is None:
+            raise ValueError(f"parse_status '{self.parse_status}' requires execution")
+        if self.parse_status in _NO_EXECUTION and self.execution is not None:
+            raise ValueError(f"parse_status '{self.parse_status}' must not have execution")
         return self
 
 

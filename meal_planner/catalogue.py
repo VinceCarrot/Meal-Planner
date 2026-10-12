@@ -12,7 +12,9 @@ from typing import Any, TypeVar
 
 from pydantic import BaseModel, ValidationError
 
+from .constraint_types import IngredientExclusion
 from .models import (
+    Constraint,
     ConstraintSource,
     ConstraintsFile,
     Dish,
@@ -109,6 +111,7 @@ def check_catalogue(cat: Catalogue, menu_ids: set[str] | None = None) -> list[Da
     for c in cat.constraints.constraints:
         if c.source != ConstraintSource.PERSISTENT:
             issues.append(DataIssue(CONSTRAINTS_FILE, f"constraints[{c.constraint_id}]", "only persistent constraints are stored here"))
+        issues += [DataIssue(CONSTRAINTS_FILE, f"constraints[{c.constraint_id}]", msg) for msg in constraint_ref_errors(c, ingredient_ids)]
 
     for f in cat.preferences.feedback:
         loc = f"feedback[{f.feedback_id}]"
@@ -130,6 +133,13 @@ def check_menu(menu: MenuVersion, cat: Catalogue, file: str) -> list[DataIssue]:
         if len(set(dinner.dish_ids)) != len(dinner.dish_ids):
             issues.append(DataIssue(file, f"dinners[{dinner.date}]", "the same dish appears twice in one dinner"))
     return issues
+
+
+def constraint_ref_errors(constraint: Constraint, ingredient_ids: set[str]) -> list[str]:
+    """Catalogue references in a constraint's parameters that do not exist."""
+    if not isinstance(constraint.execution, IngredientExclusion):
+        return []
+    return [f"unknown ingredient_id '{i}'" for i in constraint.execution.ingredient_ids if i not in ingredient_ids]
 
 
 def _ingredient_refs(file: str, dish: Dish, ingredient_ids: set[str]) -> list[DataIssue]:

@@ -67,13 +67,42 @@ def test_constraint_defaults_to_unparsed():
     assert _constraint().parse_status == "unparsed"
 
 
+SOUP_ONCE = {"type": "dish_type_count", "dish_type": "soup", "min": 1, "max": 1}
+
+
 @pytest.mark.parametrize("status", ["executable", "approximated"])
-def test_evaluable_constraint_requires_execution_type(status):
+def test_evaluable_constraint_requires_execution(status):
     with pytest.raises(ValidationError, match="requires execution"):
         _constraint(parse_status=status)
-    with pytest.raises(ValidationError, match="requires execution"):
-        _constraint(parse_status=status, execution={"dish_type": "soup"})
-    assert _constraint(parse_status=status, execution={"type": "dish_type_count"})
+    assert _constraint(parse_status=status, execution=SOUP_ONCE).execution.dish_type == "soup"
+
+
+@pytest.mark.parametrize("status", ["unparsed", "needs_clarification", "unsupported"])
+def test_non_evaluable_constraint_has_no_execution(status):
+    with pytest.raises(ValidationError, match="must not have execution"):
+        _constraint(parse_status=status, execution=SOUP_ONCE)
+
+
+def test_conflicting_constraint_keeps_its_interpretation():
+    assert _constraint(parse_status="conflict", execution=SOUP_ONCE).execution is not None
+    assert _constraint(parse_status="conflict").execution is None
+
+
+def test_execution_parameters_are_validated_by_type():
+    with pytest.raises(ValidationError):
+        _constraint(parse_status="executable", execution={"type": "calorie_target", "kcal": 600})
+    with pytest.raises(ValidationError, match="min must not exceed max"):
+        _constraint(parse_status="executable", execution={**SOUP_ONCE, "min": 2})
+    with pytest.raises(ValidationError):
+        _constraint(parse_status="executable", execution={"type": "exact_repeat_window", "weeks": 5})
+
+
+def test_constraint_id_prefix_matches_source():
+    with pytest.raises(ValidationError, match="start with 'T'"):
+        _constraint(source="task")
+    assert _constraint(constraint_id="T001", source="task", overrides=["C001"]).overrides == ("C001",)
+    with pytest.raises(ValidationError, match="only task constraints"):
+        _constraint(overrides=["C002"])
 
 
 def test_constraint_scope_must_be_non_empty_and_unique():

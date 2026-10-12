@@ -53,6 +53,8 @@ This plan is a proposed sequence. Adjust it based on implementation findings wit
 
 ## Phase 2 — Constraint Registry and Parser
 
+**Status:** completed 2026-10-12. Code in `meal_planner/` (`constraint_types`, `constraint_parser`, `constraints`, `llm/`); see `architecture.md` §5.2. No UI yet: persistent constraints are inspected and edited through `constraints.py` functions until Phase 6.
+
 ### Tasks
 
 - Define typed executable constraint schemas and a registry.
