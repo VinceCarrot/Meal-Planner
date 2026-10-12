@@ -40,7 +40,7 @@ The application plans family weekday dinners using a local ingredient catalogue 
 
 **Effective constraint set**
 
-The system combines persistent constraints and the current task's additional constraints before optimization. Each constraint retains its source, scope, strictness, and status.
+The system combines persistent constraints and the current task's additional constraints before optimization. Each constraint retains its source, scope, strictness, and parse status.
 
 - An explicit task-level override may temporarily supersede a persistent constraint.
 - An ambiguous conflict must be explained and clarified with the user.
@@ -84,7 +84,7 @@ Strictness depends on the user's intent and the constraint's meaning. If hard co
 - Respect user-selected dish count and dish-type composition.
 - Include soup according to the selected constraint.
 - Estimate calories using recipe ingredients, quantities, serving yield, and diner assumptions when data permits.
-- Target a reasonable calorie range. An initial default of approximately ±20% around the target is proposed, not a clinically precise nutrition guarantee.
+- Target a reasonable calorie range. An initial default of approximately ±20% around the target is proposed, not a clinically precise nutrition guarantee. **Deferred (2026-10-12):** calorie constraints are not implemented in the initial version; calorie fields are still recorded on ingredients and dishes (see `architecture.md` ADR-008).
 - Avoid exact dish repetition within the configured repetition window.
 - Support configurable repetition windows, such as one week, two weeks, or the full four-week plan.
 - Reduce similarity between individual dishes and between complete meals.

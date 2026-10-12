@@ -39,18 +39,16 @@ This is a logical design, not a commitment to a particular web framework or agen
 
 ## 3. Runtime and Agent Orchestration
 
-### 3.1 Open Decision: Runtime
+### 3.1 Runtime (decided — see ADR-003, ADR-004, ADR-005 in §12)
 
-Claude Code is a development tool and must not be assumed to be the deployed application's runtime orchestrator.
+The core workflow runs in ordinary application code. Claude is called at explicit boundaries:
 
-Possible runtime approaches include:
-- An Agent SDK.
-- Another agent framework.
-- A simpler application-controlled workflow with explicit LLM calls and typed tools.
+- **Structured calls (no tools):** constraint parsing, translation. The application sends text and a JSON schema and validates the returned object.
+- **Agent calls (application-provided read-only tools):** candidate-dish generation, video recipe extraction. Claude chooses which tools to call; the application still validates every result before use.
 
-**Initial recommendation:** keep the core workflow in ordinary application code. Use an LLM only at explicit boundaries such as constraint parsing, candidate-dish generation, video extraction, and translation. Add a more autonomous agent loop only where it demonstrates clear value.
+Callers depend on a backend-neutral LLM interface, not on a specific invocation method, so the backend can be switched without rewriting callers.
 
-This keeps execution, permissions, retries, validation, and termination conditions under application control.
+This keeps execution, permissions, validation, and termination conditions under application control.
 
 ### 3.2 Agent and Tool Responsibilities
 
@@ -135,17 +133,19 @@ Illustrative YAML:
 
 ```yaml
 constraint_id: C001
-description: "Keep daily dinner calories close to the target"
+description: "Every dinner includes exactly one soup"
 scope:
   - menu_generation
   - menu_adjustment
-priority: soft
+strictness: hard
 source: persistent
 execution:
-  type: calorie_deviation
-  tolerance: 0.20
+  type: dish_type_count
+  dish_type: soup
+  min: 1
+  max: 1
 parse_status: executable
-status: active
+active: true
 ```
 
 This is illustrative, not a finalized schema.
@@ -153,13 +153,18 @@ This is illustrative, not a finalized schema.
 Useful metadata includes:
 - Stable ID.
 - Natural-language description.
-- Scope: `menu_generation`, `menu_adjustment`, or both.
-- Source: `persistent` or `task`.
-- Strictness: `hard` or `soft`.
-- Structured execution type and typed parameters.
-- Parse and validation status.
+- `scope`: `menu_generation`, `menu_adjustment`, or both.
+- `source`: `persistent` or `task`.
+- `strictness`: `hard` or `soft`.
+- `execution`: structured execution type and typed parameters.
+- `parse_status`: the parser outcome (see below).
 - Conflict and override information.
-- Active status.
+- `active`: whether the constraint is currently enabled.
+
+Two different status vocabularies apply to a constraint and must not be mixed:
+
+- **`parse_status`** describes whether the constraint itself could be understood and represented: `executable`, `approximated`, `needs_clarification`, `unsupported`, or `conflict` (see `requirements.md` §3.2). It is stored with the constraint.
+- **Validation result** describes whether a specific menu satisfies the constraint: `passed`, `failed`, `not_evaluable`, `approximated`, or `conflict` (see §7). It is produced per menu by the validator and stored in the menu's validation report, not in the constraint record.
 
 The schema must support unsupported, approximate, ambiguous, and conflicting constraints. Never discard the original natural-language description after parsing.
 
@@ -403,9 +408,10 @@ Avoid logging credentials or unnecessary sensitive information. For each failed 
 
 ## 10. Open Decisions
 
-- Runtime orchestration framework and model/provider.
-- Web UI/backend framework.
-- Final YAML schemas and migration strategy.
+Decisions already made are recorded in §12.
+
+- Final YAML schemas and migration strategy (to be settled in Phase 1).
+- Exact LLM interface signatures and how the Claude Code CLI backend exposes application tools (to be settled in Phase 2).
 - Solver choice after prototype benchmarking; OR-Tools CP-SAT is the current recommendation.
 - Exact hard/soft classification for each default constraint.
 - Similarity feature weights, thresholds, and comparison windows.
@@ -424,3 +430,77 @@ The repository is used exclusively as a reference for Web UI file and directory 
 Its business logic, implementation code, domain models, UI styling, and product requirements are not authoritative for this project.
 
 The final Web UI architecture must be adapted to this project's requirements and confirmed technology stack.
+
+The adapted Web UI structure is recorded in ADR-006 (§12).
+
+## 12. Architecture Decision Records
+
+Each record states its status. "Confirmed" means the user explicitly approved it; "Default" means a low-impact implementation choice that may be revisited without a design discussion.
+
+### ADR-001 Python environment — Confirmed (2026-10-12)
+
+- Conda environment `meal-planner`, Python 3.11.
+- Packaging through `pyproject.toml`; install with `pip install -e .[dev]`.
+
+### ADR-002 Schema validation library — Confirmed (2026-10-12)
+
+- pydantic v2 for YAML records and for all LLM output.
+- Reason: typed validation with field-level error messages, used both for user data files and for untrusted model output.
+
+### ADR-003 Model provider and access path — Confirmed (2026-10-12)
+
+- Claude only. Local models are not used.
+- First access path: the Claude Code CLI in non-interactive mode (`claude -p`), invoked as a subprocess and authenticated with the user's own Claude subscription. This is the officially documented way to run Claude Code from another program.
+- The standalone CLI must be installed and on `PATH`. The copies bundled inside the Claude desktop app or the VS Code extension are not used, because their paths change on update.
+- `ANTHROPIC_API_KEY` must be unset, otherwise the CLI uses the key instead of the subscription.
+- Rejected: automating the claude.ai web interface (for example with Playwright). Anthropic's consumer terms prohibit automated access to the consumer service without an API key, and the usage policy prohibits routing requests through consumer subscriptions.
+- Subscription login is for this user's personal use. The application must not be distributed with subscription-based login.
+
+### ADR-004 Orchestration model — Confirmed (2026-10-12)
+
+Hybrid:
+
+- Application code controls the main workflows: generation, adjustment, validation, saving.
+- Structured calls without tools: constraint parsing, translation.
+- Agent calls with application-provided read-only tools: candidate-dish generation, video recipe extraction.
+- A fully agent-orchestrated workflow was considered and not chosen, because it is harder to test and reproduce and uses more calls.
+
+### ADR-005 Backend-neutral LLM interface — Confirmed (2026-10-12)
+
+The user may later switch the invocation method (for example to the Anthropic API or the Agent SDK). Switching must not require rewriting callers.
+
+- Callers depend on a small interface with two operations:
+  - `structured(system, prompt, output_schema)` returns one JSON object;
+  - `agent(system, prompt, tools, output_schema)` runs a tool-using loop and returns one JSON object.
+- Tools are defined once in a backend-neutral form: name, description, JSON input schema, and a Python handler.
+- Each backend adapts these definitions to its own mechanism. The first backend is `claude -p`; other backends implement the same interface.
+- The backend is selected by configuration.
+- Tests use a fake backend and never call a real model.
+- Permission enforcement does not depend on the backend. The tool set given to AI contains only read operations; every write goes through application services after validation.
+- Exact signatures, and how the CLI backend exposes application tools (expected: an MCP server passed with `--mcp-config`, with built-in tools disabled), are finalized and verified in Phase 2.
+
+### ADR-006 Web UI structure — Confirmed (2026-10-12)
+
+Follows the structural approach of the reference repository (§11), adapted to this project:
+
+- Flask serves one Jinja shell page assembled from per-feature partials (`templates/modules/<feature>.html`).
+- The front end uses vanilla ES modules, with one folder per feature (`static/modules/<feature>/<feature>.js|.css`). It loads data from JSON endpoints with `fetch`. There is no Node build step.
+- Unlike the reference repository, endpoints are business operations (for example "approve pending dishes"). There is no generic "write this data to this file path" endpoint, because that would bypass the ingredient permission boundary.
+- Flask is added as a dependency in Phase 6.
+
+### ADR-007 Dish types — Confirmed (2026-10-12)
+
+- `dish_type` is a fixed enum: `vegetarian`, `mixed` (meat and vegetable), `meat` (major meat dish), `soup`.
+- Meal composition is expressed as count ranges per dish type.
+- Adding a type requires a code change.
+
+### ADR-008 Calorie fields — Confirmed (2026-10-12)
+
+- Ingredient records have an optional `kcal_per_100g`. An optional per-unit gram weight is used to convert non-mass units.
+- Dish records have an optional `calories_kcal` with its basis (servings, and whether it was computed or estimated).
+- Calorie-related constraints are deferred. They are not part of the initial constraint registry, and the optimizer does not use calories until this decision is revisited.
+
+### Defaults
+
+- Stable IDs use readable prefixes: `ing_<slug>` for ingredients, `dish_<nnnn>` for dishes, `C<nnn>` for constraints. Final formats are fixed in the Phase 1 schemas.
+- Application-owned YAML files are written atomically (temporary file plus `os.replace`). The previous version is kept as a `.bak` file.

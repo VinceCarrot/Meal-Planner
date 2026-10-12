@@ -39,7 +39,7 @@ If implementation reveals a conflict, follow the latest explicit user decision. 
 - Persistent constraints apply by default to both full menu generation and subsequent menu adjustment.
 - Generation and adjustment must each provide a separate way to enter task-specific additional constraints.
 - Parse natural-language constraints into structured executable representations where possible.
-- Preserve each constraint's description, scope, priority, parser status, and execution status.
+- Preserve each constraint's description, scope, strictness, parse status, and per-menu validation result.
 - Do not force unsupported natural-language constraints into unrelated existing parameters.
 - If a constraint is ambiguous, conflicts with another constraint, or cannot be evaluated with available data/tools, explain the limitation or ask for clarification.
 - Task-scoped constraints do not permanently change persistent constraints.
@@ -79,11 +79,10 @@ If implementation reveals a conflict, follow the latest explicit user decision. 
 
 ## Current Open Decisions
 
-The following are not fully confirmed in the first documentation draft:
+Confirmed decisions (environment, model access, orchestration, LLM interface, Web UI, dish types, calorie fields) are recorded in `docs/architecture.md` §12. In short: Claude only, no local models; called through the Claude Code CLI (`claude -p`) behind a backend-neutral interface; never automate the claude.ai web interface.
 
-- Runtime orchestration choice: Claude Agent SDK, another agent runtime, or a simpler application-controlled workflow.
-- Web UI and backend framework.
-- Local model/provider strategy and whether any hosted model is permitted.
+The following remain open:
+
 - Final similarity feature weights and thresholds.
 - Whether CP-SAT should handle all planning or be combined with local search after prototyping.
 - Recipe PDF layout and exact contents.
@@ -96,7 +95,7 @@ The following are not fully confirmed in the first documentation draft:
 When implementing the Web UI, use the following GitHub repository as a reference for **file and directory architecture only**:
 
 - Repository: https://github.com/VinceCarrot/Family-Accounting-Web-UI
-- Scope: directory structure, file organization, module boundaries, and separation of responsibilities.
+- Scope: directory structure, file organization, module boundaries, and separation of responsibilities, web-ui impelemtation (e.g. flask).
 
 ### Strict Restrictions
 

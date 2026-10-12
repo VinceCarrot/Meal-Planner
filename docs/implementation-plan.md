@@ -71,7 +71,7 @@ This plan is a proposed sequence. Adjust it based on implementation findings wit
 
 ### Exit Criteria
 
-- A task can produce a validated effective constraint set with source, scope, priority, and parse status preserved.
+- A task can produce a validated effective constraint set with source, scope, strictness, and parse status preserved.
 
 ## Phase 3 — Deterministic Food and Similarity Tools
 

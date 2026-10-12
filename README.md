@@ -76,6 +76,17 @@ The exact file splitting and schemas may be refined during implementation. YAML 
 - `docs/architecture.md` — proposed architecture, modules, data model, and optimizer design.
 - `docs/implementation-plan.md` — phased implementation and test plan.
 
+## Development Setup
+
+```bash
+conda create -n meal-planner python=3.11
+conda activate meal-planner
+pip install -e ".[dev]"
+pytest
+```
+
+AI features call the Claude Code CLI (`claude -p`) using your own Claude subscription. Install the standalone CLI, run `claude` once to log in, and make sure `ANTHROPIC_API_KEY` is not set. See `docs/architecture.md` §12 for the recorded technology decisions.
+
 ## Project Status
 
 This is the first project-specification draft.
