@@ -396,6 +396,33 @@ If the approved catalogue has no feasible solution:
 
 Do not silently relax hard constraints or automatically approve generated dishes. If suggesting a relaxation, explain its impact and wait for the user's decision.
 
+### 6.10.1 Implementation (Phase 5)
+
+**Requests.** `candidates.requests_for_gaps` turns each `CatalogueGap` into a request for `max(minimum, ceil(factor × missing dishes))` dishes of the missing type. The defaults are factor 1.5 and minimum 5 (`settings.candidates`).
+
+**Generation.** `candidates.generate_candidates` makes one agent call using the `dish_generation` model and the read-only tools in `ai_tools.py` (`list_ingredients`, `search_ingredients`, `list_dishes`).
+
+- The prompt states the request and the hard ingredient exclusions.
+- Every draft is validated in code. A draft is **rejected with a reason, never repaired**, if:
+  - it does not match the schema, or a quantity has no unit;
+  - its dish type is not the requested one;
+  - it uses an unknown ingredient ID;
+  - it contains an excluded ingredient;
+  - its name duplicates an approved or pending dish.
+- An ingredient that is not in the catalogue may appear only as an `unmatched_name` line. It is flagged for the user and never created.
+- Valid drafts get new `dish_<nnnn>` IDs, `source: ai_generated` and `review_status: pending`, and are saved to `pending_dishes.yaml` only.
+
+**Review.** `review.apply_review` applies a batch of `approve`, `edit` and `reject` decisions.
+
+- The whole batch is validated first and written only if every decision is valid.
+- **Approve:**
+  - A dish with `unmatched_name` lines cannot be approved; the user edits the line to a catalogue ingredient first.
+  - The dish moves to `dishes.yaml` through `DataStore.save_dishes_and_pending`. That method validates the combined result once, then writes `dishes.yaml` before `pending_dishes.yaml` (ADR-018).
+- **Edit:** the dish keeps its `dish_id`, `source`, `source_url` and `created_at`.
+- **Reject:** the dish stays in `pending_dishes.yaml` as `rejected` and cannot be approved later.
+
+**Re-planning.** After approval, the planner uses the updated catalogue. A test covers the complete loop: gap → candidates → approval → feasible plan.
+
 ### 6.11 Menu Adjustment
 
 Reuse the same constraint registry, validators, similarity engine, and optimizer.
@@ -714,3 +741,18 @@ The vocabulary is an initial draft and can be extended through a code change.
 - **Similarity pairs.** Similarity terms skip pairs of the same dish; serving the same dish twice is repetition. Dish similarity with earlier menus is not modelled yet.
 - **Repeatable search.** Deterministic search uses `interleave_search` with `max_deterministic_time` = `time_limit_s` (default 30). The wall-clock limit is 3× that, as a safety net. The same input gives the same menu.
 - **Dislike feedback.** It is a soft penalty, not an exclusion, so a small catalogue does not become infeasible.
+
+### ADR-018 Candidate review persistence and batch size — Confirmed (2026-10-12)
+
+**Approval.**
+
+- The combined result is validated once, then written in this order: `dishes.yaml` first, `pending_dishes.yaml` second. Both files keep a `.bak`.
+- If the second write is interrupted, the dish exists in both files. The next load reports it, with a hint to remove it from `pending_dishes.yaml`.
+
+**Candidate count.** `max(5, ceil(1.5 × missing dishes))`, configurable in `settings.candidates`.
+
+**Defaults** (not separately confirmed):
+
+- Rejected candidates are final records.
+- Invalid AI drafts are rejected rather than auto-corrected.
+- Edits cannot change provenance.

@@ -8,6 +8,7 @@ import os
 
 import pytest
 
+from meal_planner.candidates import CandidateRequest, generate_candidates
 from meal_planner.constraint_parser import parse_constraints
 from meal_planner.constraints import TaskConstraintInput, make_task_constraints
 from meal_planner.llm import Tool, create_backend
@@ -58,3 +59,14 @@ def test_live_agent_uses_read_only_tool(store):
     )
     assert calls
     assert set(output["ingredient_ids"]) == {"ing_tomato", "ing_shrimp"}
+
+
+def test_live_candidate_generation(store):
+    cat = store.load()
+    llm = create_backend()  # account default model, as configured for dish_generation
+    _, result = generate_candidates(store, cat, llm, CandidateRequest("soup", 2, "测试：需要两道新的汤"))
+
+    assert result.added, result.rejected
+    for dish in result.added:
+        assert dish.dish_type == "soup" and dish.review_status == "pending" and dish.steps
+    assert store.load().approved_dish_ids == cat.approved_dish_ids

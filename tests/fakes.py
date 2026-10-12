@@ -13,7 +13,10 @@ class FakeLLM:
         return self.response(prompt) if callable(self.response) else self.response
 
     def agent(self, system, prompt, tools, output_schema):
-        raise AssertionError("agent calls are not expected here")
+        self.calls.append({"system": system, "prompt": prompt, "tools": tools, "schema": output_schema})
+        if self.error:
+            raise self.error
+        return self.response(prompt) if callable(self.response) else self.response
 
 
 def result(constraint_id, status="executable", strictness="hard", execution=None, notes=""):

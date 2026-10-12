@@ -71,6 +71,19 @@ class DataStore:
     def save_preferences(self, catalogue: Catalogue, preferences: PreferencesFile) -> Catalogue:
         return self._save(catalogue, "preferences", preferences)
 
+    def save_dishes_and_pending(self, catalogue: Catalogue, dishes: DishesFile, pending: DishesFile) -> Catalogue:
+        """Move dishes between the two files (review approval).
+
+        The combined result is validated once, then dishes.yaml is written before
+        pending_dishes.yaml. If the second write is interrupted, the dish is in both
+        files and the next load reports it.
+        """
+        updated = dataclasses.replace(catalogue, dishes=dishes, pending_dishes=pending)
+        _raise_if(check_catalogue(updated, set(self.menu_ids())))
+        write_yaml_atomic(self.data_dir / DISHES_FILE, dishes.model_dump(mode="json"))
+        write_yaml_atomic(self.data_dir / PENDING_DISHES_FILE, pending.model_dump(mode="json"))
+        return updated
+
     def save_ingredients(self, catalogue: Catalogue, ingredients: IngredientsFile) -> Catalogue:
         """User-owned master data. Call only for an explicit user edit; never expose to AI."""
         return self._save(catalogue, "ingredients", ingredients)

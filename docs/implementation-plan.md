@@ -138,6 +138,8 @@ This plan is a proposed sequence. Adjust it based on implementation findings wit
 
 ## Phase 5 — Dish Candidate Generation and Batch Review
 
+**Status:** completed 2026-10-12. Code in `meal_planner/` (`ai_tools`, `candidates`, `review`); see `architecture.md` §6.10.1 and ADR-018.
+
 ### Tasks
 
 - Generate targeted recipe candidates based on identified catalogue gaps and available ingredient IDs.

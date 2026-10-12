@@ -93,7 +93,7 @@ def check_catalogue(cat: Catalogue, menu_ids: set[str] | None = None) -> list[Da
     issues += _duplicates(PREFERENCES_FILE, "feedback_id", [f.feedback_id for f in cat.preferences.feedback])
 
     for dish_id in sorted(approved_ids & {d.dish_id for d in cat.pending_dishes.dishes}):
-        issues.append(DataIssue(PENDING_DISHES_FILE, f"dishes[{dish_id}]", "dish_id is already used in dishes.yaml"))
+        issues.append(DataIssue(PENDING_DISHES_FILE, f"dishes[{dish_id}]", "dish_id is already used in dishes.yaml (if an approval was interrupted, remove it from pending_dishes.yaml)"))
 
     for dish in cat.dishes.dishes:
         loc = f"dishes[{dish.dish_id}]"

@@ -53,12 +53,20 @@ class PlannerSettings(Record):
     repair_max_steps: int = Field(50, ge=0)
 
 
+class CandidateSettings(Record):
+    """How many candidate dishes to request for a catalogue gap: max(minimum, ceil(factor x gap))."""
+
+    factor: float = Field(1.5, ge=1)
+    minimum: int = Field(5, ge=1)
+
+
 class Settings(Record):
     schema_version: Literal[1] = 1
     llm_backend: Literal["claude_cli"] = "claude_cli"
     models: dict[LLMTask, str | None] = Field(default_factory=lambda: dict(DEFAULT_MODELS))
     similarity_weights: SimilarityWeights = SimilarityWeights()
     planner: PlannerSettings = PlannerSettings()
+    candidates: CandidateSettings = CandidateSettings()
 
     def model_for(self, task: LLMTask) -> str | None:
         return self.models.get(task, DEFAULT_MODELS[task])

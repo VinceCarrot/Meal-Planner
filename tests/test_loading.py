@@ -84,7 +84,7 @@ def test_duplicate_ingredient_ids(store, data_dir):
 
 def test_dish_id_shared_between_approved_and_pending(store, data_dir):
     edit_yaml(data_dir / "pending_dishes.yaml", lambda d: d["dishes"][0].update(dish_id="dish_0001"))
-    assert _issues(store) == ["pending_dishes.yaml: dishes[dish_0001]: dish_id is already used in dishes.yaml"]
+    assert _issues(store) == ["pending_dishes.yaml: dishes[dish_0001]: dish_id is already used in dishes.yaml (if an approval was interrupted, remove it from pending_dishes.yaml)"]
 
 
 def test_unknown_ingredient_references(store, data_dir):

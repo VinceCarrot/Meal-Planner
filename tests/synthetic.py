@@ -11,6 +11,7 @@ from meal_planner.models import (
     IngredientsFile,
     PreferencesFile,
 )
+from meal_planner.yaml_io import write_yaml_atomic
 
 INGREDIENTS = {
     "vegetable": ["tomato", "bok_choy", "potato", "eggplant", "green_pepper", "cabbage", "spinach", "carrot",
@@ -86,3 +87,16 @@ def synthetic_catalogue(num_dishes: int, seed: int = 0) -> Catalogue:
     )
     assert check_catalogue(catalogue) == []
     return catalogue
+
+
+def write_catalogue(catalogue: Catalogue, data_dir) -> None:
+    """Write a catalogue as the five YAML data files (for tests that need a DataStore)."""
+    data_dir.mkdir(parents=True, exist_ok=True)
+    for name, part in [
+        ("ingredients.yaml", catalogue.ingredients),
+        ("dishes.yaml", catalogue.dishes),
+        ("pending_dishes.yaml", catalogue.pending_dishes),
+        ("constraints.yaml", catalogue.constraints),
+        ("preferences.yaml", catalogue.preferences),
+    ]:
+        write_yaml_atomic(data_dir / name, part.model_dump(mode="json"))
