@@ -14,6 +14,7 @@ from pydantic import Field
 from .catalogue import DataError, DataIssue, parse_model
 from .llm import LLMBackend, create_backend
 from .models import Record
+from .similarity import SimilarityWeights
 from .yaml_io import YamlReadError, read_yaml, write_yaml_atomic
 
 SETTINGS_FILE = "settings.yaml"
@@ -38,6 +39,7 @@ class Settings(Record):
     schema_version: Literal[1] = 1
     llm_backend: Literal["claude_cli"] = "claude_cli"
     models: dict[LLMTask, str | None] = Field(default_factory=lambda: dict(DEFAULT_MODELS))
+    similarity_weights: SimilarityWeights = SimilarityWeights()
 
     def model_for(self, task: LLMTask) -> str | None:
         return self.models.get(task, DEFAULT_MODELS[task])

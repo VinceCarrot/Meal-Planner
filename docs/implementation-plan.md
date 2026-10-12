@@ -81,6 +81,8 @@ This plan is a proposed sequence. Adjust it based on implementation findings wit
 
 ## Phase 3 — Deterministic Food and Similarity Tools
 
+**Status:** completed 2026-10-12. Code in `meal_planner/` (`calories`, `checks`, `similarity`); see `architecture.md` §6.8.1, ADR-015, ADR-016.
+
 ### Tasks
 
 - Implement dish-type counting and meal composition checks.

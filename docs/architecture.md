@@ -344,6 +344,34 @@ Also compute a normalized score when comparing meals with different dish counts.
 
 Preserve this baseline unless a future design decision explicitly changes it.
 
+### 6.8.1 Implementation (Phase 3)
+
+These modules are deterministic and do not call an LLM:
+
+- `calories.py`:
+  - **Unit conversion:**
+    - Mass units (`g`/`克`, `kg`/`公斤`/`千克`, `斤`, `两`) convert directly.
+    - Any other unit, including volume, needs the ingredient's `grams_per_unit`.
+  - **Missing data is listed, not guessed.** A line is listed with its reason when it has no quantity, no gram weight for its unit, or no `kcal_per_100g`.
+  - **Totals only when complete.** `total_kcal` and `per_serving_kcal` are given only when every line was converted. Otherwise only `known_kcal` and `coverage` are reported.
+- `checks.py`:
+  - Dish-type counting and range checks for `dish_count` and `dish_type_count`.
+  - Exclusion hits, by ingredient ID or by category.
+  - Exact repeats in a sliding calendar window of `weeks × 7` days (ADR-016). Earlier menus can be included in the input.
+- `similarity.py`:
+  - **Dish similarity** is the weighted average of these feature scores:
+    - Jaccard of `main_ingredients`;
+    - Jaccard of recipe ingredients with seasonings excluded;
+    - same `cooking_method`;
+    - Jaccard of `flavours`;
+    - same `cuisine`.
+  - **Missing features.** A feature missing on either dish, or set to `other`, is left out and the remaining weights are renormalized. `coverage` reports the share of total weight that was actually compared. With no comparable feature the score is `None`.
+  - **Whole-meal similarity** uses the baseline greedy matching:
+    - `total` is the sum of the matched pair scores.
+    - `normalized` is `total` divided by the larger meal size (ADR-016).
+    - `mean_matched` is also reported.
+    - Pairs with an unknown score are never matched; they are counted in `unknown_pairs`.
+
 ### 6.9 Hybrid Optimization Strategy
 
 Whole-meal similarity is awkward to encode directly in a compact constraint model. The proposed first implementation is therefore a hybrid:
@@ -601,3 +629,27 @@ The vocabulary is an initial draft and can be extended through a code change.
 - `null` means the backend default. Model names are passed to the backend unchanged; for `claude_cli` they are `--model` values.
 - The user switches models from the Web UI (Phase 6), which edits this file.
 - A missing file means all defaults; a missing task entry falls back to that task's default.
+
+### ADR-015 Initial similarity weights — Default (2026-10-12, tunable)
+
+- Initial weights:
+
+  | Feature | Weight |
+  |---|---|
+  | `main_ingredients` | 0.35 |
+  | `ingredients` (core combination, seasonings excluded) | 0.20 |
+  | `cooking_method` | 0.20 |
+  | `flavours` | 0.15 |
+  | `cuisine` | 0.10 |
+
+- The weights are stored in `data/settings.yaml` under `similarity_weights`.
+- They are prototyping assumptions and must be checked against real catalogue examples before thresholds are fixed.
+- Similarity thresholds remain open until the optimizer work in Phase 4.
+
+### ADR-016 Repetition window and meal-size normalization — Default (2026-10-12)
+
+- **Repetition window.** "Not repeated within N weeks" means that two servings of the same dish must be at least `N × 7` calendar days apart.
+  - With `N = 1`, a dish may return on the same weekday of the next week.
+  - With `N = 4`, a dish appears at most once in the plan.
+  - Each violation is reported as a pair of consecutive servings.
+- **Meal-size normalization.** The normalized whole-meal score is `total / max(size_a, size_b)`, so extra unmatched dishes count as dissimilar. `mean_matched` (`total / matched pairs`) is reported alongside it.

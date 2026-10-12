@@ -5,3 +5,9 @@ models:
   dish_generation: null
   video_extraction: null
   translation: sonnet
+similarity_weights:
+  main_ingredients: 0.35
+  ingredients: 0.2
+  cooking_method: 0.2
+  flavours: 0.15
+  cuisine: 0.1
