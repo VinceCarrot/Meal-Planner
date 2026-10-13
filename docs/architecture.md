@@ -535,6 +535,26 @@ URL intake → accessible metadata/transcript retrieval → optional ASR/vision 
 
 Platform availability and permitted access must be checked. Do not assume every URL can be downloaded or transcribed.
 
+#### Implementation (Phase 8)
+
+`meal_planner/video_import.py`, endpoint `POST /api/videos/import`, panel on the review page.
+
+1. **URL intake.** The URL is checked against the supported patterns (`youtube.com/watch?v=`, `/shorts/`, `youtu.be/`, `bilibili.com/video/BV…|av…`, `b23.tv/…`). Anything else fails with a clear message.
+2. **Text retrieval.** yt-dlp reads the title, the description and one subtitle track. It never downloads the video or audio. Track choice:
+   - uploaded subtitles in any language (Chinese, then English, then any other) are preferred;
+   - otherwise, automatic captions in the video's language are used;
+   - Bilibili danmaku and live chat are ignored.
+   
+   The VTT, SRT and JSON subtitle formats are converted to plain text.
+3. **No subtitles.** The description is used if it has at least 60 characters. Otherwise the import fails ("no subtitles; speech recognition not supported") without calling Claude. Text longer than 20,000 characters is cut, and the cut is noted.
+4. **Extraction.** One structured Claude call (`video_extraction` model) receives the video text and the ingredient list. It is told to use only what the text states.
+   - The output is validated in code.
+   - A video without a recipe (`found_recipe: false`) or malformed output fails, and nothing is saved.
+5. **Ingredient matching.** An `ingredient_id` proposed by the model is accepted only if it exists. Otherwise the name is matched exactly (Chinese name, alias or English name, case-insensitive). Unmatched names become `unmatched_name` lines for review. There is no fuzzy matching, and the catalogue is never changed.
+6. **Pending review.** The dish is saved to `pending_dishes.yaml` with `source: video_imported` and `source_url`. Its `uncertainty_notes` include the model's doubts and the text source (uploaded subtitles, automatic captions, or description only).
+
+**Verification.** On 2026-10-12, a real YouTube video's title and uploaded subtitles were read through yt-dlp (`MEAL_PLANNER_LIVE_VIDEO_URL` live test). Bilibili access was not verified live; videos that need login or are region-restricted fail with yt-dlp's message.
+
 ### English PDF
 
 Use approved recipe/menu data as input. Translation should preserve quantities, sequence, timing, and cooking details.
@@ -851,3 +871,11 @@ The vocabulary is an initial draft and can be extended through a code change.
 **Not supported yet:** feedback for a named diner, which the requirements list as "if supported".
 
 **Saving.** Proposals are never saved automatically. Saving requires a change note and creates a new immutable version.
+
+### ADR-020 Video import approach — Default (2026-10-12)
+
+- **Text only.** Platform text (title, description, subtitles) is read through yt-dlp. The video and audio are never downloaded.
+- **No speech recognition or vision.** Local models are excluded (ADR-003), and the Claude CLI path has no audio input. Videos without usable text fail clearly instead of producing invented content.
+- **Exact ingredient matching.** Ingredients are matched exactly; anything else is left to the user in review.
+- **Platform terms.** Reading public metadata and subtitles is for the user's personal use. Access that needs a login is not attempted; no cookies are passed to yt-dlp.
+- **Dependency.** `yt-dlp` was added because it handles both platforms' metadata and subtitle formats.

@@ -211,6 +211,8 @@ This plan is a proposed sequence. Adjust it based on implementation findings wit
 
 ## Phase 8 — Video Recipe Import
 
+**Status:** completed 2026-10-12. Code in `meal_planner/video_import.py`; see `architecture.md` §8 and ADR-020. Speech recognition is not supported.
+
 ### Tasks
 
 - Implement URL intake and platform-specific metadata/transcript retrieval where permitted.

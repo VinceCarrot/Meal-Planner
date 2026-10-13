@@ -283,3 +283,26 @@ def test_adjustment_requires_a_reason_and_a_real_target(client):
     response = client.post("/api/menus/M001/adjust/save", json={"version": 1, "dinners": dinners, "change_note": " "})
     assert response.status_code == 400 and "原因" in response.get_json()["issues"][0]
     assert client.post("/api/menus/M404/adjust/propose", json={"date": START, "dish_id": "dish_0001"}).status_code == 404
+
+
+# --- Video import ----------------------------------------------------------------------
+
+
+def test_video_import_endpoint(data_dir, llm):
+    from meal_planner.video_import import VideoText
+
+    class Source:
+        def fetch(self, ref):
+            return VideoText("白菜豆腐汤", "", "白菜切段，豆腐切块，加水煮开……", "subtitles", "zh")
+
+    client = create_app(data_dir, llm_factory=lambda s, task: llm, video_source=Source()).test_client()
+    llm.response = {"found_recipe": True, "reason": "", "recipe": {
+        "name_zh": "白菜豆腐汤", "dish_type": "soup", "ingredients": [{"name": "包菜", "quantity": 200, "unit": "g"}, {"name": "虾皮"}],
+        "steps": ["煮开"], "uncertainty_notes": "没有说明时间"}}
+
+    result = ok(client.post("/api/videos/import", json={"url": "https://youtu.be/dQw4w9WgXcQ"}), 201)
+
+    assert result["text_source"] == "subtitles" and result["dish"]["review_status"] == "pending"
+    assert [l["unmatched_name"] for l in result["dish"]["ingredients"]] == [None, "虾皮"]
+    bad = client.post("/api/videos/import", json={"url": "https://vimeo.com/1"})
+    assert bad.status_code == 422 and "只支持" in bad.get_json()["issues"][0]

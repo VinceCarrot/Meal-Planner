@@ -16,23 +16,25 @@ from werkzeug.exceptions import HTTPException
 
 from ..catalogue import DataError
 from ..llm import LLMError
-from .api import constraints, dishes, ingredients, menus, settings
+from ..video_import import VideoImportError, YtDlpSource
+from .api import constraints, dishes, ingredients, menus, settings, videos
 from .helpers import NotFound
 
 log = logging.getLogger(__name__)
 
 
-def create_app(data_dir: Path, llm_factory=None) -> Flask:
-    """`llm_factory(settings, task)` returns the LLM backend for a task (tests pass a fake)."""
+def create_app(data_dir: Path, llm_factory=None, video_source=None) -> Flask:
+    """`llm_factory(settings, task)` returns the LLM backend for a task; tests pass fakes for it and `video_source`."""
     # ES modules need a JavaScript MIME type; the Windows registry sometimes maps .js to text/plain.
     mimetypes.add_type("text/javascript", ".js")
     app = Flask(__name__)
     app.config["DATA_DIR"] = Path(data_dir)
     app.config["LLM_FACTORY"] = llm_factory or (lambda s, task: s.backend_for(task))
+    app.config["VIDEO_SOURCE"] = video_source or YtDlpSource()
     app.json.ensure_ascii = False
     app.json.sort_keys = False
 
-    for module in (constraints, dishes, ingredients, menus, settings):
+    for module in (constraints, dishes, ingredients, menus, settings, videos):
         app.register_blueprint(module.bp, url_prefix="/api")
 
     @app.get("/")
@@ -51,6 +53,10 @@ def create_app(data_dir: Path, llm_factory=None) -> Flask:
     @app.errorhandler(NotFound)
     def not_found(e: NotFound):
         return jsonify(error=str(e), issues=[]), 404
+
+    @app.errorhandler(VideoImportError)
+    def video_error(e: VideoImportError):
+        return jsonify(error="视频导入失败", issues=[str(e)]), 422
 
     @app.errorhandler(LLMError)
     def llm_error(e: LLMError):

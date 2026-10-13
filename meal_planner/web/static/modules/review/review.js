@@ -26,6 +26,7 @@ function build() {
     Object.keys(LABELS.dish_type).map((t) => h('option', { value: t }, label('dish_type', t))));
   const count = h('input', { type: 'number', min: 1, max: 30, value: 5 });
   const reason = h('input', { placeholder: '想要什么样的菜（可选）', style: 'flex:1' });
+  const videoUrl = h('input', { placeholder: 'https://www.bilibili.com/video/BV… 或 https://www.youtube.com/watch?v=…', style: 'flex:1' });
   fill(root,
     messages,
     h('div', { class: 'panel' },
@@ -33,6 +34,10 @@ function build() {
       h('div', { class: 'row' }, type, count, '道', reason,
         h('button', { onclick: () => generate(type.value, Number(count.value), reason.value) }, '生成')),
       h('p', { class: 'hint' }, '只会使用食材库里的食材；用到食材库没有的食材时会标为“未匹配”，需要你处理后才能通过。')),
+    h('div', { class: 'panel' },
+      h('h3', {}, '从视频导入菜谱'),
+      h('div', { class: 'row' }, videoUrl, h('button', { onclick: () => importVideo(videoUrl.value) }, '导入')),
+      h('p', { class: 'hint' }, '读取视频的标题、简介和字幕（不下载视频），由 Claude 提取菜谱。没有字幕的视频只能根据简介提取；目前不支持语音识别。')),
     pendingBox,
     rejectedBox);
 }
@@ -125,6 +130,23 @@ async function generate(dishType, count, reason) {
     }, '正在用 Claude 生成候选菜（可能需要一两分钟）…');
     showMessage(messages, 'info', `生成了 ${result.added.length} 道候选菜。`,
       result.rejected.map(([name, why]) => `未通过校验：${name}（${why}）`));
+  } catch (err) {
+    showError(messages, err);
+  }
+  await refresh();
+}
+
+const TEXT_SOURCES = { subtitles: '上传者字幕', auto_captions: '自动生成字幕', description: '仅视频简介' };
+
+async function importVideo(url) {
+  fill(messages);
+  if (!url.trim()) return;
+  try {
+    const result = await post('/api/videos/import', { url }, '正在读取视频字幕并提取菜谱…');
+    const unmatched = result.dish.ingredients.filter((l) => l.unmatched_name && !l.ingredient_id).length;
+    showMessage(messages, 'info', `已从《${result.title}》导入候选菜「${result.dish.name_zh}」（依据：${TEXT_SOURCES[result.text_source]}）。`,
+      [unmatched ? `${unmatched} 种食材不在食材库中，需要处理后才能通过` : '所有食材都已匹配到食材库',
+        ...(result.truncated ? ['视频文字过长，只使用了前一部分'] : [])]);
   } catch (err) {
     showError(messages, err);
   }

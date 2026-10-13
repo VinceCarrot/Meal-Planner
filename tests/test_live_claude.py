@@ -70,3 +70,13 @@ def test_live_candidate_generation(store):
     for dish in result.added:
         assert dish.dish_type == "soup" and dish.review_status == "pending" and dish.steps
     assert store.load().approved_dish_ids == cat.approved_dish_ids
+
+
+@pytest.mark.skipif(not os.environ.get("MEAL_PLANNER_LIVE_VIDEO_URL"), reason="set MEAL_PLANNER_LIVE_VIDEO_URL to a cooking video")
+def test_live_video_text():
+    """Reads title/description/subtitles of a real video (network); no Claude call."""
+    from meal_planner.video_import import YtDlpSource, parse_video_url
+
+    video = YtDlpSource().fetch(parse_video_url(os.environ["MEAL_PLANNER_LIVE_VIDEO_URL"]))
+    assert video.title
+    print(video.title, video.transcript_kind, video.language, len(video.transcript or ""), len(video.description))
