@@ -89,7 +89,7 @@ function renderDetail(d) {
 }
 
 async function addDish() {
-  const dish = await editDish(null, ingredients, '新增菜品');
+  const dish = await editDish(null, ingredients, '新增菜品', { analyse: true, requireMatched: true });
   if (!dish) return;
   try {
     const created = await post('/api/dishes', dish);
@@ -102,7 +102,7 @@ async function addDish() {
 }
 
 async function editExisting(d) {
-  const dish = await editDish(d, ingredients, `编辑 ${d.name_zh}`);
+  const dish = await editDish(d, ingredients, `编辑 ${d.name_zh}`, { requireMatched: true });
   if (!dish) return;
   try {
     const saved = await put(`/api/dishes/${d.dish_id}`, dish);

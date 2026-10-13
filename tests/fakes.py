@@ -6,8 +6,8 @@ class FakeLLM:
         self.error = error
         self.calls = []
 
-    def structured(self, system, prompt, output_schema):
-        self.calls.append({"system": system, "prompt": prompt, "schema": output_schema})
+    def structured(self, system, prompt, output_schema, web_search=False):
+        self.calls.append({"system": system, "prompt": prompt, "schema": output_schema, "web_search": web_search})
         if self.error:
             raise self.error
         return self.response(prompt) if callable(self.response) else self.response

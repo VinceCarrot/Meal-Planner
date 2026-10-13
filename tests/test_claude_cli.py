@@ -69,6 +69,13 @@ def test_structured_call_isolates_the_cli(fake_run, backend):
     assert Path(call["cwd"]).resolve() != Path.cwd().resolve()
 
 
+def test_web_search_enables_only_the_search_tool(fake_run, backend):
+    backend.structured("s", "p", SCHEMA, web_search=True)
+    cmd = fake_run.calls[0]["cmd"]
+    assert _flag(cmd, "--tools") == "WebSearch" and _flag(cmd, "--allowedTools") == "WebSearch"
+    assert _flag(cmd, "--setting-sources") == "" and "--strict-mcp-config" in cmd
+
+
 def test_model_option_is_passed(fake_run):
     ClaudeCliBackend(executable="claude-test", model="sonnet").structured("s", "p", SCHEMA)
     assert _flag(fake_run.calls[0]["cmd"], "--model") == "sonnet"

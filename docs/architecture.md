@@ -608,7 +608,7 @@ Implemented (reviewed in Phase 10):
   - The server binds to 127.0.0.1 only.
   - Flask `TRUSTED_HOSTS` accepts only `127.0.0.1` and `localhost`, which blocks DNS rebinding.
   - Writes require JSON bodies, and CORS is not enabled.
-- **Claude isolation.** Claude CLI calls run in an empty temporary directory with built-in tools disabled.
+- **Claude isolation.** Claude CLI calls run in an empty temporary directory with built-in tools disabled. The only exception is the opt-in web search of dish analysis (ADR-023), which enables `WebSearch` alone; file, shell and fetch tools stay disabled.
 
 ## 10. Open Decisions
 
@@ -709,7 +709,7 @@ Each record states its status. "Confirmed" means the user explicitly approved it
 Hybrid:
 
 - Application code controls the main workflows: generation, adjustment, validation, saving.
-- Structured calls without tools: constraint parsing, translation, ingredient analysis (ADR-022).
+- Structured calls without tools: constraint parsing, translation, ingredient analysis (ADR-022), dish analysis (ADR-023).
 - Agent calls with application-provided read-only tools: candidate-dish generation, video recipe extraction.
 - A fully agent-orchestrated workflow was considered and not chosen, because it is harder to test and reproduce and uses more calls.
 
@@ -729,6 +729,7 @@ The user may later switch the invocation method (for example to the Anthropic AP
 - `claude -p` backend (`llm/claude_cli.py`), verified against the real CLI on 2026-10-12:
   - Each call runs in an empty temporary directory, so the project's `CLAUDE.md` is not loaded.
   - Isolation flags: `--tools ""` (no built-in file or shell tools), `--setting-sources ""`, `--strict-mcp-config`, `--no-session-persistence`.
+  - `structured(..., web_search=True)` passes `--tools WebSearch --allowedTools WebSearch` instead of `--tools ""`; all other isolation flags stay. Purpose of the isolation: Claude cannot read or write the data files or run commands, so every write still goes through validated application code (ADR-012); calls stay single-purpose, testable and short.
   - Output is enforced with `--json-schema`, and the backend reads the `structured_output` field. Pydantic's `discriminator` keyword is removed first, because the CLI's strict schema check rejects it.
   - For agent calls, the tools are served from the application process over a local MCP streamable-HTTP endpoint (package `mcp` 2.x, run with `uvicorn`). The CLI is passed `--mcp-config` and `--allowedTools mcp__app__<tool>`. The endpoint exists only for the duration of the call.
   - Model: the CLI default for the account unless `model` is passed (`--model`).
@@ -830,6 +831,7 @@ The vocabulary is an initial draft and can be extended through a code change.
   | `constraint_parsing` | `sonnet` | Short structured task: faster and uses less quota |
   | `translation` | `sonnet` | Same as above |
   | `ingredient_analysis` | `sonnet` | Same as above (ADR-022) |
+  | `dish_analysis` | `sonnet` | Same as above (ADR-023) |
   | `dish_generation` | account default (Opus) | Harder generation task |
   | `video_extraction` | account default (Opus) | Harder generation task |
 
@@ -956,3 +958,27 @@ The vocabulary is an initial draft and can be extended through a code change.
 **Model.** Task `ingredient_analysis`, default `sonnet`, selectable on the settings page.
 
 **UI.** The Chinese name comes first in the form, followed by the "分析" button. While Claude is working, an inline message is shown, the form fields are read-only, and every button on the ingredient page is disabled; they are enabled again when the call returns or fails.
+
+### ADR-023 AI-assisted dish form — Confirmed (2026-10-13)
+
+**Requested by the user.** The "新增菜品" dialog shows, in order: the Chinese name, a large free-form method text box (not required to be one step per line), and the "分析" button; the remaining fields follow. With only a name, Claude writes a standard home-style method; with a name and method text, Claude rewrites the user's text into clean steps (one action per line) without adding content. In both cases Claude fills in the other fields, and every field stays editable before saving.
+
+**Permission boundary (unchanged).** `POST /api/dishes/suggest` (`meal_planner/dish_suggest.py`) returns `{dish, steps_source: parsed|generated, warnings}` and writes nothing. The dish is saved only by the user's "确定", through `POST /api/dishes` (source `manual`, approved directly, as before).
+
+**Checks in code:**
+
+- Strict output schema; malformed output, or no ingredients or no steps, raises `LLMError` (HTTP 502). An empty name or method text over 8000 characters is refused (HTTP 400) without calling Claude.
+- `ingredient_id` values not in the catalogue are discarded; the name is then matched exactly against Chinese name, aliases and English name (same rule as video import). Remaining ingredients become `unmatched_name` lines with a warning. The dialog refuses to save an approved dish while any line is unmatched; the user selects a catalogue ingredient, deletes the line, or adds the ingredient on the ingredient page first.
+- A quantity without a unit is dropped. Numbering prefixes ("1.", "第二步：", "（3）", bullets) are stripped from steps, here and again when the dialog is saved. Servings outside 1–50 are dropped. Whole-dish calories are left empty (they are estimated from ingredients).
+- Generated methods carry the warning that they are unverified; a name already used by an approved or pending dish produces a warning.
+
+**Web search (opt-in, confirmed 2026-10-13).** The dialog has a "联网搜索做法" checkbox, unticked by default and disabled while the method box has text. Only when it is ticked and the method box is empty does the call enable the CLI's `WebSearch` tool (and nothing else); Claude then bases the recipe on the search results and returns the URLs it used. Verified on the user's subscription on 2026-10-13 (a real `WebSearch` tool call; about 20 s per analysis).
+
+- Returned URLs must be `http(s)://`; duplicates are removed and at most 5 are kept. They are shown as links in the dialog, and the first one fills the new "参考链接" field, which is saved as the dish's `source_url` (`POST /api/dishes` now accepts a user-provided `http(s)` link; anything else is refused with 400).
+- `WebSearch` returns result snippets, not full pages (fetching pages stays disabled), so amounts may still be estimates; Claude is asked to say so in `uncertainty_notes`. The dish name is sent to the search service through Claude; no other data is.
+- Search results are untrusted input: the prompt tells Claude to treat them as reference text only, and the output passes the same checks as any other proposal. Code cannot verify that a URL actually appeared in the search results.
+- If no usable source is found, Claude falls back to its own knowledge, `sources` is empty, and the dialog warns that the method is unverified.
+
+**Model.** Task `dish_analysis`, default `sonnet`, selectable on the settings page.
+
+**UI.** The edit dialogs for existing dishes and candidates use the same layout without the "分析" button, the web-search checkbox and the reference-link field; their method box is still parsed one step per line.

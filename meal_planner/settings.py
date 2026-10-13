@@ -26,6 +26,7 @@ class LLMTask(StrEnum):
     VIDEO_EXTRACTION = "video_extraction"
     TRANSLATION = "translation"
     INGREDIENT_ANALYSIS = "ingredient_analysis"
+    DISH_ANALYSIS = "dish_analysis"
 
 
 DEFAULT_MODELS = {
@@ -34,6 +35,7 @@ DEFAULT_MODELS = {
     LLMTask.VIDEO_EXTRACTION: None,
     LLMTask.TRANSLATION: "sonnet",
     LLMTask.INGREDIENT_ANALYSIS: "sonnet",
+    LLMTask.DISH_ANALYSIS: "sonnet",
 }
 
 

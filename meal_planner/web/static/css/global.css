@@ -128,7 +128,8 @@ details summary:hover { text-decoration: underline; text-underline-offset: 3px; 
 .inline-busy { display: flex; align-items: center; gap: 10px; margin: 8px 0; padding: 10px 14px; border-radius: 8px; border-left: 3px solid var(--accent); background: var(--accent-soft); color: #23396F; font-size: 13.5px; }
 .inline-busy .spinner { width: 16px; height: 16px; border-width: 2px; flex-shrink: 0; }
 .analyse-row { align-items: flex-end; }
-.analyse-row > button, .analyse-row > .hint { margin-bottom: 8px; }
+.analyse-row > button, .analyse-row > label, .analyse-row > .hint { margin-bottom: 8px; }
+label.muted { color: var(--faint); }
 input[readonly] { background: var(--surface3); color: var(--muted); }
 .toast { position: fixed; bottom: 24px; right: 24px; background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 8px; z-index: 60; box-shadow: var(--shadow); font-size: 13.5px; }
 .modal { position: fixed; inset: 0; background: rgba(30,34,41,.28); display: flex; align-items: flex-start; justify-content: center; overflow: auto; z-index: 40; padding: 40px 12px; }

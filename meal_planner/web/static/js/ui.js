@@ -52,7 +52,7 @@ export const LABELS = {
   },
   task: { menu_generation: '生成菜单', menu_adjustment: '调整菜单' },
   source: { manual: '手动录入', ai_generated: 'AI 生成', video_imported: '视频导入', persistent: '长期', task: '本次' },
-  llm_task: { constraint_parsing: '约束解析', dish_generation: '候选菜生成', video_extraction: '视频菜谱提取', translation: '翻译', ingredient_analysis: '食材分析' },
+  llm_task: { constraint_parsing: '约束解析', dish_generation: '候选菜生成', video_extraction: '视频菜谱提取', translation: '翻译', ingredient_analysis: '食材分析', dish_analysis: '菜品分析' },
   weekday: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
 };
 

@@ -7,6 +7,7 @@ from flask import Blueprint
 from ...candidates import CandidateRequest, generate_candidates, hard_exclusions, next_dish_number
 from ...catalogue import DataError, DataIssue
 from ...constraints import build_effective_set
+from ...dish_suggest import suggest_dish
 from ...menus import task_constraints_from_input
 from ...models import Dish, DishesFile
 from ...review import ReviewAction, ReviewDecision, apply_review
@@ -33,18 +34,37 @@ def list_dishes():
 
 @bp.post("/dishes")
 def add_dish():
-    """A dish entered by the user is approved directly (source: manual)."""
+    """A dish entered by the user is approved directly (source: manual), with an optional reference link."""
     store, cat = load()
-    dish = Dish.model_validate(body() | {
+    data = body()
+    source_url = str(data.get("source_url") or "").strip() or None
+    if source_url and not source_url.startswith(("http://", "https://")):
+        raise ValueError("参考链接必须以 http:// 或 https:// 开头")
+    dish = Dish.model_validate(data | {
         "dish_id": f"dish_{next_dish_number(cat):04d}",
         "source": DishSource.MANUAL,
-        "source_url": None,
+        "source_url": source_url,
         "review_status": ReviewStatus.APPROVED,
         "created_at": datetime.now().replace(microsecond=0),
         "updated_at": None,
     })
     cat = store.save_dishes(cat, DishesFile(dishes=cat.dishes.dishes + (dish,)))
     return dish_view(dish, _ingredients(cat)), 201
+
+
+@bp.post("/dishes/suggest")
+def suggest():
+    """Claude's proposal for the remaining fields of a dish, given its name and optional method text.
+
+    Writes nothing; the user saves the edited form through POST /dishes (ADR-023).
+    """
+    _, cat = load()
+    data = body()
+    existing = {d.name_zh for d in cat.dishes.dishes + cat.pending_dishes.dishes}
+    proposal, steps_source, sources, warnings = suggest_dish(
+        llm(LLMTask.DISH_ANALYSIS), str(data["name_zh"]), str(data.get("steps_text") or ""),
+        cat.ingredients.ingredients, existing, web_search=data.get("web_search") is True)
+    return {"dish": proposal, "steps_source": steps_source, "sources": sources, "warnings": warnings}
 
 
 @bp.put("/dishes/<dish_id>")

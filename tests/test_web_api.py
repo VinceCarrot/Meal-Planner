@@ -86,6 +86,45 @@ def test_ingredient_suggestion_writes_nothing(client, llm, data_dir):
     ok(client.post("/api/ingredients", json=suggested["ingredient"]), 201)
 
 
+def test_dish_suggestion_writes_nothing(client, llm, data_dir):
+    files = ["dishes.yaml", "pending_dishes.yaml", "ingredients.yaml"]
+    before = [(data_dir / f).read_bytes() for f in files]
+    llm.response = {
+        "name_en": "Tomato and egg", "dish_type": "vegetarian", "servings": 3,
+        "ingredients": [{"name": "番茄", "quantity": 300, "unit": "g", "main": True},
+                        {"name": "鸡蛋", "ingredient_id": "ing_egg", "quantity": 3, "unit": "个"}],
+        "steps": ["鸡蛋打散", "番茄切块后与鸡蛋同炒"], "cooking_method": "stir_fry", "flavours": ["sweet_sour"],
+    }
+
+    suggested = ok(client.post("/api/dishes/suggest", json={"name_zh": "番茄炒蛋", "steps_text": "炒番茄和鸡蛋"}))
+
+    assert suggested["steps_source"] == "parsed" and suggested["sources"] == [] and suggested["warnings"] == []
+    assert [(data_dir / f).read_bytes() for f in files] == before
+    created = ok(client.post("/api/dishes", json=suggested["dish"]), 201)
+    assert created["source"] == "manual" and created["style"]["main_ingredients"] == ["ing_tomato"]
+
+
+def test_dish_suggestion_with_web_search_keeps_reference_link(client, llm):
+    llm.response = {
+        "dish_type": "vegetarian", "ingredients": [{"name": "番茄", "quantity": 300, "unit": "g"}],
+        "steps": ["番茄切块", "炒软"], "sources": ["https://recipes.example/1"],
+    }
+    suggested = ok(client.post("/api/dishes/suggest", json={"name_zh": "炒番茄", "web_search": True}))
+
+    assert llm.calls[-1]["web_search"] is True and suggested["steps_source"] == "searched"
+    assert suggested["sources"] == ["https://recipes.example/1"]
+    created = ok(client.post("/api/dishes", json=suggested["dish"]), 201)
+    assert created["source_url"] == "https://recipes.example/1"
+    bad = suggested["dish"] | {"name_zh": "炒番茄2", "source_url": "javascript:alert(1)"}
+    assert client.post("/api/dishes", json=bad).status_code == 400
+
+
+def test_dish_suggestion_errors(client, llm):
+    assert client.post("/api/dishes/suggest", json={"name_zh": " "}).status_code == 400
+    llm.response = {"dish_type": "vegetarian"}
+    assert client.post("/api/dishes/suggest", json={"name_zh": "番茄炒蛋"}).status_code == 502
+
+
 def test_ingredient_suggestion_errors(client, llm):
     assert client.post("/api/ingredients/suggest", json={"name_zh": " "}).status_code == 400
     assert client.post("/api/ingredients/suggest", json={"name_zh": "秋葵", "ingredient_id": "ing_x"}).status_code == 404

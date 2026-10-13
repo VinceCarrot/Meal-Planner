@@ -1,7 +1,8 @@
 """LLM backend that runs the Claude Code CLI in non-interactive mode (ADR-003).
 
 Each call starts `claude -p` in an empty temporary directory, with all built-in
-tools disabled and user/project settings ignored. Structured output is enforced
+tools disabled (except WebSearch when a structured call asks for it) and
+user/project settings ignored. Structured output is enforced
 with `--json-schema`. For agent calls the application tools are served from this
 process over a local MCP endpoint, so they run with the application's in-memory
 read-only data.
@@ -31,7 +32,9 @@ class ClaudeCliBackend:
         self.model = model
         self.timeout_s = timeout_s
 
-    def structured(self, system: str, prompt: str, output_schema: dict) -> dict:
+    def structured(self, system: str, prompt: str, output_schema: dict, web_search: bool = False) -> dict:
+        if web_search:  # only the search tool; file and shell tools stay disabled
+            return self._run(system, prompt, output_schema, ["--allowedTools", "WebSearch"], tools="WebSearch")
         return self._run(system, prompt, output_schema, [])
 
     def agent(self, system: str, prompt: str, tools: Sequence[Tool], output_schema: dict) -> dict:
@@ -41,7 +44,7 @@ class ClaudeCliBackend:
             extra = ["--mcp-config", json.dumps(config), "--allowedTools", *allowed]
             return self._run(system, prompt, output_schema, extra)
 
-    def _run(self, system: str, prompt: str, output_schema: dict, extra_args: list[str]) -> dict:
+    def _run(self, system: str, prompt: str, output_schema: dict, extra_args: list[str], tools: str = "") -> dict:
         executable = self.executable or shutil.which("claude")
         if not executable:
             raise LLMError("Claude Code CLI not found; install it and make sure 'claude' is on PATH")
@@ -50,7 +53,7 @@ class ClaudeCliBackend:
             "--output-format", "json",
             "--json-schema", json.dumps(cli_schema(output_schema)),
             "--system-prompt", system,
-            "--tools", "",
+            "--tools", tools,
             "--strict-mcp-config",
             "--setting-sources", "",
             "--no-session-persistence",
