@@ -3,7 +3,9 @@
 Every write goes through the validated application services; there is no
 generic "write this file" endpoint. Write requests must be JSON, which browsers
 cannot send cross-site without a CORS preflight (CORS is not enabled), so other
-web pages cannot trigger writes on this local server.
+web pages cannot trigger writes on this local server. Only the Host names
+127.0.0.1 and localhost are accepted, which blocks DNS-rebinding pages that would
+otherwise count as same-origin.
 """
 
 import logging
@@ -31,6 +33,7 @@ def create_app(data_dir: Path, llm_factory=None, video_source=None) -> Flask:
     app.config["DATA_DIR"] = Path(data_dir)
     app.config["LLM_FACTORY"] = llm_factory or (lambda s, task: s.backend_for(task))
     app.config["VIDEO_SOURCE"] = video_source or YtDlpSource()
+    app.config["TRUSTED_HOSTS"] = ["127.0.0.1", "localhost"]
     app.json.ensure_ascii = False
     app.json.sort_keys = False
 

@@ -103,6 +103,15 @@ export function taskConstraintEditor({ task, placeholder }) {
   return {
     element,
     setPersistent(list) { state.persistent = list; renderParsed(); },
+    // Load already-parsed constraints (e.g. reused from a saved menu version), re-scoped to this task.
+    setParsed(list) {
+      state.parsed = list.map((c) => ({ ...c, scope: [task] }));
+      state.inputs = state.parsed.map((c) => c.description);
+      state.parsedFrom = [...state.inputs];
+      renderInputs();
+      renderParsed();
+      check();
+    },
     parsed: () => state.parsed,
     // A reason the current input cannot be used yet, or null.
     problem: () => (texts().length && !isCurrent() ? `请先解析${label('task', task)}的附加约束。` : null),

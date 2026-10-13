@@ -595,19 +595,33 @@ Log task IDs, module outcomes, validation summaries, solver status, and retry co
 
 Avoid logging credentials or unnecessary sensitive information. For each failed task, provide a user-readable explanation and a technical diagnostic suitable for local troubleshooting.
 
+Implemented (reviewed in Phase 10):
+
+- **What is logged.** Each Claude call logs its duration, number of turns and error flag. Claude failures are logged as warnings. Invalid requests are logged with a stack trace. Prompts, recipes and credentials are never logged.
+- **What the user sees.** API errors return `{error, issues}` with the file, record and field, and the UI shows them:
+  - 400 for invalid data or requests;
+  - 404 for unknown menus or records;
+  - 422 for video import failures;
+  - 502 for Claude call failures.
+- **Retries.** No component retries automatically.
+- **Network exposure.**
+  - The server binds to 127.0.0.1 only.
+  - Flask `TRUSTED_HOSTS` accepts only `127.0.0.1` and `localhost`, which blocks DNS rebinding.
+  - Writes require JSON bodies, and CORS is not enabled.
+- **Claude isolation.** Claude CLI calls run in an empty temporary directory with built-in tools disabled.
+
 ## 10. Open Decisions
 
-Decisions already made are recorded in §12.
+Decisions already made are recorded in §12. Items marked "Default" there were chosen during implementation without separate confirmation and can be revisited.
 
-- Final YAML schemas and migration strategy (to be settled in Phase 1).
-- Exact LLM interface signatures and how the Claude Code CLI backend exposes application tools (to be settled in Phase 2).
-- Solver choice after prototype benchmarking; OR-Tools CP-SAT is the current recommendation.
-- Exact hard/soft classification for each default constraint.
-- Similarity feature weights, thresholds, and comparison windows.
-- How to encode whole-meal similarity penalties in local search.
-- Nutrition data source and behavior when data is missing.
-- Video transcript, ASR, and vision providers and platform constraints.
-- English PDF layout and whether to include shopping lists.
+Still open:
+
+- Calibration of similarity weights and thresholds, and of the planner penalty weights, on the real catalogue (ADR-015, ADR-017).
+- Calorie constraints and a nutrition data source (deferred, ADR-008).
+- A speech-recognition or vision path for videos without subtitles (excluded for now, ADR-020).
+- A shopping list in the PDF, and a translation review UI (ADR-021).
+- Feedback for a named diner, and whether "future menus" and "persistent" dislikes should differ (ADR-019).
+- Schema migration: every file carries `schema_version: 1`; no migration has been needed yet.
 
 
 ## 11. Web UI Architecture Reference
@@ -899,6 +913,8 @@ The vocabulary is an initial draft and can be extended through a code change.
 **Not supported yet:** feedback for a named diner, which the requirements list as "if supported".
 
 **Saving.** Proposals are never saved automatically. Saving requires a change note and creates a new immutable version.
+
+**Generation-task constraints.** Task constraints used to generate a menu do not apply to its adjustments automatically, because they are task-scoped. Without them the persistent rules apply again, which may force a wide change. The adjustment panel therefore offers "沿用这些约束", which copies them, visibly and editably, as adjustment-task constraints. This was found by the Phase 10 end-to-end test.
 
 ### ADR-020 Video import approach — Default (2026-10-12)
 

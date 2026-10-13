@@ -259,6 +259,15 @@ This plan is a proposed sequence. Adjust it based on implementation findings wit
 
 ## Phase 10 — Hardening and Documentation
 
+**Status:** completed 2026-10-13.
+
+- End-to-end API test on the demo catalogue: shortage → candidates → review → plan → save → adjustment with feedback → video import → PDF. At the end, the ingredient file is unchanged byte for byte.
+- Corrupt-file reporting with a backup hint, tested.
+- Host restriction against DNS rebinding.
+- Logging review.
+- README rewritten: installation, start, first steps, data and backup, troubleshooting, privacy, limitations.
+- `architecture.md` §9 and §10 updated.
+
 ### Tasks
 
 - Run end-to-end tests using a representative catalogue.
@@ -283,3 +292,23 @@ A feature is not complete until:
 - Any menu change is revalidated.
 - User-visible status does not overstate what the system actually checked.
 - Relevant open decisions and known limitations are recorded.
+
+## Acceptance Criteria Checklist (requirements §10)
+
+| # | Criterion | Where it is implemented and tested |
+|---|---|---|
+| 1 | Loads valid ingredient, dish, constraint and preference YAML | `store.py`, `catalogue.py`; `tests/test_loading.py` |
+| 2 | Rejects malformed records and invalid references with actionable errors | `catalogue.py` (file/record/field locations); `tests/test_loading.py`, `test_writes.py` |
+| 3 | AI-originated operations cannot mutate ingredient master data | `readonly.py`, `ai_tools.py` (tools hold only `ReadOnlyCatalogue`); `tests/test_readonly.py`, `test_ai_tools.py`, `test_candidates.py`, `test_video_import.py`, `test_end_to_end.py` |
+| 4 | Builds a 20-dinner problem; returns a validated plan or an infeasibility explanation | `planner.py`, `solver.py`, `validator.py`; `tests/test_planner.py` |
+| 5 | Persistent and task-scoped constraints with the specified scopes | `constraints.py`, `menus.py`; `tests/test_constraints.py`, `test_adjust.py`, `test_web_api.py` |
+| 6 | No silent override of persistent constraints on ambiguous task instructions | Explicit `overrides` only; conflicts block the task; `tests/test_constraints.py` |
+| 7 | Calorie estimates with assumptions and uncertainty | `calories.py`, calories in the validation report; `tests/test_calories.py` |
+| 8 | Dish and whole-meal similarity using the documented baseline | `similarity.py` (greedy matching); `tests/test_similarity.py` |
+| 9 | Exact repeats within the configured window | `checks.find_repeats`, solver repeat rules, history across menus; `tests/test_checks.py`, `test_planner.py` |
+| 10 | Batch review; only approved dishes enter the catalogue | `review.py`; `tests/test_review.py`, `test_candidates.py` |
+| 11 | Local replacement proposal and revalidation | `adjust.py`; `tests/test_adjust.py` |
+| 12 | Menu history kept; unrelated items unchanged in a local replacement | Immutable versions; `tests/test_adjust.py`, `test_writes.py` |
+| 13 | English recipe PDF from approved recipe data | `translation.py`, `pdf_export.py`; `tests/test_translation_pdf.py`, `test_web_api.py` |
+| 14 | Documented, testable video extraction path | `video_import.py`; `tests/test_video_import.py`; live YouTube check |
+| 15 | Reports which constraints were satisfied, approximated, unsupported or unresolved | `validator.py` per-constraint results; UI result tables; `tests/test_validator.py` |

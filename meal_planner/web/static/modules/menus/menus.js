@@ -117,11 +117,15 @@ function adjustPanel() {
   feedback.onchange = () => { adjust.feedback = feedback.value; };
   feedbackNote.oninput = () => { adjust.feedbackNote = feedbackNote.value; };
   const messages = h('div');
+  const earlier = adjust.menu.constraint_snapshot.filter((c) => c.source === 'task');
   return h('div', { class: 'panel' },
     h('h3', {}, `替换 ${target.date} ${weekday(target.date)} 的「${target.dish.name_zh}」`),
     h('div', { class: 'row' }, '反馈：', feedback, feedbackNote),
     h('p', { class: 'hint' }, '“不喜欢”不会从菜品库删除这道菜；以后的菜单会尽量避开它（软约束）。'),
     h('h3', {}, '这次调整的附加约束（只用于这次调整）'),
+    earlier.length ? h('div', { class: 'row' },
+      h('span', { class: 'hint' }, `本版本生成时用过 ${earlier.length} 条附加约束（${earlier.map((c) => c.description).join('；')}），它们不会自动用于调整。`),
+      h('button', { class: 'small', onclick: () => editor.setParsed(earlier) }, '沿用这些约束')) : null,
     editor.element,
     h('div', { class: 'row' },
       h('button', { class: 'primary', onclick: () => propose(messages) }, '生成替换方案'),

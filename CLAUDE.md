@@ -81,13 +81,7 @@ If implementation reveals a conflict, follow the latest explicit user decision. 
 
 Confirmed decisions (environment, model access, orchestration, LLM interface, Web UI, dish types, calorie fields) are recorded in `docs/architecture.md` §12. In short: Claude only, no local models; called through the Claude Code CLI (`claude -p`) behind a backend-neutral interface; never automate the claude.ai web interface.
 
-The following remain open:
-
-- Final similarity feature weights and thresholds.
-- Whether CP-SAT should handle all planning or be combined with local search after prototyping.
-- Recipe PDF layout and exact contents.
-- Video subtitle, ASR, and vision implementation and platform-access constraints.
-- Exact default values for all constraints and optimization weights.
+All implementation phases (0–10) are complete. The remaining open items are listed in `docs/architecture.md` §10. Decisions marked "Default" in §12 were made during implementation and may be revisited with the user.
 
 
 ## Reference Repositories
