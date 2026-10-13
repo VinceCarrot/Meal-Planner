@@ -14,3 +14,592 @@ ingredients:
     块: 25.0
     斤: 500.0
   notes: 热量按生的带皮五花肉计,肥瘦比例不同会有差异。
+- ingredient_id: ing_pork_ribs
+  name_zh: 猪排骨
+  name_en: pork ribs
+  aliases:
+  - 排骨
+  - 猪肋排
+  - 小排
+  - 猪仔排
+  category: meat
+  kcal_per_100g: 278.0
+  grams_per_unit:
+    块: 30.0
+    根: 40.0
+    斤: 500.0
+  notes: 热量按带肉排骨可食部分计;重量含骨时可食部分约为一半至三分之二。
+- ingredient_id: ing_ground_pork
+  name_zh: 猪肉沫
+  name_en: ground pork
+  aliases:
+  - 猪肉末
+  - 猪绞肉
+  - 肉末
+  - 猪肉馅
+  - 碎猪肉
+  category: meat
+  kcal_per_100g: 250.0
+  grams_per_unit:
+    勺: 15.0
+    碗: 200.0
+  notes: 热量按中等肥瘦的生猪肉末估算;肥瘦比例不同热量差异较大。
+- ingredient_id: ing_pork_tenderloin
+  name_zh: 猪里脊
+  name_en: pork tenderloin
+  aliases:
+  - 里脊肉
+  - 猪里脊肉
+  - 通脊
+  - 小里脊
+  - 猪瘦肉
+  category: meat
+  kcal_per_100g: 155.0
+  grams_per_unit:
+    片: 10.0
+    块: 50.0
+    条: 150.0
+  notes: 指猪里脊肉(猪腰脊部位),常用于炒肉丝、炸里脊、糖醋里脊。
+- ingredient_id: ing_whole_chicken_leg
+  name_zh: 鸡全腿
+  name_en: whole chicken leg
+  aliases:
+  - 鸡腿
+  - 大鸡腿
+  - 完整鸡腿
+  category: poultry
+  kcal_per_100g: 181.0
+  grams_per_unit:
+    个: 200.0
+    只: 200.0
+  notes: 指带骨带皮的整只鸡腿(含大腿和小腿),重量含骨;kcal为可食部分。
+- ingredient_id: ing_whole_chicken
+  name_zh: 整鸡
+  name_en: whole chicken
+  aliases:
+  - 全鸡
+  - 白条鸡
+  - 土鸡
+  - 母鸡
+  - 仔鸡
+  category: poultry
+  kcal_per_100g: 167.0
+  grams_per_unit:
+    只: 1200.0
+    半只: 600.0
+  notes: 热量按带皮鸡肉可食部计;整只重量含骨,约1000–1500克,可食部约65%。
+- ingredient_id: ing_chicken_wing_midsection
+  name_zh: 鸡翅中
+  name_en: chicken wing midsection
+  aliases:
+  - 鸡中翅
+  - 中翅
+  - 鸡翅
+  category: poultry
+  kcal_per_100g: 194.0
+  grams_per_unit:
+    个: 45.0
+    只: 45.0
+  notes: 指带骨鸡翅中段,热量按带皮生鸡翅可食部分计;每个重量为带骨约数。
+- ingredient_id: ing_lean_beef
+  name_zh: 牛瘦肉
+  name_en: lean beef
+  aliases:
+  - 牛里脊
+  - 瘦牛肉
+  - 牛肉
+  category: meat
+  kcal_per_100g: 106.0
+  grams_per_unit:
+    片: 10.0
+    块: 30.0
+    两: 50.0
+  notes: 热量为生牛瘦肉(可食部)数值,不同部位略有差异。
+- ingredient_id: ing_tiger_prawn
+  name_zh: 老虎虾
+  name_en: tiger prawn
+  aliases:
+  - 鲜虾
+  - 草虾
+  - 大虎虾
+  - 黑虎虾
+  category: seafood
+  kcal_per_100g: 93.0
+  grams_per_unit:
+    只: 40.0
+    个: 40.0
+  notes: 指斑节对虾(黑虎虾);单只重量差异大,热量按带壳前的可食部分计。
+- ingredient_id: ing_shrimp_paste
+  name_zh: 虾滑
+  name_en: shrimp paste
+  aliases:
+  - 虾胶
+  - 鲜虾滑
+  - 虾肉泥
+  category: seafood
+  kcal_per_100g: 100.0
+  grams_per_unit:
+    勺: 25.0
+    份: 200.0
+  notes: 指火锅常用的搅打虾肉泥(虾胶);热量因是否加淀粉、肥肉而异,为估算值。
+- ingredient_id: ing_egg
+  name_zh: 鸡蛋
+  name_en: egg
+  aliases:
+  - 鸡子
+  - 蛋
+  - 土鸡蛋
+  category: egg
+  kcal_per_100g: 144.0
+  grams_per_unit:
+    个: 50.0
+    只: 50.0
+  notes: 指鸡蛋(含壳约60克,可食部分约50克);热量按可食部分计。
+- ingredient_id: ing_firm_tofu
+  name_zh: 老豆腐
+  name_en: firm tofu
+  aliases:
+  - 北豆腐
+  - 硬豆腐
+  - 卤水豆腐
+  category: soy
+  kcal_per_100g: 116.0
+  grams_per_unit:
+    块: 300.0
+    盒: 400.0
+  notes: 老豆腐即北豆腐(卤水点制),质地较硬、含水少;热量参考北豆腐。
+- ingredient_id: ing_soft_tofu
+  name_zh: 嫩豆腐
+  name_en: soft tofu
+  aliases:
+  - 内酯豆腐
+  - 水豆腐
+  - 滑豆腐
+  category: soy
+  kcal_per_100g: 50.0
+  grams_per_unit:
+    盒: 350.0
+    块: 150.0
+    勺: 30.0
+  notes: 指质地细嫩的内酯豆腐/嫩豆腐,热量约为每100克50千卡左右。
+- ingredient_id: ing_green_beans
+  name_zh: 四季豆
+  name_en: green beans
+  aliases:
+  - 菜豆
+  - 刀豆
+  - 芸豆
+  - 豆角
+  - 四季豆角
+  category: vegetable
+  kcal_per_100g: 31.0
+  grams_per_unit:
+    根: 8.0
+    把: 200.0
+  notes: 四季豆必须充分煮熟或炒熟,以去除毒素。
+- ingredient_id: ing_pressed_tofu
+  name_zh: 香干
+  name_en: pressed tofu
+  aliases:
+  - 豆腐干
+  - 白干
+  - 豆干
+  category: soy
+  kcal_per_100g: 140.0
+  grams_per_unit:
+    块: 50.0
+    片: 10.0
+  notes: 香干指质地紧实的豆腐干(常为卤制),热量因品种略有差异。
+- ingredient_id: ing_potato
+  name_zh: 土豆
+  name_en: potato
+  aliases:
+  - 马铃薯
+  - 洋芋
+  - 地蛋
+  - 山药蛋
+  category: vegetable
+  kcal_per_100g: 77.0
+  grams_per_unit:
+    个: 200.0
+    颗: 200.0
+  notes: 热量按生的可食部分计算(去皮)。
+- ingredient_id: ing_bitter_melon
+  name_zh: 苦瓜
+  name_en: bitter melon
+  aliases:
+  - 凉瓜
+  - 癞瓜
+  - 锦荔枝
+  category: vegetable
+  kcal_per_100g: 19.0
+  grams_per_unit:
+    根: 300.0
+    个: 300.0
+    片: 5.0
+  notes: 热量按生品可食部计;焯水或盐腌可减轻苦味。
+- ingredient_id: ing_lotus_root
+  name_zh: 莲藕
+  name_en: lotus root
+  aliases:
+  - 藕
+  - 莲菜
+  - 藕节
+  category: vegetable
+  kcal_per_100g: 73.0
+  grams_per_unit:
+    节: 200.0
+    段: 150.0
+    片: 10.0
+    根: 400.0
+  notes: 指新鲜莲藕;粉藕适合炖汤,脆藕适合清炒凉拌。
+- ingredient_id: ing_white_button_mushroom
+  name_zh: 白口蘑
+  name_en: white button mushroom
+  aliases:
+  - 口蘑
+  - 白蘑菇
+  - 双孢菇
+  - 洋蘑菇
+  - 蘑菇
+  category: mushroom
+  kcal_per_100g: 22.0
+  grams_per_unit:
+    个: 15.0
+    朵: 15.0
+  notes: 按家常做法理解为新鲜白色双孢蘑菇;传统“口蘑”也可指张家口产的干蘑菇,热量不同。
+- ingredient_id: ing_baby_napa_cabbage
+  name_zh: 娃娃菜
+  name_en: baby napa cabbage
+  aliases:
+  - 小白菜心
+  - 迷你白菜
+  - 娃娃白菜
+  category: vegetable
+  kcal_per_100g: 16.0
+  grams_per_unit:
+    棵: 200.0
+    个: 200.0
+    片: 20.0
+  notes: 娃娃菜是小型大白菜品种,热量参考大白菜;一棵约150–250克。
+- ingredient_id: ing_barramundi
+  name_zh: 金目鲈
+  name_en: barramundi
+  aliases:
+  - 尖吻鲈
+  - 澳洲肺鱼
+  - 盲槽
+  - 银鲈
+  - 巴拉蒙迪鱼
+  category: seafood
+  kcal_per_100g: 97.0
+  grams_per_unit:
+    条: 600.0
+    片: 30.0
+  notes: 金目鲈即尖吻鲈(barramundi, Lates calcarifer),常用于清蒸;热量为估计值,按整条带骨重量计可食部分较少。
+- ingredient_id: ing_scallion
+  name_zh: 小葱
+  name_en: scallion
+  aliases:
+  - 香葱
+  - 细香葱
+  - 青葱
+  - 葱
+  category: vegetable
+  kcal_per_100g: 30.0
+  grams_per_unit:
+    根: 15.0
+    棵: 25.0
+    把: 100.0
+    勺: 5.0
+  notes: 小葱指较细的香葱/青葱(葱叶为主),常用于调味和装饰;与大葱(章丘大葱)不同。勺指葱花。
+- ingredient_id: ing_celery
+  name_zh: 香芹
+  name_en: celery
+  aliases:
+  - 西芹
+  - 洋芹
+  - 芹菜
+  - 欧芹菜
+  category: vegetable
+  kcal_per_100g: 16.0
+  grams_per_unit:
+    根: 40.0
+    棵: 500.0
+  notes: 香芹在不同地区可指西芹(Western celery)或较细的本地芹菜;此处按西芹处理。根指单根茎秆。
+- ingredient_id: ing_coriander
+  name_zh: 香菜
+  name_en: coriander
+  aliases:
+  - 芫荽
+  - 胡荽
+  - 香荽
+  category: vegetable
+  kcal_per_100g: 33.0
+  grams_per_unit:
+    根: 3.0
+    棵: 10.0
+    把: 50.0
+  notes: 英文在英国常称 coriander，美国称 cilantro（叶和嫩茎）。
+- ingredient_id: ing_golden_pompano
+  name_zh: 金鲳鱼
+  name_en: golden pompano
+  aliases:
+  - 金昌鱼
+  - 红鳍鲳
+  - 黄鳍鲳
+  - 卿鱼
+  category: seafood
+  kcal_per_100g: 142.0
+  grams_per_unit:
+    条: 400.0
+  notes: 热量为带刺鱼肉可食部参考值;条重因规格而异,常见300-500克。
+- ingredient_id: ing_kangkong
+  name_zh: 空心菜
+  name_en: kangkong
+  aliases:
+  - 通菜
+  - 蕹菜
+  - 蕻菜
+  - 藤藤菜
+  - 竹叶菜
+  category: vegetable
+  kcal_per_100g: 23.0
+  grams_per_unit:
+    把: 250.0
+    根: 10.0
+  notes: 又称通菜、蕹菜(ong choy)。
+- ingredient_id: ing_cauliflower
+  name_zh: 花菜
+  name_en: cauliflower
+  aliases:
+  - 花椰菜
+  - 菜花
+  - 白花菜
+  category: vegetable
+  kcal_per_100g: 26.0
+  grams_per_unit:
+    个: 600.0
+    朵: 30.0
+  notes: 指白色花椰菜(cauliflower);西兰花(broccoli)通常称“西兰花/绿花菜”。
+- ingredient_id: ing_broccoli
+  name_zh: 西兰花
+  name_en: broccoli
+  aliases:
+  - 西蓝花
+  - 绿花菜
+  - 青花菜
+  - 绿菜花
+  category: vegetable
+  kcal_per_100g: 34.0
+  grams_per_unit:
+    颗: 300.0
+    朵: 30.0
+  notes: 热量按可食部分计;一颗约含花球与部分茎。
+- ingredient_id: ing_cai_xin
+  name_zh: 菜心
+  name_en: cai xin
+  aliases:
+  - 菜薹
+  - 油菜心
+  - 菜芯
+  - 广东菜心
+  category: vegetable
+  kcal_per_100g: 25.0
+  grams_per_unit:
+    根: 25.0
+    棵: 40.0
+    把: 250.0
+  notes: 指广东菜心(choy sum),非红菜薹或菜花心。
+- ingredient_id: ing_ginger
+  name_zh: 生姜
+  name_en: ginger
+  aliases:
+  - 姜
+  - 老姜
+  - 姜块
+  - 黄姜
+  category: vegetable
+  kcal_per_100g: 41.0
+  grams_per_unit:
+    块: 15.0
+    片: 3.0
+    勺: 10.0
+  notes: 常用作调味辅料;“块”指约拇指大小的一块,“勺”指姜末。
+- ingredient_id: ing_garlic
+  name_zh: 大蒜
+  name_en: garlic
+  aliases:
+  - 蒜头
+  - 蒜
+  - 大蒜头
+  - 蒜瓣
+  category: vegetable
+  kcal_per_100g: 128.0
+  grams_per_unit:
+    瓣: 5.0
+    头: 40.0
+    勺: 10.0
+  notes: 指蒜头(鳞茎);“勺”按蒜末计。
+- ingredient_id: ing_leg_of_lamb
+  name_zh: 羊腿肉
+  name_en: leg of lamb
+  aliases:
+  - 羊后腿肉
+  - 羊腿
+  - 羔羊腿肉
+  category: meat
+  kcal_per_100g: 203.0
+  grams_per_unit: {}
+  notes: 热量按带少量脂肪的生羊肉估算,实际随肥瘦而异。
+- ingredient_id: ing_onion
+  name_zh: 洋葱
+  name_en: onion
+  aliases:
+  - 圆葱
+  - 葱头
+  - 玉葱
+  category: vegetable
+  kcal_per_100g: 40.0
+  grams_per_unit:
+    个: 200.0
+    片: 5.0
+  notes: 指常见的洋葱(紫皮或黄皮),不是小葱或大葱。
+- ingredient_id: ing_salt
+  name_zh: 盐
+  name_en: salt
+  aliases:
+  - 食盐
+  - 食用盐
+  - 精盐
+  - 海盐
+  category: seasoning
+  kcal_per_100g: 0.0
+  grams_per_unit:
+    茶匙: 5.0
+    勺: 6.0
+    汤匙: 18.0
+    小撮: 1.0
+  notes: 勺指家用小勺(约6克);盐不含热量,钠含量很高。
+- ingredient_id: ing_light_soy_sauce
+  name_zh: 生抽
+  name_en: light soy sauce
+  aliases:
+  - 生抽酱油
+  - 鲜酱油
+  - 酱油
+  category: seasoning
+  kcal_per_100g: 63.0
+  grams_per_unit:
+    勺: 15.0
+    汤匙: 15.0
+    茶匙: 5.0
+    ml: 1.15
+  notes: 生抽颜色较浅、味咸鲜,用于调味提鲜;与上色用的老抽不同。
+- ingredient_id: ing_dark_soy_sauce
+  name_zh: 老抽
+  name_en: dark soy sauce
+  aliases:
+  - 老抽王
+  - 红烧酱油
+  - 浓色酱油
+  category: seasoning
+  kcal_per_100g: 63.0
+  grams_per_unit:
+    勺: 15.0
+    汤匙: 15.0
+    茶匙: 5.0
+    ml: 1.2
+  notes: 主要用于上色,咸味比生抽淡;热量为酱油的大致值。
+- ingredient_id: ing_peppercorn
+  name_zh: 花椒
+  name_en: peppercorn
+  aliases:
+  - 川椒
+  - 蜀椒
+  - 红花椒
+  - 青花椒
+  - 麻椒
+  category: seasoning
+  kcal_per_100g: 258.0
+  grams_per_unit:
+    粒: 0.1
+    勺: 3.0
+    茶匙: 2.0
+    汤匙: 6.0
+    把: 10.0
+  notes: 热量按干花椒计;青花椒与红花椒同属,麻味更重。
+- ingredient_id: ing_sesame_oil
+  name_zh: 芝麻油
+  name_en: sesame oil
+  aliases:
+  - 香油
+  - 麻油
+  - 小磨香油
+  category: seasoning
+  kcal_per_100g: 899.0
+  grams_per_unit:
+    勺: 10.0
+    汤匙: 14.0
+    茶匙: 4.5
+    滴: 0.05
+    ml: 0.92
+  notes: 通常指烹饪后淋用的香油(熟芝麻油),用量少。
+- ingredient_id: ing_salt_baked_chicken_seasoning_powder
+  name_zh: 盐焗鸡粉
+  name_en: salt-baked chicken seasoning powder
+  aliases:
+  - 盐焗鸡调味粉
+  - 盐焗粉
+  - 盐焗鸡料
+  category: seasoning
+  kcal_per_100g: null
+  grams_per_unit:
+    勺: 10.0
+    茶匙: 4.0
+    汤匙: 12.0
+    包: 30.0
+  notes: 广式盐焗鸡调味料,主要成分为盐、香辛料等,配方各品牌差异大,盐分很高;包装规格不一,按实际为准。
+- ingredient_id: ing_tomato
+  name_zh: 番茄
+  name_en: tomato
+  aliases:
+  - 西红柿
+  - 洋柿子
+  category: vegetable
+  kcal_per_100g: 15.0
+  grams_per_unit:
+    个: 150.0
+    小个: 80.0
+  notes: 按普通中等大小番茄计;圣女果(小番茄)每个约15克。
+- ingredient_id: ing_cooking_oil
+  name_zh: 食用油
+  name_en: cooking oil
+  aliases:
+  - 植物油
+  - 油
+  - 食油
+  - 炒菜油
+  - 色拉油
+  category: seasoning
+  kcal_per_100g: 899.0
+  grams_per_unit:
+    勺: 10.0
+    汤匙: 13.0
+    茶匙: 4.0
+    ml: 0.92
+  notes: 泛指家用植物油(如菜籽油、大豆油、花生油),热量按一般植物油计算;1勺按约10克估算。
+- ingredient_id: ing_white_sugar
+  name_zh: 白糖
+  name_en: white sugar
+  aliases:
+  - 砂糖
+  - 细砂糖
+  - 绵白糖
+  category: seasoning
+  kcal_per_100g: 396.0
+  grams_per_unit:
+    勺: 15.0
+    茶匙: 5.0
+    汤匙: 15.0
+  notes: 按白砂糖计;绵白糖颗粒更细,同体积略重。

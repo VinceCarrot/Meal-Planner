@@ -1,2 +1,65 @@
 schema_version: 1
-dishes: []
+dishes:
+- dish_id: dish_0001
+  name_zh: 盐焗鸡
+  name_en: Oven Salt-Baked Chicken Legs
+  dish_type: meat
+  ingredients:
+  - ingredient_id: ing_whole_chicken_leg
+    unmatched_name: null
+    quantity: 3.0
+    unit: 只
+    note: 洗净,用厨房纸擦干
+  - ingredient_id: ing_salt_baked_chicken_seasoning_powder
+    unmatched_name: null
+    quantity: 15.0
+    unit: g
+    note: 约半包(1包约30g),内外均匀抹在鸡腿上
+  - ingredient_id: ing_peppercorn
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 少许
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 切片,铺在鸡腿下面;用量适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 切段,铺在鸡腿下面;用量适量
+  - ingredient_id: ing_sesame_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 少许,出炉后刷表面
+  servings: 3
+  steps:
+  - 三只鸡全腿洗净,用厨房纸擦干
+  - 取半包盐焗鸡粉(约15g),内外均匀抹在鸡腿上
+  - 加入少许花椒
+  - 姜切片,葱切段,铺在鸡腿下面
+  - 腌制30分钟以上
+  - 每只鸡腿分别用锡纸包住
+  - 烤箱预热至200℃
+  - 将包好的鸡腿放入烤箱中层,烘烤约40分钟
+  - 取出,打开锡纸,在鸡腿表面刷少许香油
+  - 可再烤约5~10分钟,让表皮微微上色
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_whole_chicken_leg
+    - ing_salt_baked_chicken_seasoning_powder
+    cooking_method: roast
+    flavours:
+    - salty_savory
+    cuisine: 粤菜
+  source: manual
+  source_url: null
+  review_status: approved
+  uncertainty_notes: 姜、葱、花椒、香油未写明用量,按"少许/适量"处理。盐焗鸡粉"1包约30g"由"一半约15g"推算。份数按每人一只鸡腿估计为3份。
+  created_at: '2026-10-13T23:58:22'
+  updated_at: null
