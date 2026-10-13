@@ -1,15 +1,19 @@
 """Menu planning, saving and history."""
 
 from datetime import date
+from io import BytesIO
 
-from flask import Blueprint, request
+from flask import Blueprint, current_app, request, send_file
 
 from ...catalogue import DataError, DataIssue
 from ...adjust import menu_changes, propose_replacement, save_adjusted_version
 from ...menus import plan_new_menu, prepare, save_new_menu, task_constraints_from_input
 from ...models import Diner, PreferencesFile
+from ...pdf_export import build_menu_pdf, dishes_in_order
+from ...settings import LLMTask
+from ...translation import load_translations, save_translations, source_hash, translate_dishes
 from ...vocab import FeedbackScope, TaskScope
-from ..helpers import NotFound, body, dump, load, settings
+from ..helpers import NotFound, body, dump, llm, load, settings
 from ..serialize import changes_view, dinners_from_input, menu_view, plan_view, proposal_view
 
 ADJ = TaskScope.MENU_ADJUSTMENT
@@ -134,3 +138,51 @@ def put_default_diners():
     preferences = PreferencesFile.model_validate(dump(cat.preferences) | {"default_diners": diners})
     cat = store.save_preferences(cat, preferences)
     return dump(cat.preferences)
+
+
+# --- English PDF export --------------------------------------------------------------------
+
+
+def _current(cache, dishes, ingredients, dish_id) -> bool:
+    return dish_id in cache and cache[dish_id].source_hash == source_hash(dishes[dish_id], ingredients)
+
+
+@bp.post("/menus/<menu_id>/export/translate")
+def translate_menu(menu_id):
+    """Translate the menu's recipes whose English version is missing or out of date."""
+    store, cat = load()
+    menu = _version(store, cat, menu_id, body().get("version"))
+    dishes = {d.dish_id: d for d in cat.dishes.dishes}
+    ingredients = {i.ingredient_id: i for i in cat.ingredients.ingredients}
+    order = dishes_in_order(menu)
+    data_dir = current_app.config["DATA_DIR"]
+    cache = load_translations(data_dir)
+    already = sum(_current(cache, dishes, ingredients, k) for k in order)
+    cache, failed = translate_dishes(llm(LLMTask.TRANSLATION), [dishes[k] for k in order], ingredients, cache)
+    save_translations(data_dir, cache)
+    return {
+        "dishes": len(order),
+        "translated_now": len(order) - already - len(failed),
+        "failed": [{"dish_id": k, "name_zh": dishes[k].name_zh, "error": e} for k, e in failed.items()],
+        "warnings": [
+            {"dish_id": k, "name_zh": dishes[k].name_zh, "warnings": list(cache[k].warnings)}
+            for k in order if k in cache and cache[k].warnings
+        ],
+    }
+
+
+@bp.get("/menus/<menu_id>/export.pdf")
+def export_pdf(menu_id):
+    """The English recipe book of one menu version, from up-to-date translations only."""
+    store, cat = load()
+    menu = _version(store, cat, menu_id, request.args.get("version", type=int))
+    dishes = {d.dish_id: d for d in cat.dishes.dishes}
+    ingredients = {i.ingredient_id: i for i in cat.ingredients.ingredients}
+    cache = load_translations(current_app.config["DATA_DIR"])
+    order = dishes_in_order(menu)
+    stale = [k for k in order if not _current(cache, dishes, ingredients, k)]
+    if stale:
+        raise DataError([DataIssue("translations.yaml", k, "缺少最新的英文翻译，请先翻译") for k in stale])
+    pdf = build_menu_pdf(menu, dishes, {k: cache[k] for k in order})
+    return send_file(BytesIO(pdf), mimetype="application/pdf", as_attachment=True,
+                     download_name=f"{menu_id}_v{menu.version}_recipes_en.pdf")

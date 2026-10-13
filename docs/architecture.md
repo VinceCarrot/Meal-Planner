@@ -559,7 +559,35 @@ Platform availability and permitted access must be checked. Do not assume every 
 
 Use approved recipe/menu data as input. Translation should preserve quantities, sequence, timing, and cooking details.
 
-Validate that the PDF contains the expected recipes and is printable. Layout and page structure remain open decisions.
+Validate that the PDF contains the expected recipes and is printable.
+
+#### Implementation (Phase 9)
+
+`meal_planner/translation.py`, `meal_planner/pdf_export.py`. On the menu page, "导出英文 PDF" calls `POST /api/menus/<id>/export/translate` and then downloads `GET /api/menus/<id>/export.pdf?version=`.
+
+**Translation.**
+
+- Claude (`translation` model, default Sonnet) translates names, units, notes, steps and uncertainty notes, 8 dishes per call. Quantities are never sent for translation; the PDF takes them from the recipe data.
+- Each result is checked in code. A result is refused (reported, not cached, no retry) if:
+  - the number of ingredient lines or steps differs from the recipe;
+  - it still contains Chinese characters;
+  - it has empty names;
+  - it does not match the schema.
+- A number in a Chinese step (a time or temperature) that is missing from its translation produces a warning, which the UI shows for checking.
+
+**Cache.** Translations are stored in `data/translations.yaml` (application-owned, atomic writes) with a hash of the source recipe.
+
+- An unchanged recipe is not translated again.
+- An edited recipe is translated again.
+- The PDF endpoint uses only up-to-date translations and refuses to build the PDF otherwise.
+
+**PDF layout.** A4, standard Helvetica fonts, English only:
+
+- A cover page with the four-week dinner table.
+- Then one section per dish, in order of first appearance: type, servings, dates served, ingredients ("300 g Pork belly (note)"), numbered method steps and notes.
+- Page numbers.
+- Long text wraps and continues across pages.
+- No shopping list.
 
 ## 9. Observability and Error Handling
 
@@ -879,3 +907,17 @@ The vocabulary is an initial draft and can be extended through a code change.
 - **Exact ingredient matching.** Ingredients are matched exactly; anything else is left to the user in review.
 - **Platform terms.** Reading public metadata and subtitles is for the user's personal use. Access that needs a login is not attempted; no cookies are passed to yt-dlp.
 - **Dependency.** `yt-dlp` was added because it handles both platforms' metadata and subtitle formats.
+
+### ADR-021 English PDF export — Default (2026-10-13)
+
+**Translation.**
+
+- Claude translates text only, and the result is checked in code.
+- Quantities come from the recipe data.
+- Translations are cached per recipe hash in `data/translations.yaml`. There is no separate translation-editing UI yet; a cached translation can be corrected by editing that file.
+
+**Layout.** A4: a cover menu table, then one section per dish, English only. Chinese names are omitted because the standard PDF fonts cannot show them.
+
+**Shopping list.** Not included; this remains an open decision.
+
+**Library.** `reportlab` was chosen for its automatic paragraph wrapping and pagination.

@@ -80,3 +80,14 @@ def test_live_video_text():
     video = YtDlpSource().fetch(parse_video_url(os.environ["MEAL_PLANNER_LIVE_VIDEO_URL"]))
     assert video.title
     print(video.title, video.transcript_kind, video.language, len(video.transcript or ""), len(video.description))
+
+
+def test_live_translation(store):
+    from meal_planner.translation import translate_dishes
+
+    cat = store.load()
+    dish = next(d for d in cat.dishes.dishes if d.dish_id == "dish_0002")
+    ingredients = {i.ingredient_id: i for i in cat.ingredients.ingredients}
+    cache, failed = translate_dishes(create_backend(model="sonnet"), [dish], ingredients, {})
+    assert failed == {}, failed
+    print(cache["dish_0002"].model_dump())

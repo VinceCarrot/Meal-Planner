@@ -236,6 +236,8 @@ This plan is a proposed sequence. Adjust it based on implementation findings wit
 
 ## Phase 9 — English PDF Export
 
+**Status:** completed 2026-10-13. Code in `meal_planner/translation.py` and `pdf_export.py`; see `architecture.md` §8 and ADR-021.
+
 ### Tasks
 
 - Translate approved recipe content into English.

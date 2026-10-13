@@ -306,3 +306,24 @@ def test_video_import_endpoint(data_dir, llm):
     assert [l["unmatched_name"] for l in result["dish"]["ingredients"]] == [None, "虾皮"]
     bad = client.post("/api/videos/import", json={"url": "https://vimeo.com/1"})
     assert bad.status_code == 422 and "只支持" in bad.get_json()["issues"][0]
+
+
+# --- English PDF export ------------------------------------------------------------------
+
+
+def test_translate_then_download_pdf(client, llm):
+    from test_translation_pdf import fake_translator
+
+    _saved_menu(client)
+    assert client.get("/api/menus/M001/export.pdf").status_code == 400  # not translated yet
+
+    llm.response = fake_translator
+    result = ok(client.post("/api/menus/M001/export/translate", json={"version": 1}))
+    assert result["failed"] == [] and result["translated_now"] == result["dishes"] > 0
+
+    again = ok(client.post("/api/menus/M001/export/translate", json={"version": 1}))
+    assert again["translated_now"] == 0
+
+    pdf = client.get("/api/menus/M001/export.pdf?version=1")
+    assert pdf.status_code == 200 and pdf.mimetype == "application/pdf" and pdf.data.startswith(b"%PDF")
+    assert "M001_v1_recipes_en.pdf" in pdf.headers["Content-Disposition"]

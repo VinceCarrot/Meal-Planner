@@ -78,6 +78,7 @@ function changeList(changes) {
 
 function renderMenu() {
   const { menu } = adjust;
+  const exportBox = h('div');
   const report = menu.validation_report;
   const versionSelect = h('select', { onchange: (e) => openMenu(menu.menu_id, e.target.value) },
     menu.versions.map((v) => h('option', { value: v, selected: v === menu.version }, `第 ${v} 版`)));
@@ -87,7 +88,9 @@ function renderMenu() {
         h('h3', { style: 'margin:0' }, `${menu.menu_id}（${menu.start_date} 起）`),
         versionSelect,
         h('span', { class: 'spacer' }),
-        h('span', { class: 'hint' }, `保存于 ${menu.created_at.replace('T', ' ')}`)),
+        h('span', { class: 'hint' }, `保存于 ${menu.created_at.replace('T', ' ')}`),
+        h('button', { onclick: () => exportPdf(menu, exportBox) }, '导出英文 PDF')),
+      exportBox,
       menu.change_note ? h('p', {}, `说明：${menu.change_note}`) : null,
       menu.based_on_version ? h('div', {}, h('span', { class: 'hint' }, `基于第 ${menu.based_on_version} 版的改动：`), changeList(menu.changes || [])) : null,
       h('p', {}, `就餐者：${menu.diners.map((d) => `${d.description} × ${d.count}`).join('，')}`),
@@ -181,5 +184,26 @@ async function saveProposal(changeNote, messages) {
     await showMenus(menu.menu_id);
   } catch (err) {
     showError(messages, err);
+  }
+}
+
+async function exportPdf(menu, box) {
+  fill(box);
+  try {
+    const result = await post(`/api/menus/${menu.menu_id}/export/translate`, { version: menu.version },
+      '正在用 Claude 把菜谱翻译成英文（已翻译过且未修改的菜不会重复翻译）…');
+    if (result.failed.length) {
+      showMessage(box, 'error', '以下菜谱翻译未通过校验，PDF 未生成，可以稍后重试：',
+        result.failed.map((f) => `${f.name_zh}：${f.error}`));
+      return;
+    }
+    if (result.warnings.length) {
+      showMessage(box, 'warning', '翻译已完成，但请核对以下步骤中的数字：',
+        result.warnings.flatMap((w) => w.warnings.map((x) => `${w.name_zh}：${x}`)));
+    }
+    window.location.href = `/api/menus/${menu.menu_id}/export.pdf?version=${menu.version}`;
+    toast(`共 ${result.dishes} 道菜，本次新翻译 ${result.translated_now} 道，正在下载 PDF`);
+  } catch (err) {
+    showError(box, err);
   }
 }

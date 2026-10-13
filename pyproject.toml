@@ -15,6 +15,7 @@ dependencies = [
     "ortools>=9.15",  # CP-SAT solver for the 20-dinner plan (ADR-017)
     "flask>=3.0",     # local Web UI and JSON API (ADR-006)
     "yt-dlp",         # video title/description/subtitles for recipe import, no video download (ADR-020)
+    "reportlab",      # English recipe PDF with automatic text wrapping and pagination (ADR-021)
 ]
 
 [project.optional-dependencies]

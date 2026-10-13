@@ -197,7 +197,7 @@ Do not replace greedy matching with another algorithm without an explicit design
 
 - After menu/recipe approval, translate recipe content into English.
 - Export a printable PDF for household use.
-- Exact layout, pagination, inclusion of shopping lists, and translation review workflow are open decisions.
+- Exact layout, pagination, inclusion of shopping lists, and translation review workflow were open decisions. Implemented default (ADR-021): A4, a cover menu table plus one section per recipe, no shopping list, cached checked translations that can be corrected in `data/translations.yaml`.
 
 ## 10. Acceptance Criteria
 
