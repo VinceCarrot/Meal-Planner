@@ -709,7 +709,7 @@ Each record states its status. "Confirmed" means the user explicitly approved it
 Hybrid:
 
 - Application code controls the main workflows: generation, adjustment, validation, saving.
-- Structured calls without tools: constraint parsing, translation.
+- Structured calls without tools: constraint parsing, translation, ingredient analysis (ADR-022).
 - Agent calls with application-provided read-only tools: candidate-dish generation, video recipe extraction.
 - A fully agent-orchestrated workflow was considered and not chosen, because it is harder to test and reproduce and uses more calls.
 
@@ -829,12 +829,13 @@ The vocabulary is an initial draft and can be extended through a code change.
   |---|---|---|
   | `constraint_parsing` | `sonnet` | Short structured task: faster and uses less quota |
   | `translation` | `sonnet` | Same as above |
+  | `ingredient_analysis` | `sonnet` | Same as above (ADR-022) |
   | `dish_generation` | account default (Opus) | Harder generation task |
   | `video_extraction` | account default (Opus) | Harder generation task |
 
 - `null` means the backend default. Model names are passed to the backend unchanged; for `claude_cli` they are `--model` values.
 - The user switches models from the Web UI (Phase 6), which edits this file.
-- A missing file means all defaults; a missing task entry falls back to that task's default.
+- A missing file means all defaults; a missing task entry falls back to that task's default and is filled in on load, so the settings page lists every task.
 
 ### ADR-015 Initial similarity weights — Default (2026-10-12, tunable)
 
@@ -937,3 +938,21 @@ The vocabulary is an initial draft and can be extended through a code change.
 **Shopping list.** Not included; this remains an open decision.
 
 **Library.** `reportlab` was chosen for its automatic paragraph wrapping and pagination.
+
+### ADR-022 AI-assisted ingredient form — Confirmed (2026-10-13)
+
+**Requested by the user.** The user types only the Chinese name in the ingredient form and clicks "分析". Claude fills in the other fields, and the user checks and edits them before saving.
+
+**Permission boundary (unchanged).** `POST /api/ingredients/suggest` (`meal_planner/ingredient_suggest.py`) returns a proposal and writes nothing. The ingredient is saved only by the user's own "保存", through the ordinary `POST`/`PUT /api/ingredients` endpoints. This is consistent with ADR-012: AI proposes, the user decides.
+
+**Checks in code:**
+
+- Claude's output is validated against a strict schema; malformed output raises `LLMError` (HTTP 502).
+- The ID is derived from the English name in code (`ing_<slug>`, `ing_new` if empty) and made unique with a `_2`, `_3` suffix. When editing, the existing ID is kept.
+- `kcal_per_100g` outside 0–900 and unit weights outside (0, 5000] g are dropped with a warning.
+- Aliases equal to the name and duplicates are removed.
+- A name, alias, or English name shared with an existing ingredient produces a "possible duplicate" warning; it does not block saving.
+
+**Model.** Task `ingredient_analysis`, default `sonnet`, selectable on the settings page.
+
+**UI.** The Chinese name comes first in the form, followed by the "分析" button. While Claude is working, an inline message is shown, the form fields are read-only, and every button on the ingredient page is disabled; they are enabled again when the call returns or fails.

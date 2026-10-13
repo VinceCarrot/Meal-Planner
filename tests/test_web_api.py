@@ -74,6 +74,25 @@ def test_ingredient_crud(client):
     assert client.delete("/api/ingredients/ing_okra").status_code == 404
 
 
+def test_ingredient_suggestion_writes_nothing(client, llm, data_dir):
+    before = (data_dir / "ingredients.yaml").read_bytes()
+    llm.response = {"name_en": "okra", "aliases": ["羊角豆"], "category": "vegetable", "kcal_per_100g": 33,
+                    "grams_per_unit": [{"unit": "根", "grams": 12}], "notes": None}
+
+    suggested = ok(client.post("/api/ingredients/suggest", json={"name_zh": "秋葵"}))
+
+    assert suggested["ingredient"]["ingredient_id"] == "ing_okra" and suggested["warnings"] == []
+    assert (data_dir / "ingredients.yaml").read_bytes() == before
+    ok(client.post("/api/ingredients", json=suggested["ingredient"]), 201)
+
+
+def test_ingredient_suggestion_errors(client, llm):
+    assert client.post("/api/ingredients/suggest", json={"name_zh": " "}).status_code == 400
+    assert client.post("/api/ingredients/suggest", json={"name_zh": "秋葵", "ingredient_id": "ing_x"}).status_code == 404
+    llm.response = {"name_en": "okra"}
+    assert client.post("/api/ingredients/suggest", json={"name_zh": "秋葵"}).status_code == 502
+
+
 def test_ingredient_in_use_cannot_be_deleted(client):
     response = client.delete("/api/ingredients/ing_tofu")
     assert response.status_code == 400 and any("ing_tofu" in i for i in response.get_json()["issues"])

@@ -28,4 +28,4 @@ if __name__ == "__main__":
     port = int(args[0]) if args else PORT
     print(f"Data: {data_dir}")
     print(f"Open http://{HOST}:{port}")
-    create_app(data_dir).run(host=HOST, port=port, debug=False, threaded=True)
+    create_app(data_dir).run(host=HOST, port=port, debug=True, threaded=True)

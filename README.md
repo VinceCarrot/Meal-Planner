@@ -18,22 +18,24 @@ AI (Claude, through your own Claude subscription) is used only where language he
 
 ## Requirements
 
-- Windows with Anaconda or Miniconda (developed with Python 3.11).
+- Windows with Anaconda or Miniconda (Python 3.11 or later; tested with 3.13).
 - The standalone **Claude Code CLI**, logged in with your Claude subscription. Install it with `irm https://claude.ai/install.ps1 | iex` in PowerShell, then run `claude` once to log in. `ANTHROPIC_API_KEY` must **not** be set, otherwise the CLI bills that key instead of using your subscription.
 - Internet access only for Claude calls and video import. Everything else works offline.
 
 ## Install
 
 ```bash
-conda create -n meal-planner python=3.11
-conda activate meal-planner
-pip install -e ".[dev]"
+conda create -n meal python=3.13
+conda activate meal
+pip install -r requirements.txt   # pinned, tested versions
 ```
+
+`requirements.txt` lists only the top-level packages; their own dependencies are installed automatically. `pip install -e ".[dev]"` also works and takes the looser version ranges from `pyproject.toml`.
 
 ## Start
 
 ```bash
-conda activate meal-planner
+conda activate meal
 python app.py           # your data in ./data
 python app.py --demo    # invented demo data in ./demo_data (100 dishes, 6 rules); ./data is not touched
 python app.py 5001      # another port
@@ -93,7 +95,7 @@ All data is readable YAML in `data/`:
 ## Tests
 
 ```bash
-pytest                                                     # about 310 tests; never calls a real model or the network
+pytest                                                     # about 330 tests; never calls a real model or the network
 MEAL_PLANNER_LIVE_LLM=1 pytest tests/test_live_claude.py   # optional: real Claude calls on your subscription
 MEAL_PLANNER_LIVE_LLM=1 MEAL_PLANNER_LIVE_VIDEO_URL=<url> pytest tests/test_live_claude.py -k video
 python benchmarks/bench_planner.py 100 200 300             # optimizer benchmark on synthetic data

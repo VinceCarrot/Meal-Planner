@@ -1,2 +1,30 @@
 schema_version: 1
-constraints: []
+constraints:
+- constraint_id: C001
+  description: 每顿饭3-4个菜
+  scope:
+  - menu_generation
+  - menu_adjustment
+  strictness: hard
+  source: persistent
+  execution: null
+  parse_status: unparsed
+  parse_notes: null
+  overrides: []
+  active: true
+  created_at: null
+  updated_at: null
+- constraint_id: C002
+  description: 每周一、三、五晚饭要有一个汤
+  scope:
+  - menu_generation
+  - menu_adjustment
+  strictness: hard
+  source: persistent
+  execution: null
+  parse_status: unparsed
+  parse_notes: null
+  overrides: []
+  active: true
+  created_at: null
+  updated_at: null

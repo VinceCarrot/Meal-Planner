@@ -1,2 +1,16 @@
 schema_version: 1
-ingredients: []
+ingredients:
+- ingredient_id: ing_pork_belly
+  name_zh: 猪五花
+  name_en: pork belly
+  aliases:
+  - 五花肉
+  - 三层肉
+  - 五花腩
+  category: meat
+  kcal_per_100g: 395.0
+  grams_per_unit:
+    片: 10.0
+    块: 25.0
+    斤: 500.0
+  notes: 热量按生的带皮五花肉计,肥瘦比例不同会有差异。

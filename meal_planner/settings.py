@@ -9,7 +9,7 @@ from enum import StrEnum
 from pathlib import Path
 from typing import Literal
 
-from pydantic import Field
+from pydantic import Field, field_validator
 
 from .catalogue import DataError, DataIssue, parse_model
 from .llm import LLMBackend, create_backend
@@ -25,6 +25,7 @@ class LLMTask(StrEnum):
     DISH_GENERATION = "dish_generation"
     VIDEO_EXTRACTION = "video_extraction"
     TRANSLATION = "translation"
+    INGREDIENT_ANALYSIS = "ingredient_analysis"
 
 
 DEFAULT_MODELS = {
@@ -32,6 +33,7 @@ DEFAULT_MODELS = {
     LLMTask.DISH_GENERATION: None,  # account default (Opus)
     LLMTask.VIDEO_EXTRACTION: None,
     LLMTask.TRANSLATION: "sonnet",
+    LLMTask.INGREDIENT_ANALYSIS: "sonnet",
 }
 
 
@@ -69,6 +71,12 @@ class Settings(Record):
     similarity_weights: SimilarityWeights = SimilarityWeights()
     planner: PlannerSettings = PlannerSettings()
     candidates: CandidateSettings = CandidateSettings()
+
+    @field_validator("models", mode="after")
+    @classmethod
+    def _all_tasks(cls, models: dict) -> dict:
+        """Tasks missing from an older settings file get their default, so the UI lists every task."""
+        return {**DEFAULT_MODELS, **models}
 
     def model_for(self, task: LLMTask) -> str | None:
         return self.models.get(task, DEFAULT_MODELS[task])

@@ -66,10 +66,16 @@ function renderTable() {
         }, '删除'))))));
 }
 
+// While Claude analyses a name, every button on the page is disabled so that the
+// form cannot be saved, closed or replaced before the answer arrives.
+function setLocked(on) {
+  for (const b of root.querySelectorAll('button')) b.disabled = on;
+}
+
 function renderForm(existing) {
   const i = existing || { ingredient_id: 'ing_', name_zh: '', name_en: '', aliases: [], category: 'vegetable', kcal_per_100g: null, grams_per_unit: {}, notes: '' };
   const id = h('input', { value: i.ingredient_id, disabled: Boolean(existing), placeholder: 'ing_英文小写_下划线' });
-  const nameZh = h('input', { value: i.name_zh });
+  const nameZh = h('input', { value: i.name_zh, placeholder: '例如：西兰花', onkeydown: (e) => { if (e.key === 'Enter') analyse(); } });
   const nameEn = h('input', {
     value: i.name_en || '',
     oninput: (e) => {
@@ -82,11 +88,54 @@ function renderForm(existing) {
   const units = h('input', { value: unitsText(i.grams_per_unit), placeholder: '个=150, 勺=15' });
   const notes = h('input', { value: i.notes || '' });
   const field = (text, input) => h('div', { class: 'field' }, h('span', {}, text), input);
+  const filled = [nameEn, aliases, category, kcal, units, notes];
+  const status = h('div');
+  const analyseButton = h('button', { onclick: () => analyse() }, '分析');
+
+  async function analyse() {
+    if (analyseButton.disabled) return;
+    fill(status);
+    if (!nameZh.value.trim()) {
+      fill(status, h('div', { class: 'message warning' }, '请先填写中文名'));
+      return;
+    }
+    setLocked(true);
+    analyseButton.textContent = '分析中…';
+    for (const input of [nameZh, ...filled]) input.readOnly = true;
+    category.disabled = true;
+    fill(status, h('div', { class: 'inline-busy' }, h('div', { class: 'spinner' }),
+      `正在调用 Claude 分析“${nameZh.value.trim()}”，通常需要十几秒，请稍候…`));
+    try {
+      const { ingredient: s, warnings } = await post('/api/ingredients/suggest',
+        { name_zh: nameZh.value.trim(), ingredient_id: existing ? existing.ingredient_id : null });
+      if (!existing) id.value = s.ingredient_id;
+      nameEn.value = s.name_en || '';
+      aliases.value = s.aliases.join('、');
+      category.value = s.category;
+      kcal.value = s.kcal_per_100g ?? '';
+      units.value = unitsText(s.grams_per_unit);
+      notes.value = s.notes || '';
+      fill(status, h('div', { class: warnings.length ? 'message warning' : 'message info' },
+        '已填好建议内容，请检查后再保存。',
+        warnings.length ? h('ul', {}, warnings.map((w) => h('li', {}, w))) : null));
+    } catch (err) {
+      fill(status);
+      showError(status, err);
+    } finally {
+      for (const input of [nameZh, ...filled]) input.readOnly = false;
+      category.disabled = false;
+      analyseButton.textContent = '分析';
+      setLocked(false);
+    }
+  }
 
   fill(form, h('div', { class: 'panel' },
     h('h3', {}, existing ? `编辑 ${i.name_zh}` : '新增食材'),
+    h('div', { class: 'row analyse-row' }, field('中文名', nameZh), analyseButton,
+      h('span', { class: 'hint' }, '只需填中文名，点“分析”由 Claude 填写其余内容，保存前可修改')),
+    status,
     h('div', { class: 'row' },
-      field('ID（创建后不可改）', id), field('中文名', nameZh), field('英文名', nameEn), field('别名', aliases), field('分类', category)),
+      field('ID（创建后不可改）', id), field('英文名', nameEn), field('别名', aliases), field('分类', category)),
     h('div', { class: 'row' }, field('kcal / 100g', kcal), field('每单位克重', units), field('备注', notes)),
     h('div', { class: 'row' },
       h('button', {

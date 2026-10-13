@@ -1,9 +1,15 @@
-"""Ingredient master data: user edits only. AI workflows never reach these endpoints."""
+"""Ingredient master data: user edits only.
+
+The suggest endpoint lets Claude propose fields for the form; it writes nothing.
+Saving always goes through the user's own POST/PUT below (ADR-012, ADR-022).
+"""
 
 from flask import Blueprint
 
+from ...ingredient_suggest import suggest_ingredient
 from ...models import Ingredient, IngredientsFile
-from ..helpers import NotFound, body, dump, load
+from ...settings import LLMTask
+from ..helpers import NotFound, body, dump, llm, load
 
 bp = Blueprint("ingredients", __name__)
 
@@ -12,6 +18,19 @@ bp = Blueprint("ingredients", __name__)
 def list_ingredients():
     _, cat = load()
     return [dump(i) for i in cat.ingredients.ingredients]
+
+
+@bp.post("/ingredients/suggest")
+def suggest():
+    """Claude's proposal for the remaining fields of an ingredient, given its Chinese name."""
+    _, cat = load()
+    data = body()
+    editing_id = data.get("ingredient_id") or None
+    if editing_id is not None:
+        _require(cat, editing_id)
+    proposal, warnings = suggest_ingredient(
+        llm(LLMTask.INGREDIENT_ANALYSIS), str(data["name_zh"]), cat.ingredients.ingredients, editing_id)
+    return {"ingredient": proposal, "warnings": warnings}
 
 
 @bp.post("/ingredients")

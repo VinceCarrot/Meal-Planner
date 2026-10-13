@@ -25,6 +25,7 @@ def test_partial_file_falls_back_to_default_per_task(tmp_path):
     settings = load_settings(tmp_path)
     assert settings.model_for(LLMTask.DISH_GENERATION) == "sonnet"
     assert settings.model_for(LLMTask.TRANSLATION) == "sonnet"
+    assert settings.models[LLMTask.INGREDIENT_ANALYSIS] == "sonnet"  # listed for the settings page
 
 
 @pytest.mark.parametrize("text", ["llm_backend: local\n", "models:\n  cooking: opus\n"])
