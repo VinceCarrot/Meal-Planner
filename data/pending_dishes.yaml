@@ -1,2 +1,5542 @@
 schema_version: 1
-dishes: []
+dishes:
+- dish_id: dish_0013
+  name_zh: 卤猪脚
+  name_en: Soy-Braised Pork Trotter
+  dish_type: meat
+  ingredients:
+  - ingredient_id: ing_pork_trotter
+    unmatched_name: null
+    quantity: 1.0
+    unit: 只
+    note: null
+  - ingredient_id: ing_egg
+    unmatched_name: null
+    quantity: 4.0
+    unit: 个
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dark_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_rock_sugar
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_star_anise
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 桂皮
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_peppercorn
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dried_chili_pepper
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 猪脚块冷水下锅加姜片料酒焯 5 分钟，捞出洗净，拔净残毛。鸡蛋煮熟剥壳。
+  - 少油炒 30g 冰糖至琥珀色，下猪脚翻炒上色。
+  - 加 4 勺生抽、1 勺老抽、2 勺料酒、姜、蒜、葱、2 颗八角、桂皮、一小把花椒、2 个干辣椒，热水没过。
+  - 煮开转小火盖盖卤 90 分钟，最后 20 分钟放鸡蛋。筷子能轻松插透皮即好。卤水留下。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_pork_trotter
+    - ing_egg
+    cooking_method: braise
+    flavours:
+    - soy_sauce
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：待查教程）；请柜台切块。卤水不要倒，第二天加五花肉和鸡蛋再卤一次就是带饭的卤肉卤蛋。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0014
+  name_zh: 卤肉卤蛋
+  name_en: Soy-Braised Pork and Eggs (lunchbox)
+  dish_type: meat
+  ingredients:
+  - ingredient_id: ing_pork_belly
+    unmatched_name: null
+    quantity: 200.0
+    unit: g
+    note: null
+  - ingredient_id: ing_egg
+    unmatched_name: null
+    quantity: 2.0
+    unit: 个
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dark_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_rock_sugar
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_star_anise
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 桂皮
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_bay_leaf
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 1
+  steps:
+  - 鸡蛋煮 8 分钟剥壳；五花肉切 3cm 厚块焯水 3 分钟。
+  - 用现成卤水：把肉和蛋放进卤猪脚的锅里，一起小火卤 45 分钟，蛋可以提前 20 分钟捞出。
+  - 单独卤：小锅加 2 碗水、2 勺生抽、1 勺老抽、1 勺料酒、几粒冰糖、姜片、蒜瓣、1 颗八角、一小段桂皮、1 片香叶，煮开后放肉和蛋，小火 45 分钟。
+  - 肉切片，蛋对半，浇一点卤汁装盒。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_pork_belly
+    - ing_egg
+    cooking_method: braise
+    flavours:
+    - soy_sauce
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：新增）；第 3 周用卤猪脚的卤水顺手卤；第 4 周单独卤一小锅。要配一个素菜。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0015
+  name_zh: 叶菜
+  name_en: Garlic Stir-Fried Greens (whatever is freshest)
+  dish_type: vegetarian
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 叶菜
+    quantity: 300.0
+    unit: g
+    note: null
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_chicken_bouillon_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 腐乳
+    quantity: null
+    unit: null
+    note: 空心菜用
+  servings: 4
+  steps:
+  - 叶菜洗净沥干，长的切 5cm 段，粗梗先下锅。
+  - 热锅热油，蒜片爆香。
+  - 下菜大火快炒 1 到 2 分钟，加少许盐、一点鸡精，炒至刚断生出锅。
+  - 菠菜先沸水焯 10 秒再炒；空心菜可用一小块腐乳代替盐。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients: []
+    cooking_method: stir_fry
+    flavours:
+    - garlicky
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：常做）；不固定品种。女佣当天看菜心、小白菜、青龙菜、空心菜、豆苗、菠菜哪个最新鲜就买哪个。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0016
+  name_zh: 咸蛋黄蒸肉饼
+  name_en: Steamed Pork Patty with Salted Egg Yolk
+  dish_type: meat
+  ingredients:
+  - ingredient_id: ing_ground_pork
+    unmatched_name: null
+    quantity: 300.0
+    unit: g
+    note: null
+  - ingredient_id: ing_salted_egg_yolk
+    unmatched_name: null
+    quantity: 2.0
+    unit: 个
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_sesame_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 糖
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 肉末加 1 勺生抽、半勺料酒、1 勺淀粉、姜末、少许糖和白胡椒、3 勺水，顺一个方向搅到起胶。
+  - 摊入深盘约 2cm 厚，中间压两个小窝，放咸蛋黄。
+  - 水开后大火蒸 15 分钟，出锅撒葱花、淋香油。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_ground_pork
+    - ing_salted_egg_yolk
+    cooking_method: steam
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：新增）；肉末用一整盒。孩子吃肉饼部分，咸蛋黄给大人。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0017
+  name_zh: 咸蛋黄虾
+  name_en: Salted Egg Yolk Prawns
+  dish_type: meat
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 虾仁
+    quantity: 250.0
+    unit: g
+    note: null
+  - ingredient_id: ing_salted_egg_yolk
+    unmatched_name: null
+    quantity: 3.0
+    unit: 个
+    note: null
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 糖
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 虾仁解冻擦干，加少许盐、白胡椒、半勺料酒腌 10 分钟，裹薄淀粉。
+  - 咸蛋黄蒸 8 分钟，压成泥。
+  - 热油中火把虾仁煎至两面变红卷起，盛出。
+  - 锅里留少许油，小火下咸蛋黄泥炒到起泡，加一点糖，回锅虾仁快速翻匀。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_salted_egg_yolk
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；虾一周一次，排周五周六。家里菜单上常出现（salted egg shrimp）。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0018
+  name_zh: 土豆烧牛腩
+  name_en: Braised Beef Brisket with Potato (lunchbox)
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: ing_beef_brisket
+    unmatched_name: null
+    quantity: 250.0
+    unit: g
+    note: null
+  - ingredient_id: ing_potato
+    unmatched_name: null
+    quantity: 2.0
+    unit: 个
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dark_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_rock_sugar
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_star_anise
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 桂皮
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 1
+  steps:
+  - 牛腩切 3cm 块，冷水下锅加姜料酒焯 3 分钟洗净。
+  - 热油炒姜蒜，牛腩炒干水汽，加 1 勺生抽、半勺老抽、1 勺料酒、几粒冰糖、八角、桂皮。
+  - 加热水没过，高压锅 25 分钟（或小火炖 60 分钟）。
+  - 加土豆块再煮 12 分钟至软，大火收汁。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_beef_brisket
+    - ing_potato
+    cooking_method: braise
+    flavours:
+    - soy_sauce
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：新增）；牛腩一包 500g 用一半，另一半冷冻下次用。牛肉只有主人吃。可以周日白天先炖好。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0019
+  name_zh: 土豆烧鸡块
+  name_en: Braised Chicken with Potato (lunchbox)
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 去骨鸡腿肉
+    quantity: 200.0
+    unit: g
+    note: null
+  - ingredient_id: ing_potato
+    unmatched_name: null
+    quantity: 2.0
+    unit: 个
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dark_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 糖
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_star_anise
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 1
+  steps:
+  - 鸡腿肉切 3cm 块，土豆去皮切块。
+  - 热油下姜蒜，鸡块中大火煎 3 分钟至表面金黄，加 1 勺料酒。
+  - 加 1 勺生抽、半勺老抽、1 勺蚝油、半小勺糖、1 颗八角、土豆，加水刚没过，盖盖小火 15 分钟。
+  - 开盖大火收汁至浓稠，撒葱花。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_potato
+    cooking_method: braise
+    flavours:
+    - soy_sauce
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：新增）；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0020
+  name_zh: 土豆焖鸡腿
+  name_en: Braised Chicken Thighs with Potato
+  dish_type: meat
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 带骨鸡腿
+    quantity: 2.0
+    unit: 只
+    note: null
+  - ingredient_id: ing_potato
+    unmatched_name: null
+    quantity: 3.0
+    unit: 个
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dark_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_star_anise
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 糖
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 鸡腿块冷水焯 2 分钟捞出洗净。土豆切大块。
+  - 热油下姜片蒜瓣和 1 颗八角爆香，下鸡块炒至表面微黄。
+  - 加 2 勺生抽、半勺老抽、1 勺蚝油、1 勺料酒、半勺糖，炒匀后加热水与鸡块齐平。
+  - 煮开后下土豆，盖盖中小火焖 20 分钟，开盖收汁至土豆软、汁浓。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_potato
+    cooking_method: braise
+    flavours:
+    - soy_sauce
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：新增）；请柜台把鸡腿斩成块。；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0021
+  name_zh: 姜葱蒸鸡腿
+  name_en: Steamed Chicken Leg with Ginger-Scallion Sauce
+  dish_type: meat
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 带骨鸡腿
+    quantity: 2.0
+    unit: 只
+    note: null
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: 1.0
+    unit: 把
+    note: null
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: 1.0
+    unit: 块
+    note: null
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 糖
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 椒盐
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 鸡腿解冻，用盐和姜片腌 15 分钟。
+  - 放姜片，水开后蒸 30 分钟。
+  - 蒸熟后手撕或切块。
+  - 姜葱酱：姜和葱切细末（用熟食砧板），烧热油浇上。
+  - 加 1/3 小勺盐、半勺糖、1/3 勺椒盐、1 勺凉开水拌匀。
+  - 浇在撕好的鸡肉上拌匀。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_scallion
+    - ing_ginger
+    cooking_method: steam
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；切姜葱要用熟食砧板和刀。来源：WhatsApp 2024-09-06
+    PDF 第 1–2 页；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0022
+  name_zh: 家常豆腐
+  name_en: Home-Style Braised Tofu with Shiitake
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 豆腐
+    quantity: 1.0
+    unit: 盒
+    note: null
+  - ingredient_id: null
+    unmatched_name: 猪肉片
+    quantity: 100.0
+    unit: g
+    note: null
+  - ingredient_id: ing_fresh_shiitake_mushroom
+    unmatched_name: null
+    quantity: 1.0
+    unit: 包
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dark_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 糖
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 老豆腐切 1cm 厚三角片，厨房纸吸干；香菇切片。
+  - 平底锅多油中火，豆腐两面煎至金黄盛出。
+  - 肉片炒变色，下蒜姜、香菇炒 2 分钟。
+  - 加 1 勺生抽、几滴老抽、1 勺蚝油、半勺料酒、半小勺糖、半碗水，放豆腐小火焖 3 分钟。
+  - 淀粉水勾薄芡，撒葱段出锅。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_fresh_shiitake_mushroom
+    cooking_method: braise
+    flavours:
+    - soy_sauce
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：新增）；不放青椒木耳，用香菇。买老豆腐（firm tofu）才好煎。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0023
+  name_zh: 山药排骨汤
+  name_en: Chinese Yam and Pork Rib Soup
+  dish_type: soup
+  ingredients:
+  - ingredient_id: ing_pork_ribs
+    unmatched_name: null
+    quantity: 500.0
+    unit: g
+    note: null
+  - ingredient_id: null
+    unmatched_name: 山药
+    quantity: 0.5
+    unit: 根
+    note: null
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 枸杞
+    quantity: null
+    unit: null
+    note: 可选
+  servings: 4
+  steps:
+  - 排骨焯水洗净。山药削皮切 3cm 段，泡水防变色。
+  - 排骨、姜片、料酒加 1.5 升水煮开撇沫，小火炖 50 分钟。
+  - 下山药再炖 20 分钟至软，加盐。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_pork_ribs
+    cooking_method: stew
+    flavours:
+    - light
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：新增）；一根山药用一半，另一半同周做山药炒肉片。削皮戴手套，山药黏液会痒。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0024
+  name_zh: 山药炒肉片
+  name_en: Chinese Yam with Pork Slices
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 山药
+    quantity: 0.5
+    unit: 根
+    note: null
+  - ingredient_id: null
+    unmatched_name: 猪肉片
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 白醋
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 山药戴手套削皮，斜切薄片，泡在加了几滴白醋的水里。
+  - 肉片加半勺生抽、半勺料酒、1 小勺淀粉腌 10 分钟。
+  - 热油肉片大火滑炒变色盛出。
+  - 蒜片爆香，山药片下锅大火炒 2 分钟，加 2 勺水。
+  - 回锅肉片，加 1 勺生抽、半勺蚝油、少许盐翻匀，撒葱段。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients: []
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：新增）；和山药排骨汤同周安排，一根山药两道菜用完。削皮时戴手套，山药黏液会让手痒。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0025
+  name_zh: 巴当鱼片汤
+  name_en: Batang Fish Slice Soup
+  dish_type: soup
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 巴当鱼
+    quantity: 0.5
+    unit: 条
+    note: null
+  - ingredient_id: null
+    unmatched_name: 芥菜
+    quantity: 1.0
+    unit: 棵
+    note: null
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: 1.0
+    unit: 块
+    note: null
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_sesame_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 鱼肉切 0.5cm 厚片，加少许盐、白胡椒、半勺淀粉抓匀。姜切细丝，芥菜切段。
+  - 1 升水加一半姜丝煮开，下芥菜煮 3 分钟。
+  - 下鱼片和 2 勺料酒，中火煮 2 分钟变白即可，加盐、剩下的姜丝、白胡椒、几滴香油。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_ginger
+    cooking_method: boil
+    flavours:
+    - light
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：新增）；用一条巴当鱼的另一半切片，和煎巴当鱼同周。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0026
+  name_zh: 干锅花菜
+  name_en: Dry-Wok Cauliflower with Pork Belly
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: ing_cauliflower
+    unmatched_name: null
+    quantity: 1.0
+    unit: 颗
+    note: null
+  - ingredient_id: ing_pork_belly
+    unmatched_name: null
+    quantity: 100.0
+    unit: g
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dark_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 糖
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dried_chili_pepper
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 可不放
+  servings: 4
+  steps:
+  - 花菜手撕小朵，洗净沥干；五花肉切薄片。
+  - 五花肉小火煸出油至微焦。
+  - 下蒜片姜片，花菜大火翻炒 4 分钟至边缘焦黄。
+  - 加 1 勺生抽、几滴老抽、半小勺糖、少许盐，加 2 勺水翻炒至收干。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_cauliflower
+    - ing_pork_belly
+    cooking_method: stir_fry
+    flavours:
+    - spicy
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：常做）；家庭版不放辣；大人想吃辣，起锅前拨一半出来单独加干辣椒。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0027
+  name_zh: 手撕包菜
+  name_en: Hand-Torn Cabbage
+  dish_type: vegetarian
+  ingredients:
+  - ingredient_id: ing_cabbage
+    unmatched_name: null
+    quantity: 0.5
+    unit: 颗
+    note: null
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 白醋
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 糖
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dried_chili_pepper
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 可不放
+  servings: 4
+  steps:
+  - 包菜去硬芯，手撕成大片，洗净甩干。
+  - 热锅不加太多油，蒜片爆香（大人可加干辣椒）。
+  - 包菜下锅大火干炒 2 分钟至边缘微焦，加 1 勺生抽、半勺白醋、少许盐糖，翻匀出锅。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_cabbage
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：新增）；一颗包菜用半颗，另外半颗包保鲜膜放冰箱，同周带饭加量用。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0028
+  name_zh: 擂椒茄子
+  name_en: Smashed Eggplant with Green Chilli (adults only)
+  dish_type: vegetarian
+  ingredients:
+  - ingredient_id: ing_eggplant
+    unmatched_name: null
+    quantity: 2.0
+    unit: 根
+    note: null
+  - ingredient_id: ing_green_bell_pepper
+    unmatched_name: null
+    quantity: 1.0
+    unit: 包
+    note: null
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dark_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 醋
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 2
+  steps:
+  - 茄子蒸 20 分钟，撕成条。
+  - 青椒在干锅里烙到表皮起泡，撕成条。
+  - 调汁：烧热一点油浇在蒜末上，加 2 勺生抽、半勺老抽、1 勺醋、盐。
+  - 茄子和青椒混合，捣碎拌匀，浇汁。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_eggplant
+    - ing_green_bell_pepper
+    cooking_method: other
+    flavours:
+    - spicy
+    cuisine: 湘菜
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：加菜；原状态：常做）；吃了容易胃痛，不和麻婆豆腐同周，也不排在周一到周四。来源：WhatsApp
+    2024-09-19；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0029
+  name_zh: 毛血旺
+  name_en: Chongqing Spicy Blood Curd Hotpot (adults only)
+  dish_type: meat
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 猪血
+    quantity: 300.0
+    unit: g
+    note: null
+  - ingredient_id: null
+    unmatched_name: 午餐肉
+    quantity: 100.0
+    unit: g
+    note: null
+  - ingredient_id: null
+    unmatched_name: 黄豆芽
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: null
+    unmatched_name: 豆腐
+    quantity: 0.5
+    unit: 盒
+    note: null
+  - ingredient_id: ing_broad_bean_chili_paste
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 火锅底料
+    quantity: null
+    unit: null
+    note: 麻辣
+  - ingredient_id: ing_dried_chili_pepper
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_peppercorn
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 2
+  steps:
+  - 猪血切厚片焯水；午餐肉切片；豆腐切块。
+  - 黄豆芽焯 1 分钟铺碗底。
+  - 热油炒 2 勺豆瓣酱和一小块麻辣底料出红油，下姜蒜，加 3 碗水煮开，加 1 勺料酒、半勺生抽。
+  - 下猪血、午餐肉、豆腐煮 5 分钟，连汤倒在豆芽上。
+  - 面铺干辣椒段、花椒、蒜末，热油泼上，撒葱花。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients: []
+    cooking_method: boil
+    flavours:
+    - numbing_spicy
+    cuisine: 川菜
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：加菜；原状态：新增）；备选菜。猪血供应不稳定，Sheng Siong 有货才做。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0030
+  name_zh: 水煮牛肉
+  name_en: Sichuan Water-Boiled Beef (adults only)
+  dish_type: meat
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 牛柳
+    quantity: 300.0
+    unit: g
+    note: null
+  - ingredient_id: null
+    unmatched_name: 叶菜
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: ing_broad_bean_chili_paste
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dried_chili_pepper
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_peppercorn
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 鸡蛋清
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_chili_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 2
+  steps:
+  - 牛柳逆纹切薄片，加 1 勺生抽、半勺料酒、1 勺淀粉、半个蛋清抓匀腌 15 分钟。
+  - 叶菜焯 30 秒铺碗底。
+  - 热油小火炒 2 勺豆瓣酱出红油，下姜蒜，加 2 碗水煮开，调少许生抽。
+  - 牛肉片逐片下锅，中火煮 1 分钟至刚变色，连汤倒在菜上。
+  - 面上铺蒜末、1 小勺辣椒粉、1 小把干辣椒段和 1 小勺花椒，烧 3 勺热油泼上去，撒葱花。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients: []
+    cooking_method: boil
+    flavours:
+    - numbing_spicy
+    cuisine: 川菜
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：加菜；原状态：常做）；孩子牛肉过敏，这道只给大人。孩子那晚吃其余三道菜。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0031
+  name_zh: 海带排骨汤
+  name_en: Kelp and Pork Rib Soup
+  dish_type: soup
+  ingredients:
+  - ingredient_id: ing_pork_ribs
+    unmatched_name: null
+    quantity: 500.0
+    unit: g
+    note: null
+  - ingredient_id: ing_knotted_kelp
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 海带结一把泡软洗净。排骨焯水洗净。
+  - 排骨、姜片、料酒加 1.5 升水煮开撇沫，小火炖 40 分钟。
+  - 下海带结再炖 30 分钟，加盐和白胡椒。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_pork_ribs
+    cooking_method: stew
+    flavours:
+    - light
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：常做）；海带结干的要提前泡 1 小时。；类型、做法、口味、菜系由 Claude
+    判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0032
+  name_zh: 清炒山药
+  name_en: Stir-Fried Chinese Yam
+  dish_type: vegetarian
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 山药
+    quantity: 0.5
+    unit: 根
+    note: null
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 白醋
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_chicken_bouillon_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 山药戴手套削皮切薄片，泡白醋水。
+  - 热油蒜片爆香，山药大火炒 2 分钟，加 2 勺水、少许盐鸡精。
+  - 炒至脆嫩撒葱段出锅。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients: []
+    cooking_method: stir_fry
+    flavours:
+    - light
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：新增）；备选菜。削皮戴手套。；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0033
+  name_zh: 清炒杏鲍菇
+  name_en: Pan-Seared King Oyster Mushroom
+  dish_type: vegetarian
+  ingredients:
+  - ingredient_id: ing_king_oyster_mushroom
+    unmatched_name: null
+    quantity: 1.0
+    unit: 包
+    note: null
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_black_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 杏鲍菇切 5mm 厚片。
+  - 平底锅少油中火，杏鲍菇摆平煎 3 分钟一面，翻面再煎 2 分钟至金黄。
+  - 下蒜末，加 1 勺生抽、半勺蚝油、少许黑胡椒翻匀，撒葱花。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_king_oyster_mushroom
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：新增）；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0034
+  name_zh: 清蒸金目鲈
+  name_en: Steamed Barramundi with Ginger and Spring Onion
+  dish_type: meat
+  ingredients:
+  - ingredient_id: ing_barramundi
+    unmatched_name: null
+    quantity: 1.0
+    unit: 条
+    note: null
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: 1.0
+    unit: 把
+    note: null
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 蒸鱼豉油
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 鱼两面各划两刀，抹少许盐和料酒，鱼身铺姜片，腌 10 分钟。
+  - 水开后上锅，大火蒸 8 分钟（700g 左右的鱼），关火焖 2 分钟。
+  - 倒掉盘中腥水，去掉旧姜，铺上葱丝姜丝，淋 3 勺蒸鱼豉油。
+  - 烧 2 勺油至冒烟，浇在葱丝上。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_barramundi
+    - ing_scallion
+    cooking_method: steam
+    flavours:
+    - light
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：新增）；鱼请柜台去鳞去内脏。当天买当天吃，不留隔夜。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0035
+  name_zh: 炒蛤蜊
+  name_en: Stir-Fried Clams (Lala) with Ginger and Spring Onion
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: ing_clam
+    unmatched_name: null
+    quantity: 500.0
+    unit: g
+    note: null
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 豆豉
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 糖
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_red_chili
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 可不放
+  servings: 4
+  steps:
+  - 蛤蜊泡在加了 1 勺盐的清水里 30 分钟吐沙，刷净外壳。
+  - 热油下姜丝、蒜片、1 小勺豆豉爆香。
+  - 倒入蛤蜊大火翻炒，加 2 勺料酒，盖盖焖 2 分钟至开口。
+  - 加半勺生抽、半小勺糖，淀粉水勾薄芡，撒葱段。没开口的扔掉。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_clam
+    cooking_method: stir_fry
+    flavours:
+    - garlicky
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：试菜）；Sheng Siong 周末常有 lala。买回来先泡盐水 30 分钟吐沙。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0036
+  name_zh: 烤鸡翅
+  name_en: Oven-Roasted Chicken Wings
+  dish_type: meat
+  ingredients:
+  - ingredient_id: ing_chicken_wing_midsection
+    unmatched_name: null
+    quantity: 500.0
+    unit: g
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cumin_barbecue_seasoning
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_black_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 鸡翅两面划刀，加 1 勺生抽、1 勺蚝油、半勺料酒、蒜末、1 勺孜然烧烤料、黑胡椒、1 勺油抓匀，腌 30 分钟以上。
+  - 烤箱 200°C 预热，鸡翅铺烤架或锡纸上，烤 20 分钟。
+  - 翻面再烤 10 分钟至表皮焦黄。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_chicken_wing_midsection
+    cooking_method: roast
+    flavours:
+    - soy_sauce
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；咸香口，不刷蜂蜜。；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0037
+  name_zh: 煎三文鱼
+  name_en: Pan-Fried Salmon
+  dish_type: meat
+  ingredients:
+  - ingredient_id: ing_salmon
+    unmatched_name: null
+    quantity: 2.0
+    unit: 块
+    note: null
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_black_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 三文鱼解冻，用厨房纸吸干水分。
+  - 整块表面抹油、盐、黑胡椒，腌 15 分钟。
+  - 平底锅中火煎：皮朝下先煎 4 分钟，翻面 2 分钟，侧面各 30 秒。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_salmon
+    cooking_method: pan_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；只用油、盐、黑胡椒，不用照烧酱。全家每周都吃的菜。来源：WhatsApp
+    2024-09-19；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0038
+  name_zh: 煎午鱼
+  name_en: Pan-Fried Threadfin (Ikan Kurau)
+  dish_type: meat
+  ingredients:
+  - ingredient_id: ing_pomfret
+    unmatched_name: null
+    quantity: 1.0
+    unit: 条
+    note: null
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 鱼擦干，抹薄盐和白胡椒腌 10 分钟，再拍薄薄一层淀粉。
+  - 平底锅 3 勺油中火，姜片擦锅，鱼下锅不动煎 4 分钟，翻面再煎 4 分钟至金黄酥脆。
+  - 装盘，淋少许生抽或配姜丝蘸酱油。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_pomfret
+    cooking_method: pan_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：新增）；整条或 2 块鱼扒都可以，鱼扒更好煎。；类型、做法、口味、菜系由 Claude
+    判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0039
+  name_zh: 煎去骨鸡腿
+  name_en: Crispy Pan-Fried Boneless Chicken Thigh
+  dish_type: meat
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 去骨鸡腿肉
+    quantity: 350.0
+    unit: g
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 鸡腿去骨（或直接买去骨鸡腿肉）。
+  - 加生抽和蚝油腌 15 分钟。
+  - 用厨房纸吸干表面。
+  - 裹一层薄淀粉。
+  - 平底锅中火煎，皮朝下先煎 5 分钟至金黄酥脆，翻面 4 分钟。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients: []
+    cooking_method: pan_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；小红书原帖说是"儿子最喜欢的菜"。只用生抽蚝油腌，不是照烧。来源：WhatsApp
+    2025-10-23；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0040
+  name_zh: 煎巴当鱼
+  name_en: Pan-Fried Batang (Spanish Mackerel) Steaks
+  dish_type: meat
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 巴当鱼
+    quantity: 0.5
+    unit: 条
+    note: null
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 鱼块擦干，抹盐和白胡椒腌 15 分钟，拍一层薄淀粉。
+  - 平底锅中火热油，鱼块煎 3 分钟翻面再 3 分钟，边缘金黄即可。
+  - 配姜丝和生抽。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients: []
+    cooking_method: pan_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：新增）；一条巴当鱼请柜台分成两半：一半切厚块煎，一半切薄片做巴当鱼片汤，同一周用完。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0041
+  name_zh: 煎鸡翅
+  name_en: Pan-Fried Chicken Wings
+  dish_type: meat
+  ingredients:
+  - ingredient_id: ing_chicken_wing_midsection
+    unmatched_name: null
+    quantity: 500.0
+    unit: g
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 鸡翅两面各划一刀，加 1 勺生抽、1 勺蚝油、半勺料酒、蒜末、白胡椒抓匀腌 20 分钟。
+  - 平底锅少油中小火，鸡翅皮朝下煎 5 分钟至金黄，翻面再煎 5 分钟。
+  - 倒入腌汁和 3 勺水，盖盖小火焖 5 分钟，开盖收干汁。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_chicken_wing_midsection
+    cooking_method: pan_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；孩子爱吃，味道咸香不甜。；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0042
+  name_zh: 煎鸡胸肉
+  name_en: Pan-Seared Chicken Breast Slices (with a little water)
+  dish_type: meat
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 鸡胸肉
+    quantity: 400.0
+    unit: g
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_black_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 蛋清
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 鸡胸肉切薄片。
+  - 加生抽、黑胡椒、盐、蛋清、淀粉腌 30 分钟。
+  - 平底锅小火，少油。
+  - 鸡肉片下锅，一面 30 秒，翻面 30 秒。
+  - 加一点水，盖盖焖 30 秒。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients: []
+    cooking_method: pan_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；薄片加水焖一下，肉不柴。也用来做孩子的鸡肉汉堡。来源：WhatsApp
+    2026-04-23；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0043
+  name_zh: 牛肉炒青菜
+  name_en: Beef and Greens Stir-Fry (lunchbox)
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 牛肉片
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: null
+    unmatched_name: 叶菜
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 1
+  steps:
+  - 牛肉片加 1 勺生抽、半勺料酒、1 小勺淀粉、少许白胡椒抓匀腌 10 分钟。
+  - 热锅热油，牛肉大火滑炒至变色盛出。
+  - 蒜片爆香，下青菜大火炒 1 分钟，回锅牛肉，加 1 勺蚝油翻匀。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients: []
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：常做）；牛肉只有主人带饭吃，孩子不吃。；类型、做法、口味、菜系由 Claude
+    判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0044
+  name_zh: 牛肉豆腐煲
+  name_en: Beef and Tofu Claypot-Style (lunchbox)
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 牛肉片
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: null
+    unmatched_name: 豆腐
+    quantity: 0.5
+    unit: 盒
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dark_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_black_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 1
+  steps:
+  - 牛肉片加 1 勺生抽、半勺料酒、1 小勺淀粉腌 10 分钟；老豆腐切 2cm 块煎至金黄。
+  - 蒜姜爆香，牛肉大火滑炒变色。
+  - 加豆腐、1 勺蚝油、几滴老抽、半碗水，小火焖 3 分钟，淀粉水收浓，撒黑胡椒葱段。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients: []
+    cooking_method: stew
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：常做）；原青椒牛肉豆腐煲去青椒版。牛肉只有主人带饭吃。要配一个素菜。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0045
+  name_zh: 猪肉蛋饼
+  name_en: Pork and Egg Pancake
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: ing_ground_pork
+    unmatched_name: null
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: ing_egg
+    unmatched_name: null
+    quantity: 3.0
+    unit: 个
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_sesame_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 肉末加半勺生抽、半勺料酒、少许白胡椒、1 小勺淀粉拌匀。
+  - 鸡蛋打散，加肉末、葱花、少许盐、几滴香油搅匀。
+  - 平底锅薄油中小火，倒入蛋液摊平，盖盖煎 4 分钟至底面金黄定型。
+  - 翻面再煎 3 分钟至肉熟透，切块装盘。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_ground_pork
+    - ing_egg
+    cooking_method: pan_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：常做）；小孩爱吃。和同周另一道用肉末的菜共用一盒 300g 肉末。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0046
+  name_zh: 瘦肉水
+  name_en: Clear Lean Pork Broth (Cantonese)
+  dish_type: soup
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 瘦肉
+    quantity: 300.0
+    unit: g
+    note: null
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 瘦肉切薄片或剁成粗末，清水冲去血水。
+  - 放入大碗，加 3 片姜、800ml 热水，盖保鲜膜。
+  - 隔水大火蒸 50 分钟，只喝汤，加少许盐。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients: []
+    cooking_method: stew
+    flavours:
+    - light
+    cuisine: 粤菜
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：常做）；每周一次的清汤，孩子喝很好。；类型、做法、口味、菜系由 Claude
+    判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0047
+  name_zh: 秋葵炒肉
+  name_en: Lady's Finger (Okra) with Pork
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: ing_ladyfinger
+    unmatched_name: null
+    quantity: 1.0
+    unit: 包
+    note: null
+  - ingredient_id: null
+    unmatched_name: 猪肉片
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 秋葵用盐搓洗，开水焯 2 分钟，切片。
+  - 肉切小块，加生抽、淀粉、油腌 15 分钟。
+  - 热油爆香蒜，下肉炒至变色，下秋葵。
+  - 加生抽、水、少许盐，盖盖焖一会儿即可。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_ladyfinger
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: http://xhslink.com/a/yVnD4OfBWQg3
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：常做）；主人带饭常配的素菜，也可以单独做一份进饭盒。秋葵先用盐搓洗再焯水，不会太黏。来源：WhatsApp
+    2025-01-08；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0048
+  name_zh: 紫菜牛肉丸汤
+  name_en: Seaweed Soup with Beef Meatballs
+  dish_type: soup
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 牛肉丸
+    quantity: 1.0
+    unit: 包
+    note: null
+  - ingredient_id: ing_egg
+    unmatched_name: null
+    quantity: 1.0
+    unit: 个
+    note: null
+  - ingredient_id: ing_dried_nori_laver
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_sesame_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 锅里烧 1.2 升水，水开下 8 个牛肉丸煮 5 分钟至浮起。
+  - 紫菜撕小块放入，煮 1 分钟。
+  - 鸡蛋打散淋入（可不放），加盐、白胡椒、几滴香油，撒葱花。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_egg
+    cooking_method: boil
+    flavours:
+    - light
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：常做）；孩子牛肉过敏，不喝这锅。给孩子换成虾滑或紫菜蛋花汤。家里常做（8 个牛肉丸）。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0049
+  name_zh: 紫菜肉丸汤
+  name_en: Pork Meatball and Seaweed Soup
+  dish_type: soup
+  ingredients:
+  - ingredient_id: ing_ground_pork
+    unmatched_name: null
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: ing_dried_nori_laver
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_sesame_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_egg
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 可选
+  servings: 4
+  steps:
+  - 肉末加半勺生抽、半勺淀粉、姜末、少许白胡椒、1 勺水搅至起胶。
+  - 800ml 水加姜片煮开，用勺子挖肉丸下锅，中火煮 5 分钟浮起。
+  - 撕一小把紫菜放入，加盐，撒葱花淋香油。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_ground_pork
+    cooking_method: boil
+    flavours:
+    - light
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：常做）；肉末用半盒，另一半同周做半荤菜。；类型、做法、口味、菜系由 Claude
+    判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0050
+  name_zh: 紫菜蛋花汤
+  name_en: Seaweed and Egg Drop Soup
+  dish_type: soup
+  ingredients:
+  - ingredient_id: ing_egg
+    unmatched_name: null
+    quantity: 2.0
+    unit: 个
+    note: null
+  - ingredient_id: ing_dried_nori_laver
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_sesame_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 800ml 水煮开，撕入一把紫菜，加半勺生抽。
+  - 蛋液打散，转小火沿锅边细细淋入，不要搅，10 秒后轻推。
+  - 加盐、白胡椒、葱花、香油。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_egg
+    cooking_method: boil
+    flavours:
+    - light
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：新增）；快手汤，周五配面用。；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0051
+  name_zh: 红烧肉
+  name_en: Red-Braised Pork Belly
+  dish_type: meat
+  ingredients:
+  - ingredient_id: ing_pork_belly
+    unmatched_name: null
+    quantity: 500.0
+    unit: g
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dark_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_rock_sugar
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_star_anise
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 桂皮
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 五花肉切 3cm 方块，冷水下锅加姜片料酒焯水 3 分钟，捞出洗净。
+  - 少油小火炒 20g 冰糖至琥珀色，下肉块翻炒上色。
+  - 加生抽 2 勺、老抽 半勺、料酒 2 勺、姜片、葱段、1 颗八角、一小段桂皮，加热水没过肉。
+  - 大火煮开转小火盖盖焖 45 分钟，开盖大火收汁至浓稠。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_pork_belly
+    cooking_method: braise
+    flavours:
+    - soy_sauce
+    - sweet
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；小孩爱吃，少放糖色就不甜。；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0052
+  name_zh: 羊肚菌排骨汤
+  name_en: Morel and Pork Rib Soup
+  dish_type: soup
+  ingredients:
+  - ingredient_id: ing_pork_ribs
+    unmatched_name: null
+    quantity: 500.0
+    unit: g
+    note: null
+  - ingredient_id: null
+    unmatched_name: 羊肚菌
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 羊肚菌 20g 温水泡 30 分钟，剪开冲洗掉泥沙，泡菇水沉淀后留清液。
+  - 排骨焯水洗净，加姜片、料酒、泡菇水和清水 1.5 升煮开撇沫。
+  - 下羊肚菌小火炖 70 分钟，加盐。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_pork_ribs
+    cooking_method: stew
+    flavours:
+    - light
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：常做）；羊肚菌 RedMart 买干的，约 20g 一次。泡菇水要用。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0053
+  name_zh: 肉末蒸汤
+  name_en: Steamed Minced Pork Soup with White Mushroom
+  dish_type: soup
+  ingredients:
+  - ingredient_id: ing_ground_pork
+    unmatched_name: null
+    quantity: 200.0
+    unit: g
+    note: null
+  - ingredient_id: ing_white_button_mushroom
+    unmatched_name: null
+    quantity: 1.0
+    unit: 盒
+    note: null
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 梅头肉剁碎（或买肉末）。
+  - 加淀粉、盐、姜末、少许油拌匀，腌 10 分钟。
+  - 肉末放进深碗，加口蘑片，加约 500ml 水。
+  - 放 1 片姜，水开后蒸 30 分钟。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_ground_pork
+    - ing_white_button_mushroom
+    cooking_method: steam
+    flavours:
+    - light
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：常做）；家里最常做的汤（steam minced pork soup）。用梅头肉自己剁更嫩。来源：WhatsApp
+    2024-10-05；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0054
+  name_zh: 肉末豆腐
+  name_en: Minced Pork Tofu (extra meat, lunchbox)
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: ing_ground_pork
+    unmatched_name: null
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: null
+    unmatched_name: 豆腐
+    quantity: 0.5
+    unit: 盒
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dark_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 1
+  steps:
+  - 老豆腐切 2cm 块。
+  - 热油下姜蒜末，肉末大火炒散变色，加半勺料酒。
+  - 加 1 勺生抽、几滴老抽、1 勺蚝油、半碗水，放豆腐小火焖 3 分钟。
+  - 淀粉水收浓，撒白胡椒葱花。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_ground_pork
+    cooking_method: braise
+    flavours:
+    - soy_sauce
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：常做）；肉多版，小孩不吃所以只做带饭。要配一个素菜。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0055
+  name_zh: 肉末豆角
+  name_en: French Beans with Minced Pork
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: ing_green_beans
+    unmatched_name: null
+    quantity: 250.0
+    unit: g
+    note: null
+  - ingredient_id: ing_ground_pork
+    unmatched_name: null
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 糖
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 四季豆去头尾掐成 4cm 段，洗净沥干。
+  - 锅里多放一点油，中火把豆角煎炒 5 分钟至表皮起皱变软，盛出。
+  - 余油下蒜末姜末，肉末大火炒散至变色，加半勺料酒。
+  - 回锅豆角，加 1 勺生抽、1 勺蚝油、半小勺糖，翻炒 1 分钟出锅。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_green_beans
+    - ing_ground_pork
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：新增）；和同周另一道用肉末的菜共用一盒 300g 肉末。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0056
+  name_zh: 腐竹炒肉片
+  name_en: Sliced Pork with Beancurd Sticks and Shiitake
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 猪肉片
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: ing_fresh_shiitake_mushroom
+    unmatched_name: null
+    quantity: 1.0
+    unit: 包
+    note: null
+  - ingredient_id: null
+    unmatched_name: 腐竹
+    quantity: null
+    unit: null
+    note: 干，泡 30 分钟以上：温水加 1 勺盐、几滴白醋，用碗压住
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 芹菜段
+    quantity: null
+    unit: null
+    note: 可选
+  servings: 4
+  steps:
+  - 腐竹剪段，温水加盐和几滴白醋泡至少 30 分钟，用碗压住让它完全泡在水里。
+  - 香菇切片；肉切薄片，加生抽、淀粉、油腌 15 分钟。
+  - 热油先炒香菇，下肉炒至变色，下腐竹，加少许生抽和水，盖盖煮 5 分钟。
+  - 可加芹菜段翻匀出锅。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_fresh_shiitake_mushroom
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: http://xhslink.com/a/Ub1A5kyyVAT4
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：常做）；腐竹要提前至少 30 分钟泡软（加盐和几滴白醋，用碗压住）。芹菜段可加可不加。来源：WhatsApp
+    2025-01-31；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0057
+  name_zh: 芋头蒸排骨
+  name_en: Steamed Pork Ribs on Yam
+  dish_type: meat
+  ingredients:
+  - ingredient_id: ing_pork_ribs
+    unmatched_name: null
+    quantity: 500.0
+    unit: g
+    note: null
+  - ingredient_id: null
+    unmatched_name: 芋头
+    quantity: 1.0
+    unit: 个
+    note: null
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 排骨加淀粉抓洗几遍去血水，擦干。
+  - 加 3/4 勺盐、少许料酒、白胡椒粉、2 勺淀粉拌匀。
+  - 再加 1 勺淀粉和 2 勺油拌匀。
+  - 加姜末蒜末拌匀，腌 20 分钟。
+  - 芋头切小块铺盘底。
+  - 排骨铺在芋头上。
+  - 水开后蒸 30 分钟。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_pork_ribs
+    cooking_method: steam
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；芋头（Thai yam）FairPrice 有，一个约 500g。来源：WhatsApp
+    2024-09-22；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0058
+  name_zh: 芹菜炒牛肉
+  name_en: Stir-Fried Beef with Chinese Celery (lunchbox)
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 牛肉片
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: ing_celery
+    unmatched_name: null
+    quantity: 1.0
+    unit: 包
+    note: null
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 1
+  steps:
+  - 牛肉逆纹切薄片，加姜、生抽、蚝油、淀粉、油腌 15 分钟。
+  - 芹菜切段。
+  - 牛肉大火炒至八成熟盛出，再炒芹菜。
+  - 牛肉回锅，淋少许淀粉水（生抽 + 淀粉 + 水），快速翻匀。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_celery
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: http://xhslink.com/o/6twCCOoTJyU
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：常做）；牛肉只有主人带饭吃，孩子不吃。用本地芹菜（daun sup）。来源：WhatsApp
+    2026-04-21；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0059
+  name_zh: 芹菜炒香干
+  name_en: Celery with Pressed Tofu
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: ing_celery
+    unmatched_name: null
+    quantity: 1.0
+    unit: 包
+    note: null
+  - ingredient_id: ing_pressed_tofu
+    unmatched_name: null
+    quantity: 1.0
+    unit: 包
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dried_chili_pepper
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 可不放
+  servings: 4
+  steps:
+  - 芹菜撕去老筋，斜切 4cm 段；香干切薄片。
+  - 热油下蒜片（大人想吃辣可加几粒干辣椒），香干中火煎炒 2 分钟至微黄。
+  - 下芹菜大火炒 2 分钟，加 1 勺生抽、半勺蚝油、少许盐，炒匀出锅。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_celery
+    - ing_pressed_tofu
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：常做）；不带肉的版本。WhatsApp 里发过的带肉版本见「香干炒肉」（肉片
+    + 香干）。；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0060
+  name_zh: 苦瓜黄豆排骨汤
+  name_en: Bitter Gourd, Soybean and Pork Rib Soup
+  dish_type: soup
+  ingredients:
+  - ingredient_id: ing_pork_ribs
+    unmatched_name: null
+    quantity: 500.0
+    unit: g
+    note: null
+  - ingredient_id: ing_bitter_melon
+    unmatched_name: null
+    quantity: 1.0
+    unit: 根
+    note: null
+  - ingredient_id: null
+    unmatched_name: 黄豆
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 黄豆 50g 提前泡一夜。排骨焯水洗净。苦瓜去籽切大块。
+  - 排骨、黄豆、姜片、料酒加 1.5 升水煮开撇沫，小火炖 50 分钟。
+  - 下苦瓜再炖 30 分钟，加盐。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_pork_ribs
+    - ing_bitter_melon
+    cooking_method: stew
+    flavours:
+    - light
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：新增）；黄豆前一晚泡。苦瓜炖久了不苦。；类型、做法、口味、菜系由 Claude
+    判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0061
+  name_zh: 莲藕排骨汤
+  name_en: Lotus Root Pork Rib Soup
+  dish_type: soup
+  ingredients:
+  - ingredient_id: ing_pork_ribs
+    unmatched_name: null
+    quantity: 500.0
+    unit: g
+    note: null
+  - ingredient_id: ing_lotus_root
+    unmatched_name: null
+    quantity: 0.5
+    unit: 节
+    note: null
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 花生
+    quantity: null
+    unit: null
+    note: 可选，提前泡 2 小时
+  servings: 4
+  steps:
+  - 花生（可选）泡 2 小时。莲藕去皮切块。
+  - 排骨冷水加姜片煮开，冲掉血沫。
+  - 莲藕和花生在开水里焯 1 分钟。
+  - 排骨、花生、莲藕加水大火煮开，撇沫，转小火盖盖炖 1.5 小时，加盐。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_pork_ribs
+    - ing_lotus_root
+    cooking_method: stew
+    flavours:
+    - light
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：常做）；一节藕用一半，另一半同周做藕片炒肉片。花生可放可不放。来源：WhatsApp
+    2024-09-25；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0062
+  name_zh: 莴笋炒肉片
+  name_en: Celtuce with Pork Slices
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 莴笋
+    quantity: 1.0
+    unit: 根
+    note: null
+  - ingredient_id: null
+    unmatched_name: 猪肉片
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_chicken_bouillon_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 莴笋削去厚皮，切菱形薄片；肉片加半勺生抽、半勺料酒、1 小勺淀粉腌 10 分钟。
+  - 热油肉片大火滑炒变色盛出。
+  - 蒜片爆香，莴笋大火炒 2 分钟，加少许盐。
+  - 回锅肉片，加半勺生抽、少许鸡精翻匀出锅。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients: []
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：新增）；莴笋在 Sheng Siong 买。叶子不要扔，可以当第二天的叶菜炒。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0063
+  name_zh: 菠菜豆腐汤
+  name_en: Spinach and Tofu Soup
+  dish_type: soup
+  ingredients:
+  - ingredient_id: ing_spinach
+    unmatched_name: null
+    quantity: 300.0
+    unit: g
+    note: null
+  - ingredient_id: null
+    unmatched_name: 豆腐
+    quantity: 1.0
+    unit: 盒
+    note: null
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_sesame_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_chicken_bouillon_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 可选
+  servings: 4
+  steps:
+  - 菠菜洗净切段，开水烫 30 秒捞出去草酸。嫩豆腐切块。
+  - 800ml 水加姜片煮开，下豆腐煮 3 分钟。
+  - 下菠菜煮 1 分钟，加盐、白胡椒、香油。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_spinach
+    cooking_method: boil
+    flavours:
+    - light
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：新增）；快手汤。用嫩豆腐。；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0064
+  name_zh: 葱油白切鸡
+  name_en: Poached Chicken with Spring Onion Oil
+  dish_type: meat
+  ingredients:
+  - ingredient_id: ing_whole_chicken
+    unmatched_name: null
+    quantity: 0.5
+    unit: 只
+    note: null
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: 1.0
+    unit: 把
+    note: null
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_sesame_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 半只鸡冷水下锅，加姜片、葱结、1 勺料酒，水开后转最小火浸煮 20 分钟，关火焖 10 分钟。
+  - 捞出放冰水 5 分钟，皮更紧。斩块装盘。
+  - 葱切细丝铺鸡上，撒少许盐。烧 3 勺油至冒烟浇在葱丝上，淋 1 勺生抽、半勺香油。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_whole_chicken
+    - ing_scallion
+    cooking_method: boil
+    flavours:
+    - salty_savory
+    cuisine: 粤菜
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：新增）；半只鸡做菜，另半只炖香菇鸡汤。；类型、做法、口味、菜系由 Claude
+    判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0065
+  name_zh: 葱烧豆腐
+  name_en: Spring Onion Braised Tofu
+  dish_type: vegetarian
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 豆腐
+    quantity: 1.0
+    unit: 盒
+    note: null
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: 1.0
+    unit: 把
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dark_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 糖
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 老豆腐切 1cm 厚片吸干水；葱白切段，葱绿切段分开放。
+  - 平底锅多油中火，豆腐两面煎至金黄。
+  - 下葱白煸 1 分钟出香，加 1 勺生抽、几滴老抽、1 勺蚝油、半小勺糖、半碗水，小火焖 3 分钟。
+  - 淀粉水勾薄芡，放葱绿翻两下出锅。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_scallion
+    cooking_method: braise
+    flavours:
+    - soy_sauce
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：新增）；买老豆腐（firm tofu）。；类型、做法、口味、菜系由 Claude
+    判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0066
+  name_zh: 蒜蓉蒸茄子
+  name_en: Steamed Eggplant with Garlic Sauce
+  dish_type: vegetarian
+  ingredients:
+  - ingredient_id: ing_eggplant
+    unmatched_name: null
+    quantity: 2.0
+    unit: 根
+    note: null
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 糖
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_sesame_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_red_chili
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 可不放
+  servings: 4
+  steps:
+  - 茄子切 8cm 段再对剖，表面抹一点油防变黑，水开后蒸 10 分钟。
+  - 蒜末 3 勺，热油 2 勺泼在蒜末上，加 2 勺生抽、1 勺蚝油、半小勺糖、几滴香油拌成酱。
+  - 蒸好的茄子撕成条，浇酱汁撒葱花。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_eggplant
+    cooking_method: steam
+    flavours:
+    - garlicky
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：新增）；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0067
+  name_zh: 蒜蓉西兰花
+  name_en: Garlic Broccoli
+  dish_type: vegetarian
+  ingredients:
+  - ingredient_id: ing_broccoli
+    unmatched_name: null
+    quantity: 1.0
+    unit: 颗
+    note: null
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_chicken_bouillon_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 西兰花切小朵，盐水泡 5 分钟洗净。
+  - 沸水加少许盐和油，西兰花焯 1 分钟捞出沥干。
+  - 热油下蒜末爆香，西兰花大火炒 1 分钟，加少许盐鸡精，淀粉水勾薄芡出锅。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_broccoli
+    cooking_method: stir_fry
+    flavours:
+    - garlicky
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：新增）；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0068
+  name_zh: 蒜香排骨
+  name_en: Garlic Pork Ribs
+  dish_type: meat
+  ingredients:
+  - ingredient_id: ing_pork_ribs
+    unmatched_name: null
+    quantity: 500.0
+    unit: g
+    note: null
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: 2.0
+    unit: 头
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 糖
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_egg
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 排骨泡水 20 分钟沥干，加 1 勺生抽、1 勺蚝油、1 勺料酒、半勺糖、白胡椒、半个蛋液、2 勺淀粉抓匀腌 30 分钟。
+  - 一头蒜切末，一头蒜拍碎。油温六成热先炸碎蒜至微黄捞出。
+  - 排骨中油温炸 6 分钟捞出，升高油温复炸 1 分钟至金黄。
+  - 锅留少油，下蒜末炒香，倒入排骨和炸蒜翻匀，撒少许盐。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_pork_ribs
+    - ing_garlic
+    cooking_method: deep_fry
+    flavours:
+    - garlicky
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：新增）；请柜台切 4cm 段。先炸后炒，蒜要多。；类型、做法、口味、菜系由 Claude
+    判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0069
+  name_zh: 蒸蛋
+  name_en: Savory Steamed Egg
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: ing_egg
+    unmatched_name: null
+    quantity: 4.0
+    unit: 个
+    note: null
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_sesame_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 温水
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 4 个鸡蛋打散，加 1 小勺盐，加鸡蛋液 1.5 倍的温水（约 300ml），搅匀。
+  - 过筛倒入深盘，撇掉表面泡沫，盖保鲜膜或盘子。
+  - 水开后上锅，中小火蒸 12 分钟，关火焖 2 分钟。
+  - 出锅淋 1 勺生抽、几滴香油，撒葱花。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_egg
+    cooking_method: steam
+    flavours:
+    - light
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：常做）；小孩常备菜，每周可以有一次。；类型、做法、口味、菜系由 Claude
+    判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0070
+  name_zh: 藕片炒肉片
+  name_en: Stir-Fried Lotus Root with Pork Slices
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: ing_lotus_root
+    unmatched_name: null
+    quantity: 0.5
+    unit: 节
+    note: null
+  - ingredient_id: null
+    unmatched_name: 猪肉片
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 白醋
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 藕去皮切薄片，泡在加了几滴白醋的清水里防变黑。
+  - 肉片加半勺生抽、半勺料酒、1 小勺淀粉抓匀腌 10 分钟。
+  - 热锅热油，肉片大火滑炒至变色盛出。
+  - 蒜片姜丝爆香，下藕片大火炒 2 分钟，加少许水炒至断生。
+  - 回锅肉片，加 1 勺生抽、1 勺蚝油翻匀，撒葱段出锅。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_lotus_root
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：新增）；和莲藕排骨汤同周安排，一节藕两道菜用完。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0071
+  name_zh: 藤椒鸡
+  name_en: Jiao Ma Chicken (Sichuan Pepper Chicken)
+  dish_type: meat
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 带骨鸡腿
+    quantity: 2.0
+    unit: 只
+    note: null
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: 1.0
+    unit: 把
+    note: null
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_peppercorn
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_chili_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 白芝麻
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 醋
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_teng_jiao_oil_green_sichuan_peppercorn_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 糖
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 2
+  steps:
+  - 鸡腿冷水下锅，加葱、姜片、花椒，大火煮开撇沫，转中小火煮 15 到 20 分钟，筷子能扎透无血水即熟。
+  - 捞出泡冷水 5 到 10 分钟。
+  - 沥干，顺纹手撕成小块。
+  - 调汁：碗里放姜末、辣椒粉、白芝麻，烧热油浇上；加 2 勺生抽、1 勺醋、半勺藤椒油、少许糖拌匀。
+  - 浇在鸡肉上，撒葱花。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_scallion
+    cooking_method: boil
+    flavours:
+    - numbing_spicy
+    cuisine: 川菜
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：加菜；原状态：常做）；主人常带的便当菜。带饭时酱汁另装一小盒，第二天自己拌；可以加芹菜或香菜。藤椒油在
+    RedMart 买。来源：WhatsApp 2026-05-13；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0072
+  name_zh: 蘑菇炒肉片
+  name_en: Button Mushrooms with Pork Slices
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: ing_white_button_mushroom
+    unmatched_name: null
+    quantity: 1.0
+    unit: 盒
+    note: null
+  - ingredient_id: null
+    unmatched_name: 猪肉片
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 肉片加半勺生抽、半勺料酒、1 小勺淀粉腌 10 分钟。口蘑擦净切片。
+  - 热锅热油，肉片大火滑炒至变色盛出。
+  - 下蘑菇片，中大火干炒 3 分钟至出水收干、边缘微黄。
+  - 蒜片爆香，回锅肉片，加 1 勺生抽、1 勺蚝油、少许白胡椒翻匀，撒葱花。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_white_button_mushroom
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：新增）；和同周另一道用肉片的菜共用一盒 300g 肉片。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0073
+  name_zh: 虫草花乌鸡汤
+  name_en: Cordyceps Flower Black Chicken Soup
+  dish_type: soup
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 乌鸡
+    quantity: 1.0
+    unit: 只
+    note: null
+  - ingredient_id: null
+    unmatched_name: 虫草花
+    quantity: null
+    unit: null
+    note: 约 20g
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 乌鸡去内脏洗净。
+  - 冷水没过鸡煮开一次，冲掉血沫。
+  - 虫草花洗净，和鸡、姜片一起加水。
+  - 大火煮开撇沫。
+  - 转小火盖盖炖 1 小时，加盐。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients: []
+    cooking_method: stew
+    flavours:
+    - light
+    cuisine: 粤菜
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：常做）；乌鸡 FairPrice 的 Pasar 盒装约 400g。虫草花干货常备。来源：WhatsApp
+    2024-09-22；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0074
+  name_zh: 蚝油生菜
+  name_en: Lettuce with Oyster Sauce
+  dish_type: vegetarian
+  ingredients:
+  - ingredient_id: ing_lettuce
+    unmatched_name: null
+    quantity: 1.0
+    unit: 颗
+    note: null
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 糖
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 生菜掰大片洗净。
+  - 沸水加少许油和盐，生菜焯 20 秒捞出沥干摆盘。
+  - 热油下蒜末，加 2 勺蚝油、半勺生抽、半小勺糖、3 勺水煮开，淀粉水勾薄芡，浇在生菜上。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_lettuce
+    cooking_method: boil
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：新增）；当晚吃完，不适合隔夜。；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0075
+  name_zh: 裙带菜虾球汤
+  name_en: Wakame and Prawn Soup
+  dish_type: soup
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 虾仁
+    quantity: 250.0
+    unit: g
+    note: null
+  - ingredient_id: null
+    unmatched_name: 裙带菜
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_sesame_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 干裙带菜一小把冷水泡 5 分钟，洗净。虾仁解冻，加少许料酒和白胡椒抓一下。
+  - 800ml 水加姜片煮开，下裙带菜煮 2 分钟。
+  - 下虾仁煮 2 分钟变红卷起即可，加盐、香油、葱花。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients: []
+    cooking_method: boil
+    flavours:
+    - light
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：常做）；虾只排周五周六。；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0076
+  name_zh: 西洋菜排骨汤
+  name_en: Watercress and Pork Rib Soup
+  dish_type: soup
+  ingredients:
+  - ingredient_id: ing_pork_ribs
+    unmatched_name: null
+    quantity: 500.0
+    unit: g
+    note: null
+  - ingredient_id: ing_watercress
+    unmatched_name: null
+    quantity: 1.0
+    unit: 包
+    note: null
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 排骨焯水洗净。西洋菜洗净切两段。
+  - 排骨、姜片、料酒加 1.5 升水煮开撇沫，小火炖 40 分钟。
+  - 放西洋菜再炖 30 分钟，加盐。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_pork_ribs
+    - ing_watercress
+    cooking_method: stew
+    flavours:
+    - light
+    cuisine: 粤菜
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：新增）；西洋菜要炖到软烂才不苦。；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0077
+  name_zh: 豆角炒肉片
+  name_en: French Beans with Pork Slices (lunchbox)
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: ing_green_beans
+    unmatched_name: null
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: null
+    unmatched_name: 猪肉片
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 1
+  steps:
+  - 肉片加半勺生抽、半勺料酒、1 小勺淀粉腌 10 分钟；四季豆切 4cm 段。
+  - 豆角多油中火煸 4 分钟至起皱盛出。
+  - 肉片大火炒变色，下蒜姜，回锅豆角，加 1 勺生抽、半勺蚝油翻匀。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_green_beans
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：新增）；备选菜。；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0078
+  name_zh: 豉汁蒸排骨
+  name_en: Steamed Pork Ribs with Black Bean Sauce
+  dish_type: meat
+  ingredients:
+  - ingredient_id: ing_pork_ribs
+    unmatched_name: null
+    quantity: 500.0
+    unit: g
+    note: null
+  - ingredient_id: null
+    unmatched_name: 豆豉
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 糖
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 排骨小段冲洗泡水 20 分钟去血水，沥干。
+  - 加 1 勺半豆豉（略压碎）、蒜末、姜末、1 勺生抽、1 勺蚝油、1 勺料酒、半勺糖、1 勺淀粉、1 勺油抓匀腌 20 分钟。
+  - 平铺深盘，水开后大火蒸 20 分钟。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_pork_ribs
+    cooking_method: steam
+    flavours:
+    - soy_sauce
+    cuisine: 粤菜
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：新增）；请柜台把排骨切成 3cm 小段。；类型、做法、口味、菜系由 Claude
+    判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0079
+  name_zh: 酱油水豆腐鱼
+  name_en: Bombay Duck in Soy Broth (Fujian style)
+  dish_type: meat
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 豆腐鱼
+    quantity: 500.0
+    unit: g
+    note: null
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: 1.0
+    unit: 把
+    note: null
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 糖
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 豆腐鱼去头去内脏，剪成 5cm 段，洗净沥干。
+  - 热油下姜片蒜片爆香，加 1 碗热水、3 勺生抽、1 勺料酒、半勺糖煮开。
+  - 下鱼段，中火煮 4 分钟，轻轻晃锅不要翻，撒葱段、白胡椒出锅。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_scallion
+    cooking_method: braise
+    flavours:
+    - soy_sauce
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：试菜）；豆腐鱼不常有，买不到就做清蒸金目鲈。鱼肉极嫩，不要翻动太多。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0080
+  name_zh: 酱油鸡腿
+  name_en: Soy Sauce Chicken Thighs
+  dish_type: meat
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 带骨鸡腿
+    quantity: 2.0
+    unit: 只
+    note: null
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: 1.0
+    unit: 把
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dark_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_rock_sugar
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_star_anise
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 桂皮
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_sesame_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 锅内放 1 碗生抽、半碗水、2 勺老抽、30g 冰糖、2 勺料酒、姜片、葱段、1 颗八角、一小段桂皮，煮开。
+  - 鸡腿放入，汤汁要没过一半，中小火每面煮 10 分钟，中途翻面两次。
+  - 关火盖盖焖 10 分钟。取出刷一层香油，稍凉斩块，淋 2 勺卤汁。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_scallion
+    cooking_method: braise
+    flavours:
+    - soy_sauce
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：新增）；粤式酱油鸡做法，带骨鸡腿整只浸煮再斩块。；类型、做法、口味、菜系由 Claude
+    判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0081
+  name_zh: 酱焖鸡块
+  name_en: Soybean-Paste Braised Chicken with Potato
+  dish_type: meat
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 去骨鸡腿肉
+    quantity: 350.0
+    unit: g
+    note: null
+  - ingredient_id: ing_potato
+    unmatched_name: null
+    quantity: 2.0
+    unit: 个
+    note: null
+  - ingredient_id: ing_fresh_shiitake_mushroom
+    unmatched_name: null
+    quantity: 1.0
+    unit: 包
+    note: null
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dried_chili_pepper
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_peppercorn
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 黄豆酱
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 鸡肉切小块，冷水下锅加姜片煮开，冲掉血沫。
+  - 土豆、香菇切块。
+  - 热油爆香姜片、蒜、干辣椒和几粒花椒，下鸡块翻炒。
+  - 加 1 勺生抽、1 勺黄豆酱、白胡椒粉炒匀。
+  - 下土豆、香菇，加水没过一半，盖盖焖 15 分钟。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_potato
+    - ing_fresh_shiitake_mushroom
+    cooking_method: braise
+    flavours:
+    - soy_sauce
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；原做法有青椒红椒，全家版不放。来源：WhatsApp 2024-10-05；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0082
+  name_zh: 酸菜嫩肉片
+  name_en: Pickled Mustard Greens with Tender Pork Slices
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 猪肉片
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: null
+    unmatched_name: 酸菜
+    quantity: 1.0
+    unit: 包
+    note: null
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 肉片加白胡椒粉、生抽、盐、淀粉和少量水抓匀。
+  - 肉片下开水汆至变色捞出。
+  - 酸菜洗净挤干切段，蒜爆香下酸菜炒，加水、少许盐。
+  - 把肉片铺在酸菜上，盖盖中小火煮 3 分钟。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients: []
+    cooking_method: boil
+    flavours:
+    - sour
+    cuisine: 家常
+  source: manual
+  source_url: http://xhslink.com/a/x3OAQNWgSRV2
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：常做）；肉片先水煮再铺在酸菜上，很嫩。酸菜本身咸，盐要少放。来源：WhatsApp
+    2025-01-03；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0083
+  name_zh: 酸菜肉丝
+  name_en: Stir-Fried Shredded Pork with Pickled Mustard Greens (lunchbox)
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 猪肉片
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: null
+    unmatched_name: 酸菜
+    quantity: 0.5
+    unit: 包
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 1
+  steps:
+  - 酸菜冲一遍水，挤干。
+  - 肉切丝，加生抽、姜末、淀粉、少许油腌 15 分钟。
+  - 肉丝炒至八成熟盛出。
+  - 爆香姜蒜，下酸菜炒到水汽收干。
+  - 肉丝回锅炒熟拌匀。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients: []
+    cooking_method: stir_fry
+    flavours:
+    - sour
+    cuisine: 家常
+  source: manual
+  source_url: http://xhslink.com/o/49OgXinUEiV
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：常做）；半包酸菜，剩的半包留给酸菜嫩肉片。酸菜只冲一遍水，保留酸味。来源：WhatsApp
+    2026-06-22；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0084
+  name_zh: 醋溜土豆丝
+  name_en: Vinegar Potato Shreds
+  dish_type: vegetarian
+  ingredients:
+  - ingredient_id: ing_potato
+    unmatched_name: null
+    quantity: 3.0
+    unit: 个
+    note: null
+  - ingredient_id: null
+    unmatched_name: 白醋
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 糖
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dried_chili_pepper
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 可不放
+  - ingredient_id: ing_peppercorn
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 可不放
+  servings: 4
+  steps:
+  - 土豆去皮切细丝，清水泡 5 分钟冲掉淀粉，沥干。
+  - 热油下蒜片（大人想吃辣可加 2 粒干辣椒），下土豆丝大火翻炒 2 分钟。
+  - 沿锅边淋 1 勺白醋，加半小勺盐、一点糖，再炒 1 分钟至脆嫩，撒葱花出锅。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_potato
+    cooking_method: stir_fry
+    flavours:
+    - sour
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：常做）；家庭版不放辣。；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0085
+  name_zh: 青椒炒牛肉
+  name_en: Stir-Fried Beef with Green Chilli Peppers (lunchbox)
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 牛肉片
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: ing_green_bell_pepper
+    unmatched_name: null
+    quantity: 1.0
+    unit: 包
+    note: null
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 1
+  steps:
+  - 牛肉片大火炒至五七成熟盛出。
+  - 少许油爆香姜蒜末。
+  - 下青椒圈和少许盐炒软。
+  - 牛肉回锅拌匀，加一点生抽和少量水，炒到牛肉全熟。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_green_bell_pepper
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：常做）；青椒只进主人饭盒（长的螺丝椒，不是灯笼椒）。牛肉孩子不吃。来源：WhatsApp
+    2026-06-29；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0086
+  name_zh: 青椒炒肉
+  name_en: Stir-Fried Pork with Green Chilli Peppers (lunchbox)
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 猪肉片
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: ing_green_bell_pepper
+    unmatched_name: null
+    quantity: 1.0
+    unit: 包
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 1
+  steps:
+  - 肉片加生抽、淀粉、油腌 15 分钟。
+  - 肉片大火炒至变色盛出。
+  - 少许油爆香姜蒜末，下青椒圈和少许盐炒软。
+  - 肉回锅，加一点生抽和少量水，炒匀。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_green_bell_pepper
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：常做）；主人最常带的饭盒菜（"green pepper with pork"）。青椒只进主人饭盒，用长的螺丝椒。来源：WhatsApp
+    日常指令（无文字做法）；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0087
+  name_zh: 香干炒肉
+  name_en: Tau Kwa (Pressed Tofu) with Pork
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: ing_pressed_tofu
+    unmatched_name: null
+    quantity: 1.0
+    unit: 包
+    note: null
+  - ingredient_id: null
+    unmatched_name: 猪肉片
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 肉切片，加生抽、淀粉、油腌 15 分钟。
+  - 香干切片。
+  - 热油下肉炒至变色，下香干片。
+  - 加盐和一点水，翻炒均匀。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_pressed_tofu
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: http://xhslink.com/a/zlnjq2CBfJV2
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：常做）；WhatsApp 里的香干版本，带肉；芹菜炒香干是不带肉的版本。来源：WhatsApp
+    2025-01-12；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0088
+  name_zh: 香煎猪扒
+  name_en: Pan-Fried Pork Tenderloin
+  dish_type: meat
+  ingredients:
+  - ingredient_id: ing_pork_tenderloin
+    unmatched_name: null
+    quantity: 300.0
+    unit: g
+    note: null
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_black_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 里脊切厚片。
+  - 用刀背把肉拍松。
+  - 加姜片、盐、1 小勺生抽、黑胡椒粉、淀粉和一点水抓匀，腌 1 小时。
+  - 拣掉姜片，平底锅中火煎，每面 3 分钟至金黄。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_pork_tenderloin
+    cooking_method: pan_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；用猪里脊，刀背拍松。不用照烧酱。带饭时按 1 人份做 1 到 2 片。来源：WhatsApp
+    2024-10-22；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0089
+  name_zh: 香菇油菜
+  name_en: Shiitake with Greens
+  dish_type: vegetarian
+  ingredients:
+  - ingredient_id: ing_fresh_shiitake_mushroom
+    unmatched_name: null
+    quantity: 1.0
+    unit: 包
+    note: null
+  - ingredient_id: null
+    unmatched_name: 叶菜
+    quantity: 300.0
+    unit: g
+    note: null
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 糖
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 香菇切厚片；叶菜洗净，沸水加油盐焯 40 秒捞出摆盘。
+  - 热油蒜片爆香，香菇中火炒 3 分钟至软。
+  - 加 1 勺生抽、1 勺蚝油、半小勺糖、半碗水煮开，淀粉水勾芡，浇在叶菜上。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_fresh_shiitake_mushroom
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：新增）；备选菜。叶菜用小白菜或菜心。；类型、做法、口味、菜系由 Claude
+    判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0090
+  name_zh: 香菇滑鸡
+  name_en: Steamed Chicken with Shiitake
+  dish_type: meat
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 去骨鸡腿肉
+    quantity: 350.0
+    unit: g
+    note: null
+  - ingredient_id: ing_fresh_shiitake_mushroom
+    unmatched_name: null
+    quantity: 1.0
+    unit: 包
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 糖
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_sesame_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 鸡腿肉切 3cm 块，加 1 勺生抽、1 勺蚝油、1 勺料酒、1 勺淀粉、姜丝、少许糖和白胡椒、1 勺油抓匀腌 20 分钟。
+  - 香菇去蒂切片，和鸡块拌匀，平铺盘中。
+  - 水开后大火蒸 15 分钟，撒葱花，淋香油。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_fresh_shiitake_mushroom
+    cooking_method: steam
+    flavours:
+    - salty_savory
+    cuisine: 粤菜
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：新增）；替代炸鸡。鸡肉嫩，孩子容易吃。；类型、做法、口味、菜系由 Claude
+    判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0091
+  name_zh: 香菇蒸肉饼
+  name_en: Steamed Minced Pork Patty with Shiitake and Seaweed
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: ing_ground_pork
+    unmatched_name: null
+    quantity: 300.0
+    unit: g
+    note: null
+  - ingredient_id: ing_dried_shiitake_mushroom
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 4–5 朵
+  - ingredient_id: ing_dried_nori_laver
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 一小把
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 干香菇去硬蒂，泡水 1 小时，切小丁。
+  - 紫菜泡软，挤干水。
+  - 肉末、香菇丁、紫菜放一起，加半勺生抽、1 勺淀粉、1/3 勺盐拌匀。
+  - 平铺盘中，冷水上锅蒸 15 分钟，撒葱花。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_ground_pork
+    cooking_method: steam
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：常做）；家里常做的"steam pork patty with shiitake
+    mushroom"，孩子爱吃。干香菇要提前泡 1 小时，女佣要留足时间。来源：WhatsApp 2024-09-06 PDF 第 3 页；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0092
+  name_zh: 香菇蒸鸡腿
+  name_en: Steamed Chicken Thighs with Shiitake
+  dish_type: meat
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 带骨鸡腿
+    quantity: 2.0
+    unit: 只
+    note: null
+  - ingredient_id: ing_fresh_shiitake_mushroom
+    unmatched_name: null
+    quantity: 1.0
+    unit: 包
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 糖
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_sesame_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 鸡腿斩块（或请柜台斩），冲净血水擦干。
+  - 加 1 勺生抽、1 勺蚝油、半勺料酒、姜丝、1 小勺淀粉、少许糖、几滴香油、1 勺油抓匀，腌 20 分钟。
+  - 香菇切厚片，和鸡块拌在一起平铺在深盘里。
+  - 水开后上锅，中大火蒸 25 分钟，盘里的汁拌饭很好吃。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_fresh_shiitake_mushroom
+    cooking_method: steam
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；家里每周都做的菜（steam chicken leg with mushroom）。孩子一个人吃时蒸
+    1 只就够。；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0093
+  name_zh: 香菇鸡汤
+  name_en: Chicken Soup with Dried Shiitake
+  dish_type: soup
+  ingredients:
+  - ingredient_id: ing_whole_chicken
+    unmatched_name: null
+    quantity: 0.5
+    unit: 只
+    note: null
+  - ingredient_id: ing_dried_shiitake_mushroom
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 枸杞
+    quantity: null
+    unit: null
+    note: 可选
+  servings: 4
+  steps:
+  - 干香菇 8 朵温水泡 30 分钟，泡菇水留用。半只鸡斩大块，冷水焯 3 分钟洗净。
+  - 砂锅放鸡块、香菇、姜片、泡菇水和清水共 1.5 升、1 勺料酒，大火煮开撇浮沫。
+  - 转最小火盖盖炖 70 分钟，加盐调味。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_whole_chicken
+    cooking_method: stew
+    flavours:
+    - light
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：新增）；用做盐焗鸡或白切鸡剩下的半只鸡。；类型、做法、口味、菜系由 Claude
+    判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0094
+  name_zh: 鸡翅
+  name_en: Soy-Glazed Chicken Wings (lunchbox)
+  dish_type: meat
+  ingredients:
+  - ingredient_id: ing_chicken_wing_midsection
+    unmatched_name: null
+    quantity: 200.0
+    unit: g
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dark_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 料酒
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: null
+    unmatched_name: 糖
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 1
+  steps:
+  - 鸡翅两面各划一刀，加 1 勺生抽、半勺料酒、姜片腌 15 分钟。
+  - 平底锅少油中火，鸡翅两面各煎 3 分钟至金黄。
+  - 加蒜片、半勺老抽、1 勺蚝油、半小勺糖、半碗水，盖盖小火 8 分钟，开盖收汁至裹住鸡翅。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_chicken_wing_midsection
+    cooking_method: other
+    flavours:
+    - soy_sauce
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：常做）；要配一个素菜（用当晚耐放的素菜或半荤多做一份）。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null
+- dish_id: dish_0095
+  name_zh: 麻婆豆腐
+  name_en: Spicy Tofu (home-style mapo tofu)
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: null
+    unmatched_name: 豆腐
+    quantity: 1.0
+    unit: 盒
+    note: null
+  - ingredient_id: ing_ground_pork
+    unmatched_name: null
+    quantity: 100.0
+    unit: g
+    note: null
+  - ingredient_id: ing_broad_bean_chili_paste
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 红油豆瓣
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 2
+  steps:
+  - 豆腐切块，冷水下锅加 1 勺盐煮开，捞出。
+  - 肉末加白胡椒粉、盐、淀粉腌 15 分钟。
+  - 准备 1 小勺红油豆瓣酱。
+  - 肉末和蒜炒散，下豆瓣酱炒出红油。
+  - 加水煮开。
+  - 下豆腐煮 5 分钟，淋淀粉水。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_ground_pork
+    cooking_method: braise
+    flavours:
+    - numbing_spicy
+    cuisine: 川菜
+  source: manual
+  source_url: null
+  review_status: pending
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：加菜；原状态：常做）；肠胃不好时不吃；主人常带的便当菜（带饭时做一半量，配一个素菜）。给孩子做
+    "tofu non spicy"：不放豆瓣酱，改做肉末豆腐。来源：WhatsApp 2024-09-25；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: null

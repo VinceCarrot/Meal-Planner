@@ -115,75 +115,6 @@ dishes:
   uncertainty_notes: 家常做法有多种(如加水淀粉、番茄酱、先炒番茄等),这里选最常见的先炒蛋后炒番茄版本。盐糖用量为估算,可按口味调整。
   created_at: '2026-10-14T11:26:35'
   updated_at: null
-- dish_id: dish_0003
-  name_zh: 肉沫四季豆
-  name_en: Stir-fried Green Beans with Minced Pork
-  dish_type: mixed
-  ingredients:
-  - ingredient_id: ing_green_beans
-    unmatched_name: null
-    quantity: 300.0
-    unit: g
-    note: 去头尾,掐成4cm段
-  - ingredient_id: ing_ground_pork
-    unmatched_name: null
-    quantity: 100.0
-    unit: g
-    note: 用量为建议值
-  - ingredient_id: ing_cooking_oil
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 煎豆角时多放一点
-  - ingredient_id: ing_garlic
-    unmatched_name: null
-    quantity: 3.0
-    unit: 瓣
-    note: 切末,用量为建议值
-  - ingredient_id: ing_ginger
-    unmatched_name: null
-    quantity: 10.0
-    unit: g
-    note: 切末,用量为建议值
-  - ingredient_id: ing_light_soy_sauce
-    unmatched_name: null
-    quantity: 1.0
-    unit: 勺
-    note: null
-  - ingredient_id: ing_white_sugar
-    unmatched_name: null
-    quantity: 0.5
-    unit: 小勺
-    note: null
-  servings: 2
-  steps:
-  - 四季豆去头尾,掐成4cm段
-  - 四季豆洗净,沥干水分
-  - 锅中多放一点油
-  - 中火把四季豆煎炒5分钟,至表皮起皱变软,盛出
-  - 用锅中余油下蒜末、姜末爆香
-  - 下肉末,大火炒散至变色
-  - 把四季豆倒回锅中
-  - 加1勺生抽、1勺蚝油、半小勺糖
-  - 翻炒1分钟,出锅
-  calories_kcal: null
-  calorie_basis: null
-  style:
-    main_ingredients:
-    - ing_green_beans
-    - ing_ground_pork
-    cooking_method: stir_fry
-    flavours:
-    - salty_savory
-    - soy_sauce
-    - garlicky
-    cuisine: 家常
-  source: manual
-  source_url: null
-  review_status: approved
-  uncertainty_notes: 原文未给出四季豆、肉末、蒜、姜的用量,已按两人份建议;份数也为估计。未提及盐,蚝油已有咸味,故未添加。
-  created_at: '2026-10-14T11:35:58'
-  updated_at: null
 - dish_id: dish_0004
   name_zh: 蒜蓉菜心
   name_en: Stir-fried Choy Sum with Garlic
@@ -235,69 +166,140 @@ dishes:
   uncertainty_notes: 各来源做法略有不同:有的不焯水直接炒再盖锅焖,有的焯水后勾芡淋汁。这里选用最常见的焯水后蒜蓉清炒版本。用量为按3-4人份估算,可按口味调整。
   created_at: '2026-10-14T13:41:42'
   updated_at: null
-- dish_id: dish_0005
-  name_zh: 娃娃菜虾滑
-  name_en: Shrimp Paste Balls with Baby Napa Cabbage
+- dish_id: dish_0006
+  name_zh: 苦瓜炒蛋
+  name_en: Stir-fried Bitter Melon with Eggs
   dish_type: mixed
   ingredients:
-  - ingredient_id: ing_baby_napa_cabbage
+  - ingredient_id: ing_bitter_melon
     unmatched_name: null
-    quantity: null
-    unit: null
-    note: ⅓ 包,切2cm段
-  - ingredient_id: ing_shrimp_paste
+    quantity: 1.0
+    unit: 根
+    note: 约300-400g
+  - ingredient_id: ing_egg
     unmatched_name: null
-    quantity: 100.0
-    unit: g
-    note: 冷冻,用勺挖成小丸
-  - ingredient_id: ing_ginger
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 老姜,切片,适量
+    quantity: 3.0
+    unit: 个
+    note: null
   - ingredient_id: ing_salt
     unmatched_name: null
     quantity: null
     unit: null
-    note: 少许
-  - ingredient_id: ing_chicken_bouillon_powder
+    note: 1小勺腌苦瓜,另加少许调蛋液
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: 0.5
+    unit: 勺
+    note: null
+  - ingredient_id: ing_garlic
     unmatched_name: null
     quantity: null
     unit: null
-    note: 少许
+    note: 切片,适量(约3瓣)
+  - ingredient_id: ing_white_sugar
+    unmatched_name: null
+    quantity: 0.5
+    unit: 小勺
+    note: null
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 炒蛋和炒菜用,适量
+  servings: 2
+  steps:
+  - 苦瓜对剖,去籽去白膜
+  - 苦瓜切薄片
+  - 苦瓜片加1小勺盐抓匀,腌10分钟
+  - 苦瓜冲水后挤干
+  - 鸡蛋加少许盐打散
+  - 锅中热油,倒入蛋液炒成大块后盛出
+  - 蒜切片,锅中留底油,下蒜片爆香
+  - 下苦瓜片,大火炒2分钟
+  - 加半小勺糖、半勺生抽翻炒均匀
+  - 倒回炒好的鸡蛋,翻匀后出锅
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_bitter_melon
+    - ing_egg
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    - garlicky
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: approved
+  uncertainty_notes: 原文未写油量、蒜的用量和份数,油适量、蒜约3瓣、2人份为估计;苦瓜重量按一般大小估计。原文的“糖”按白糖处理,“半勺生抽”的勺大小未说明。
+  created_at: '2026-10-14T20:04:32'
+  updated_at: null
+- dish_id: dish_0007
+  name_zh: 娃娃菜虾滑
+  name_en: Baby Napa Cabbage Wrapped Shrimp Paste Rolls
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: ing_baby_napa_cabbage
+    unmatched_name: null
+    quantity: 400.0
+    unit: g
+    note: 约2小棵,取较大的外层叶片
+  - ingredient_id: ing_shrimp_paste
+    unmatched_name: null
+    quantity: 200.0
+    unit: g
+    note: 市售成品虾滑,解冻
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: 3.0
+    unit: 片
+    note: 垫底去腥
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量,约1/2小勺
   - ingredient_id: ing_white_pepper_powder
     unmatched_name: null
     quantity: null
     unit: null
-    note: 少许
+    note: 少许,可拌入虾滑
   - ingredient_id: ing_starch
     unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量,调成淀粉水勾薄芡
+    quantity: 1.0
+    unit: 勺
+    note: 拌入虾滑增加粘性,也可用于勾薄芡
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: 1.0
+    unit: 勺
+    note: 调味汁用
   - ingredient_id: ing_sesame_oil
     unmatched_name: null
     quantity: null
     unit: null
-    note: 香油,几滴
-  servings: 1
+    note: 几滴,出锅淋上
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 少许,焯水时加
+  servings: 3
   steps:
-  - 娃娃菜切2cm段
-  - 虾滑用勺挖成小丸
-  - 小锅放1碗水,加姜片煮开
-  - 虾滑丸下锅,煮2分钟至浮起
-  - 下娃娃菜段,煮2分钟
-  - 加少许盐、鸡精、白胡椒粉调味
-  - 淀粉加水调匀,倒入锅中勾薄芡
-  - 滴几滴香油
-  - 汤汁留少一点,方便装盒
+  - 娃娃菜剥下叶片洗净,选较大较软的叶片,梗部厚的地方片薄一些
+  - 锅中烧开水,加少许盐和几滴油,放入娃娃菜叶焯30~40秒至变软,捞出过凉水沥干
+  - 虾滑解冻后加少许盐和白胡椒粉,朝一个方向搅拌上劲
+  - 取一片娃娃菜叶摊平,放一条虾滑,卷紧成卷,收口朝下,依次做完
+  - 盘底铺姜片,把菜卷整齐码入盘中
+  - 蒸锅水烧开,放入菜卷,大火蒸8~10分钟至虾滑熟透
   calories_kcal: null
   calorie_basis: null
   style:
     main_ingredients:
     - ing_baby_napa_cabbage
     - ing_shrimp_paste
-    cooking_method: boil
+    cooking_method: steam
     flavours:
     - light
     - salty_savory
@@ -305,6 +307,332 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
-  uncertainty_notes: 原文未给出姜片、盐、鸡精、白胡椒、淀粉的具体用量,均按“适量/少许”处理;份数按100g虾滑和⅓包娃娃菜估计为1份;娃娃菜克数未给出,保留原文“⅓包”。
-  created_at: '2026-10-14T13:52:04'
+  uncertainty_notes: 搜索没有找到直接对应的菜谱,只找到虾滑煮娃娃菜汤等相近做法,所以本做法是按常规方法写的,用量为估算。名称里说的是「煮熟」,这里改用蒸以保持卷形完整。想煮的话,可以在清汤或高汤里小火煮6~8分钟。
+  created_at: '2026-10-14T20:17:24'
   updated_at: null
+- dish_id: dish_0008
+  name_zh: 上汤娃娃菜
+  name_en: Baby Napa Cabbage in Rich Broth
+  dish_type: vegetarian
+  ingredients:
+  - ingredient_id: ing_baby_napa_cabbage
+    unmatched_name: null
+    quantity: 0.67
+    unit: 包
+    note: null
+  - ingredient_id: ing_egg
+    unmatched_name: null
+    quantity: 1.0
+    unit: 个
+    note: null
+  - ingredient_id: ing_chicken_bouillon_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 娃娃菜每棵纵切 6 条，洗净。
+  - 热油下蒜瓣姜片煎香，加 2 碗水和半块浓汤宝（或 1 小勺鸡精）煮开。
+  - 下娃娃菜中火煮 4 分钟至软，加少许盐和白胡椒。
+  - 鸡蛋打散淋入，淀粉水勾薄芡出锅。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_baby_napa_cabbage
+    - ing_egg
+    cooking_method: boil
+    flavours:
+    - light
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: approved
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：新增）；一包 3 棵用 2 棵，剩 1 棵给第二天的娃娃菜虾滑带饭。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: '2026-10-14T21:57:50'
+- dish_id: dish_0009
+  name_zh: 冬瓜炒肉末
+  name_en: Winter Melon with Minced Pork
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: ing_winter_melon
+    unmatched_name: null
+    quantity: 1.0
+    unit: 块
+    note: null
+  - ingredient_id: ing_ground_pork
+    unmatched_name: null
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 冬瓜去皮去籽切 1cm 厚片。
+  - 热油下姜末蒜末，肉末大火炒散变色，加半勺料酒。
+  - 下冬瓜片翻炒 1 分钟，加 1 勺生抽、半勺蚝油、半碗水，盖盖中火焖 5 分钟至冬瓜透明。
+  - 撒白胡椒和葱花出锅。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_winter_melon
+    - ing_ground_pork
+    cooking_method: stir_fry
+    flavours:
+    - light
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: approved
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：新增）；备选菜。和冬瓜虾滑汤同周安排可以用完一块冬瓜。；类型、做法、口味、菜系由
+    Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: '2026-10-14T21:57:50'
+- dish_id: dish_0010
+  name_zh: 冬瓜虾滑汤
+  name_en: Winter Melon and Prawn Paste Soup
+  dish_type: soup
+  ingredients:
+  - ingredient_id: ing_winter_melon
+    unmatched_name: null
+    quantity: 1.0
+    unit: 块
+    note: null
+  - ingredient_id: ing_shrimp_paste
+    unmatched_name: null
+    quantity: 100.0
+    unit: g
+    note: null
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_sesame_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 冬瓜去皮去籽切 1cm 厚片。
+  - 800ml 水加姜片煮开，下冬瓜中火煮 8 分钟至半透明。
+  - 虾滑用勺子挖小球下锅，煮 3 分钟浮起，加盐、白胡椒、香油。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_winter_melon
+    - ing_shrimp_paste
+    cooking_method: boil
+    flavours:
+    - light
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: approved
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：新增）；虾滑用上周剩的半盒。；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: '2026-10-14T21:57:50'
+- dish_id: dish_0011
+  name_zh: 凉拌藕片
+  name_en: Lotus Root Salad
+  dish_type: vegetarian
+  ingredients:
+  - ingredient_id: ing_lotus_root
+    unmatched_name: null
+    quantity: 0.5
+    unit: 节
+    note: null
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_black_vinegar
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_sugar
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_sesame_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_red_chili
+    unmatched_name: null
+    quantity: 1.0
+    unit: 个
+    note: 可选
+  servings: 4
+  steps:
+  - 藕去皮切薄片，清水冲掉淀粉。
+  - 开水焯 1 分钟，捞出过冰水沥干。
+  - 蒜末、2 勺生抽、1 勺醋、半小勺糖、少许盐、几滴香油拌匀，辣的另拌。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_lotus_root
+    cooking_method: cold_mix
+    flavours:
+    - sour
+    - spicy
+    cuisine: 家常
+  source: manual
+  source_url: https://youtu.be/OMFJxnYWkfU
+  review_status: approved
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：新增）；备选。和莲藕排骨汤排同一周，一节藕两道用完。孩子那份不放辣。来源：WhatsApp
+    2024-09-22（只有链接）；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: '2026-10-14T22:06:09'
+- dish_id: dish_0012
+  name_zh: 半煎煮小金鲳鱼
+  name_en: Pan-Fried and Braised Small Golden Pomfret
+  dish_type: meat
+  ingredients:
+  - ingredient_id: ing_golden_pompano
+    unmatched_name: null
+    quantity: 2.0
+    unit: 条
+    note: null
+  - ingredient_id: ing_scallion
+    unmatched_name: null
+    quantity: 1.0
+    unit: 把
+    note: null
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_sugar
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 鱼擦干，两面划刀，抹薄盐，拍一层薄淀粉。
+  - 中火热油，鱼下锅不要动，煎 3 分钟定型翻面，再煎 3 分钟至两面金黄。
+  - 下姜片葱段，沿锅边加 2 勺料酒、2 勺生抽、半勺糖、半碗热水，盖盖中小火煮 5 分钟。
+  - 开盖大火收汁至浓，撒葱花。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_scallion
+    cooking_method: pan_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: approved
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：试菜）；试菜，排在周六。鱼请柜台去鳞去内脏。；类型、做法、口味、菜系由 Claude
+    判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: '2026-10-14T22:06:09'
