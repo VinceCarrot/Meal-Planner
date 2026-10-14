@@ -20,7 +20,7 @@ from ..catalogue import DataError
 from ..llm import LLMError
 from ..video_import import VideoImportError, YtDlpSource
 from .api import constraints, dishes, ingredients, menus, settings, videos
-from .helpers import NotFound
+from .helpers import Conflict, NotFound
 
 log = logging.getLogger(__name__)
 
@@ -56,6 +56,10 @@ def create_app(data_dir: Path, llm_factory=None, video_source=None) -> Flask:
     @app.errorhandler(NotFound)
     def not_found(e: NotFound):
         return jsonify(error=str(e), issues=[]), 404
+
+    @app.errorhandler(Conflict)
+    def conflict(e: Conflict):
+        return jsonify(error=str(e), issues=e.issues), 409
 
     @app.errorhandler(VideoImportError)
     def video_error(e: VideoImportError):

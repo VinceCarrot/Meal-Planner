@@ -13,7 +13,7 @@ from ...models import Dish, DishesFile
 from ...review import ReviewAction, ReviewDecision, apply_review
 from ...settings import LLMTask
 from ...vocab import DishSource, DishType, ReviewStatus, TaskScope
-from ..helpers import NotFound, body, llm, load
+from ..helpers import Conflict, NotFound, body, llm, load
 from ..serialize import dish_view
 
 bp = Blueprint("dishes", __name__)
@@ -84,6 +84,21 @@ def edit_dish(dish_id):
     items = tuple(dish if d.dish_id == dish_id else d for d in cat.dishes.dishes)
     cat = store.save_dishes(cat, DishesFile(dishes=items))
     return dish_view(dish, _ingredients(cat))
+
+
+@bp.delete("/dishes/<dish_id>")
+def delete_dish(dish_id):
+    """Refused while a stored menu version or a feedback record uses the dish (they must stay loadable)."""
+    store, cat = load()
+    dish = next((d for d in cat.dishes.dishes if d.dish_id == dish_id), None)
+    if dish is None:
+        raise NotFound(f"菜品 {dish_id} 不存在")
+    issues = [f"菜单 {menu_id} 第 {version} 版用到了这道菜" for menu_id, version in store.menus_using_dish(dish_id)]
+    issues += [f"反馈 {f.feedback_id} 针对这道菜" for f in cat.preferences.feedback if f.dish_id == dish_id]
+    if issues:
+        raise Conflict(f"无法删除 {dish.name_zh}：仍被菜单或反馈引用", issues)
+    store.save_dishes(cat, DishesFile(dishes=tuple(d for d in cat.dishes.dishes if d.dish_id != dish_id)))
+    return {"deleted": dish_id}
 
 
 @bp.get("/pending")

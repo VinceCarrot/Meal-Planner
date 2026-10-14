@@ -14,6 +14,14 @@ class NotFound(Exception):
     pass
 
 
+class Conflict(Exception):
+    """The request is valid but other data still depends on the record."""
+
+    def __init__(self, message: str, issues: list[str]):
+        super().__init__(message)
+        self.issues = issues
+
+
 def store() -> DataStore:
     return DataStore(current_app.config["DATA_DIR"])
 

@@ -1,6 +1,6 @@
-// Approved dish catalogue: browse, add manually, edit.
+// Approved dish catalogue: browse, add manually, edit, delete.
 
-import { get, post, put } from '../../js/api.js';
+import { get, post, put, del } from '../../js/api.js';
 import { h, fill, label, dishTypeTag, showError, toast, LABELS } from '../../js/ui.js';
 import { editDish } from '../../js/dish_editor.js';
 
@@ -12,6 +12,7 @@ let typeFilter;
 let search;
 let dishes = [];
 let ingredients = [];
+let shownId = null; // dish whose detail panel is open
 
 export async function showDishes() {
   if (!root) build();
@@ -56,7 +57,7 @@ function renderList() {
   const shown = dishes.filter((d) => (!typeFilter.value || d.dish_type === typeFilter.value) && (!text || d.name_zh.includes(text)));
   fill(list, h('p', { class: 'hint' }, `共 ${dishes.length} 道，显示 ${shown.length} 道`),
     h('table', {},
-      h('tr', {}, ['ID', '名称', '类型', '主料', '做法 / 口味', '估算热量', '来源'].map((t) => h('th', {}, t))),
+      h('tr', {}, ['ID', '名称', '类型', '主料', '做法 / 口味', '估算热量', '来源', ''].map((t) => h('th', {}, t))),
       shown.map((d) => h('tr', { class: 'clickable', onclick: () => renderDetail(d) },
         h('td', {}, d.dish_id),
         h('td', {}, d.name_zh),
@@ -64,7 +65,21 @@ function renderList() {
         h('td', {}, d.style.main_ingredients.map(ingredientName).join('、')),
         h('td', {}, [label('cooking_method', d.style.cooking_method), ...d.style.flavours.map((f) => label('flavour', f))].filter(Boolean).join(' · ')),
         h('td', {}, kcalText(d)),
-        h('td', {}, label('source', d.source))))));
+        h('td', {}, label('source', d.source)),
+        h('td', {}, h('button', { class: 'small danger', onclick: (e) => { e.stopPropagation(); deleteDish(d); } }, '删除'))))));
+}
+
+async function deleteDish(d) {
+  if (!window.confirm(`删除菜品 ${d.name_zh}（${d.dish_id}）？删除后无法恢复；已保存的菜单或反馈用到这道菜时无法删除。`)) return;
+  fill(messages);
+  try {
+    await del(`/api/dishes/${d.dish_id}`);
+    toast(`已删除 ${d.name_zh}`);
+    if (shownId === d.dish_id) { shownId = null; fill(detail); }
+  } catch (err) {
+    showError(messages, err);
+  }
+  await refresh();
 }
 
 export function dishDetail(d, ingredientsList) {
@@ -81,11 +96,13 @@ export function dishDetail(d, ingredientsList) {
 }
 
 function renderDetail(d) {
+  shownId = d.dish_id;
   fill(detail, h('div', { class: 'panel' },
     dishDetail(d, ingredients),
     h('div', { class: 'row' },
       h('button', { onclick: () => editExisting(d) }, '编辑'),
-      h('button', { onclick: () => fill(detail) }, '收起'))));
+      h('button', { class: 'danger', onclick: () => deleteDish(d) }, '删除'),
+      h('button', { onclick: () => { shownId = null; fill(detail); } }, '收起'))));
 }
 
 async function addDish() {

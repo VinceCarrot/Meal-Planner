@@ -5,7 +5,7 @@ import pytest
 from fakes import FakeLLM, result
 from meal_planner.demo import synthetic_catalogue, write_catalogue
 from meal_planner.llm import LLMError
-from meal_planner.models import Constraint, ConstraintsFile
+from meal_planner.models import Constraint, ConstraintsFile, Feedback, PreferencesFile
 from meal_planner.settings import Settings, save_settings
 from meal_planner.web import create_app
 from meal_planner.yaml_io import write_yaml_atomic
@@ -385,3 +385,35 @@ def test_translate_then_download_pdf(client, llm):
     pdf = client.get("/api/menus/M001/export.pdf?version=1")
     assert pdf.status_code == 200 and pdf.mimetype == "application/pdf" and pdf.data.startswith(b"%PDF")
     assert "M001_v1_recipes_en.pdf" in pdf.headers["Content-Disposition"]
+
+
+# --- Dish deletion ---------------------------------------------------------------------
+
+
+def test_delete_unused_dish(client, data_dir):
+    dish_id = ok(client.get("/api/dishes"))[0]["dish_id"]
+    assert ok(client.delete(f"/api/dishes/{dish_id}")) == {"deleted": dish_id}
+    assert dish_id not in {d["dish_id"] for d in ok(client.get("/api/dishes"))}
+    assert client.delete(f"/api/dishes/{dish_id}").status_code == 404
+
+
+def test_dish_used_by_a_saved_menu_cannot_be_deleted(client):
+    dinners = _saved_menu(client)
+    used = dinners[0]["dish_ids"][0]
+    response = client.delete(f"/api/dishes/{used}")
+    assert response.status_code == 409 and "菜单 M001 第 1 版" in response.get_json()["issues"][0]
+    assert used in {d["dish_id"] for d in ok(client.get("/api/dishes"))}
+    ok(client.get("/api/menus/M001"))  # the menu still loads
+
+    in_menu = {i for d in dinners for i in d["dish_ids"]}
+    unused = next(d["dish_id"] for d in ok(client.get("/api/dishes")) if d["dish_id"] not in in_menu)
+    ok(client.delete(f"/api/dishes/{unused}"))
+    ok(client.get("/api/menus/M001"))
+
+
+def test_dish_with_feedback_cannot_be_deleted(client, data_dir):
+    dish_id = ok(client.get("/api/dishes"))[0]["dish_id"]
+    feedback = Feedback(feedback_id="F001", dish_id=dish_id, kind="dislike", scope="future_menus")
+    write_yaml_atomic(data_dir / "preferences.yaml", PreferencesFile(feedback=(feedback,)).model_dump(mode="json"))
+    response = client.delete(f"/api/dishes/{dish_id}")
+    assert response.status_code == 409 and "反馈 F001" in response.get_json()["issues"][0]

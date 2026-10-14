@@ -101,6 +101,20 @@ class DataStore:
             return []
         return sorted(p.name for p in self.menus_dir.iterdir() if p.is_dir())
 
+    def menus_using_dish(self, dish_id: str) -> list[tuple[str, int]]:
+        """(menu_id, version) of every stored menu version with this dish. Unreadable files count as using it."""
+        found = []
+        for menu_id in self.menu_ids():
+            for version in self.menu_versions(menu_id):
+                try:
+                    raw = read_yaml(self.data_dir / _menu_file(menu_id, version))
+                    used = any(dish_id in (d.get("dish_ids") or []) for d in raw.get("dinners") or [])
+                except (YamlReadError, AttributeError, TypeError):
+                    used = True
+                if used:
+                    found.append((menu_id, version))
+        return found
+
     def menu_versions(self, menu_id: str) -> list[int]:
         menu_dir = self.menus_dir / menu_id
         if not menu_dir.is_dir():

@@ -667,7 +667,7 @@ Main endpoints:
 |---|---|
 | Menus | `POST /api/menus/plan`, `POST /api/menus`, `GET /api/menus`, `GET /api/menus/<id>?version=` |
 | Constraints | `GET/POST /api/constraints`, `PUT/DELETE /api/constraints/<id>`, `POST /api/constraints/parse`, `POST /api/task-constraints/parse`, `POST /api/constraints/effective` |
-| Dishes | `GET/POST /api/dishes`, `PUT /api/dishes/<id>`, `GET /api/pending`, `POST /api/review`, `POST /api/candidates/generate` |
+| Dishes | `GET/POST /api/dishes`, `POST /api/dishes/suggest`, `PUT/DELETE /api/dishes/<id>` (delete is refused with 409 while a stored menu version or a feedback record uses the dish, so menu history stays loadable), `GET /api/pending`, `POST /api/review`, `POST /api/candidates/generate` |
 | Ingredients | `GET/POST /api/ingredients`, `PUT/DELETE /api/ingredients/<id>` |
 | Settings and preferences | `GET/PUT /api/settings`, `GET /api/vocab`, `GET /api/preferences`, `PUT /api/preferences/diners` |
 
