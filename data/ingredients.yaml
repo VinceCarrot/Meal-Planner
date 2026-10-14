@@ -603,3 +603,155 @@ ingredients:
     茶匙: 5.0
     汤匙: 15.0
   notes: 按白砂糖计;绵白糖颗粒更细,同体积略重。
+- ingredient_id: ing_oyster_sauce
+  name_zh: 耗油
+  name_en: oyster sauce
+  aliases:
+  - 蚝油
+  category: seasoning
+  kcal_per_100g: 114.0
+  grams_per_unit:
+    勺: 15.0
+    汤匙: 15.0
+    茶匙: 5.0
+    ml: 1.2
+  notes: “耗油”通常是“蚝油”的误写,按蚝油处理。
+- ingredient_id: ing_white_pepper_powder
+  name_zh: 白胡椒粉
+  name_en: white pepper powder
+  aliases:
+  - 白胡椒
+  - 胡椒粉
+  - 白胡椒面
+  category: seasoning
+  kcal_per_100g: 296.0
+  grams_per_unit:
+    勺: 5.0
+    茶匙: 2.5
+    小勺: 2.5
+    汤匙: 8.0
+    克: 1.0
+  notes: 常用于汤羹、腌肉提味去腥;用量通常很少。
+- ingredient_id: ing_starch
+  name_zh: 淀粉
+  name_en: starch
+  aliases:
+  - 生粉
+  - 太白粉
+  - 芡粉
+  - 玉米淀粉
+  - raw starch
+  category: seasoning
+  kcal_per_100g: 350.0
+  grams_per_unit:
+    勺: 10.0
+    汤匙: 10.0
+    茶匙: 3.0
+  notes: 泛指家用勾芡/腌肉用淀粉(常见为玉米淀粉或土豆淀粉),热量按玉米淀粉约350千卡计。
+- ingredient_id: ing_chicken_bouillon_powder
+  name_zh: 鸡精
+  name_en: chicken bouillon powder
+  aliases:
+  - 鸡粉
+  - 鸡精调味料
+  category: seasoning
+  kcal_per_100g: null
+  grams_per_unit:
+    勺: 3.0
+    茶匙: 3.0
+    汤匙: 10.0
+    小撮: 1.0
+  notes: 鸡精是以味精和鸡肉提取物为主的调味料,盐分高;热量因品牌差异较大,故未给出。
+- ingredient_id: ing_pork_trotter
+  name_zh: 猪蹄
+  name_en: pork trotter
+  aliases:
+  - 猪脚
+  - 猪手
+  - 猪蹄髈
+  category: meat
+  kcal_per_100g: 260.0
+  grams_per_unit:
+    个: 500.0
+    只: 500.0
+    块: 50.0
+  notes: 热量按带皮带骨可食部分估算;一只通常指单个整蹄,可切块使用。
+- ingredient_id: ing_beef_brisket
+  name_zh: 牛腩
+  name_en: beef brisket
+  aliases:
+  - 牛腩肉
+  - 牛肋条
+  - 牛胸腹肉
+  category: meat
+  kcal_per_100g: 150.0
+  grams_per_unit: {}
+  notes: 牛腩为牛腹部带筋肉,适合红烧、炖煮;热量因肥瘦比例差异较大(约120–330 kcal)。
+- ingredient_id: ing_sliced_lamb_roll
+  name_zh: 羊肉卷
+  name_en: sliced lamb roll
+  aliases:
+  - 羊肉片
+  - 肥羊卷
+  - 羊肉薄片
+  - 涮羊肉卷
+  - 肥羊
+  category: meat
+  kcal_per_100g: 203.0
+  grams_per_unit:
+    片: 10.0
+    盒: 250.0
+  notes: 火锅用薄切羊肉卷,热量按带肥瘦的羊肉估算,实际随肥瘦比例变化。
+- ingredient_id: ing_salmon
+  name_zh: 三文鱼
+  name_en: salmon
+  aliases:
+  - 鲑鱼
+  - 大西洋鲑
+  - 撒蒙鱼
+  category: seafood
+  kcal_per_100g: 208.0
+  grams_per_unit:
+    片: 30.0
+    块: 150.0
+    条: 1500.0
+  notes: 热量按大西洋养殖三文鱼生鲜可食部计;常见为鱼排/鱼块,一块约150克。
+- ingredient_id: ing_pomfret
+  name_zh: 午鱼
+  name_en: pomfret
+  aliases:
+  - 鲳鱼
+  - 平鱼
+  - 白鲳
+  - 银鲳
+  - 镜鱼
+  category: seafood
+  kcal_per_100g: 140.0
+  grams_per_unit:
+    条: 300.0
+    块: 80.0
+  notes: 午鱼是鲳鱼(银鲳)的地方叫法,常见于浙江沿海;热量按可食部分计,整条重量含鱼头骨内脏。
+- ingredient_id: ing_clam
+  name_zh: 蛤蜊
+  name_en: clam
+  aliases:
+  - 花蛤
+  - 蚬子
+  - 沙蛤
+  - 文蛤
+  category: seafood
+  kcal_per_100g: 62.0
+  grams_per_unit:
+    个: 15.0
+  notes: 热量按去壳可食部分计;带壳重量约为可食部分的3~4倍。烹饪前需吐沙。
+- ingredient_id: ing_salted_egg_yolk
+  name_zh: 咸蛋黄
+  name_en: salted egg yolk
+  aliases:
+  - 咸鸭蛋黄
+  - 咸蛋黃
+  category: egg
+  kcal_per_100g: 315.0
+  grams_per_unit:
+    个: 15.0
+  notes: 默认指咸鸭蛋的蛋黄(熟/生均可);热量为估算值,含盐量高,用量需减盐。

@@ -63,3 +63,248 @@ dishes:
   uncertainty_notes: 姜、葱、花椒、香油未写明用量,按"少许/适量"处理。盐焗鸡粉"1包约30g"由"一半约15g"推算。份数按每人一只鸡腿估计为3份。
   created_at: '2026-10-13T23:58:22'
   updated_at: null
+- dish_id: dish_0002
+  name_zh: 番茄炒蛋
+  name_en: Stir-fried Tomato and Eggs
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: ing_tomato
+    unmatched_name: null
+    quantity: 400.0
+    unit: g
+    note: null
+  - ingredient_id: ing_egg
+    unmatched_name: null
+    quantity: 4.0
+    unit: 个
+    note: null
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: 3.0
+    unit: g
+    note: 蛋液约1g,调味约2g,可按口味增减
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: 30.0
+    unit: ml
+    note: 炒蛋约20ml,炒番茄约10ml
+  servings: 3
+  steps:
+  - 番茄洗净,顶部划十字,用开水烫30秒后去皮,切成滚刀块
+  - 鸡蛋打入碗中,加1g盐,搅打均匀
+  - 锅烧热,倒入20ml油,中大火烧至油温较热
+  - 倒入蛋液,炒至七八成熟的大块,盛出备用
+  - 锅中补10ml油,中火放入番茄块翻炒
+  - 炒至番茄出汁变软,约2-3分钟,加2g盐调味
+  - 倒入炒好的鸡蛋,翻炒均匀,约30秒
+  - 出锅装盘
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_tomato
+    - ing_egg
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    - sweet_sour
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: approved
+  uncertainty_notes: 家常做法有多种(如加水淀粉、番茄酱、先炒番茄等),这里选最常见的先炒蛋后炒番茄版本。盐糖用量为估算,可按口味调整。
+  created_at: '2026-10-14T11:26:35'
+  updated_at: null
+- dish_id: dish_0003
+  name_zh: 肉沫四季豆
+  name_en: Stir-fried Green Beans with Minced Pork
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: ing_green_beans
+    unmatched_name: null
+    quantity: 300.0
+    unit: g
+    note: 去头尾,掐成4cm段
+  - ingredient_id: ing_ground_pork
+    unmatched_name: null
+    quantity: 100.0
+    unit: g
+    note: 用量为建议值
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 煎豆角时多放一点
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: 3.0
+    unit: 瓣
+    note: 切末,用量为建议值
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: 10.0
+    unit: g
+    note: 切末,用量为建议值
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: 1.0
+    unit: 勺
+    note: null
+  - ingredient_id: ing_white_sugar
+    unmatched_name: null
+    quantity: 0.5
+    unit: 小勺
+    note: null
+  servings: 2
+  steps:
+  - 四季豆去头尾,掐成4cm段
+  - 四季豆洗净,沥干水分
+  - 锅中多放一点油
+  - 中火把四季豆煎炒5分钟,至表皮起皱变软,盛出
+  - 用锅中余油下蒜末、姜末爆香
+  - 下肉末,大火炒散至变色
+  - 把四季豆倒回锅中
+  - 加1勺生抽、1勺蚝油、半小勺糖
+  - 翻炒1分钟,出锅
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_green_beans
+    - ing_ground_pork
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    - soy_sauce
+    - garlicky
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: approved
+  uncertainty_notes: 原文未给出四季豆、肉末、蒜、姜的用量,已按两人份建议;份数也为估计。未提及盐,蚝油已有咸味,故未添加。
+  created_at: '2026-10-14T11:35:58'
+  updated_at: null
+- dish_id: dish_0004
+  name_zh: 蒜蓉菜心
+  name_en: Stir-fried Choy Sum with Garlic
+  dish_type: vegetarian
+  ingredients:
+  - ingredient_id: ing_cai_xin
+    unmatched_name: null
+    quantity: 400.0
+    unit: g
+    note: 选梗细嫩的
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: 30.0
+    unit: g
+    note: 约5-6瓣,切蒜末
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: 30.0
+    unit: ml
+    note: 炒菜用,另焯水可加少许
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量,约3g;焯水和调味用
+  servings: 3
+  steps:
+  - 菜心洗净,沥干水分,较粗的茎对半剖开
+  - 蒜切成蒜末
+  - 炒锅烧热,倒入油,中小火下蒜末爆香,避免炒焦发苦
+  - 转大火,下菜心快速翻炒
+  - 加盐调味,翻炒均匀
+  - 加入少许水 继续翻炒
+  - 翻炒几下即可出锅
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_cai_xin
+    - ing_garlic
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    - garlicky
+    cuisine: 粤菜
+  source: manual
+  source_url: null
+  review_status: approved
+  uncertainty_notes: 各来源做法略有不同:有的不焯水直接炒再盖锅焖,有的焯水后勾芡淋汁。这里选用最常见的焯水后蒜蓉清炒版本。用量为按3-4人份估算,可按口味调整。
+  created_at: '2026-10-14T13:41:42'
+  updated_at: null
+- dish_id: dish_0005
+  name_zh: 娃娃菜虾滑
+  name_en: Shrimp Paste Balls with Baby Napa Cabbage
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: ing_baby_napa_cabbage
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: ⅓ 包,切2cm段
+  - ingredient_id: ing_shrimp_paste
+    unmatched_name: null
+    quantity: 100.0
+    unit: g
+    note: 冷冻,用勺挖成小丸
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 老姜,切片,适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 少许
+  - ingredient_id: ing_chicken_bouillon_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 少许
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 少许
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量,调成淀粉水勾薄芡
+  - ingredient_id: ing_sesame_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 香油,几滴
+  servings: 1
+  steps:
+  - 娃娃菜切2cm段
+  - 虾滑用勺挖成小丸
+  - 小锅放1碗水,加姜片煮开
+  - 虾滑丸下锅,煮2分钟至浮起
+  - 下娃娃菜段,煮2分钟
+  - 加少许盐、鸡精、白胡椒粉调味
+  - 淀粉加水调匀,倒入锅中勾薄芡
+  - 滴几滴香油
+  - 汤汁留少一点,方便装盒
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_baby_napa_cabbage
+    - ing_shrimp_paste
+    cooking_method: boil
+    flavours:
+    - light
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: approved
+  uncertainty_notes: 原文未给出姜片、盐、鸡精、白胡椒、淀粉的具体用量,均按“适量/少许”处理;份数按100g虾滑和⅓包娃娃菜估计为1份;娃娃菜克数未给出,保留原文“⅓包”。
+  created_at: '2026-10-14T13:52:04'
+  updated_at: null
