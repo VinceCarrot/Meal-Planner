@@ -1,7 +1,7 @@
 // Ingredient master data, edited only by the user.
 
 import { get, post, put, del } from '../../js/api.js';
-import { h, fill, label, showError, toast, LABELS } from '../../js/ui.js';
+import { h, fill, label, showError, sortIngredients, toast, LABELS } from '../../js/ui.js';
 
 let root;
 let messages;
@@ -41,29 +41,40 @@ function parseUnits(text) {
   return result;
 }
 
+// One table per category, in category order.
 function renderTable() {
-  fill(table, h('table', {},
-    h('tr', {}, ['ID', '中文名', '英文名', '别名', '分类', 'kcal/100g', '每单位克重', '备注', ''].map((t) => h('th', {}, t))),
-    ingredients.map((i) => h('tr', {},
-      h('td', {}, i.ingredient_id),
-      h('td', {}, i.name_zh),
-      h('td', {}, i.name_en || ''),
-      h('td', {}, i.aliases.join('、')),
-      h('td', {}, label('category', i.category)),
-      h('td', {}, i.kcal_per_100g ?? h('span', { class: 'warn' }, '未填')),
-      h('td', {}, unitsText(i.grams_per_unit)),
-      h('td', {}, i.notes || ''),
-      h('td', {},
-        h('button', { class: 'small', onclick: () => renderForm(i) }, '编辑'), ' ',
-        h('button', {
-          class: 'small danger',
-          onclick: async () => {
-            if (!window.confirm(`删除食材 ${i.name_zh}？仍被菜品使用时无法删除。`)) return;
-            fill(messages);
-            try { await del(`/api/ingredients/${i.ingredient_id}`); toast('已删除'); } catch (err) { showError(messages, err); }
-            refresh();
-          },
-        }, '删除'))))));
+  const groups = new Map();
+  for (const i of sortIngredients(ingredients)) {
+    if (!groups.has(i.category)) groups.set(i.category, []);
+    groups.get(i.category).push(i);
+  }
+  fill(table, [...groups].map(([category, items]) => h('section', { class: 'ingredient-group' },
+    h('h3', {}, label('category', category), h('span', { class: 'hint' }, ` ${items.length} 种`)),
+    h('table', {},
+      h('tr', {}, ['ID', '中文名', '英文名', '别名', 'kcal/100g', '每单位克重', '备注', ''].map((t) => h('th', {}, t))),
+      items.map(row)))));
+}
+
+function row(i) {
+  return h('tr', {},
+    h('td', {}, i.ingredient_id),
+    h('td', {}, i.name_zh),
+    h('td', {}, i.name_en || ''),
+    h('td', {}, i.aliases.join('、')),
+    h('td', {}, i.kcal_per_100g ?? h('span', { class: 'warn' }, '未填')),
+    h('td', {}, unitsText(i.grams_per_unit)),
+    h('td', {}, i.notes || ''),
+    h('td', {},
+      h('button', { class: 'small', onclick: () => renderForm(i) }, '编辑'), ' ',
+      h('button', {
+        class: 'small danger',
+        onclick: async () => {
+          if (!window.confirm(`删除食材 ${i.name_zh}？仍被菜品使用时无法删除。`)) return;
+          fill(messages);
+          try { await del(`/api/ingredients/${i.ingredient_id}`); toast('已删除'); } catch (err) { showError(messages, err); }
+          refresh();
+        },
+      }, '删除')));
 }
 
 // While Claude analyses a name, every button on the page is disabled so that the

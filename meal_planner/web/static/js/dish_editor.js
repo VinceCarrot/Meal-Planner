@@ -5,7 +5,7 @@
 // options.requireMatched: every ingredient line must reference the catalogue (approved dishes).
 
 import { post } from './api.js';
-import { h, fill, label, openModal, showError, LABELS } from './ui.js';
+import { h, fill, label, openModal, showError, sortIngredients, LABELS } from './ui.js';
 
 const NUMBERING = /^\s*(?:第?[0-9一二三四五六七八九十]+(?:步[.、:：]?|[、:：)）]|\.(?!\d))|步骤\s*[0-9一二三四五六七八九十]+[.、:：]?|[(（][0-9]+[)）]|[-*•·])\s*/;
 
@@ -18,6 +18,7 @@ export function editDish(dish, ingredients, title, { analyse = false, requireMat
   });
   d.style = d.style || { main_ingredients: [], flavours: [] };
   const byId = Object.fromEntries(ingredients.map((i) => [i.ingredient_id, i]));
+  const sorted = sortIngredients(ingredients);
 
   return new Promise((resolve) => {
     const lines = h('div');
@@ -69,7 +70,8 @@ export function editDish(dish, ingredients, title, { analyse = false, requireMat
       },
     },
     h('option', { value: '' }, line.unmatched_name ? `（未匹配：${line.unmatched_name}）请选择食材` : '请选择食材'),
-    ingredients.map((i) => h('option', { value: i.ingredient_id, selected: line.ingredient_id === i.ingredient_id }, `${i.name_zh}（${i.ingredient_id}）`)));
+    sorted.map((i) => h('option', { value: i.ingredient_id, selected: line.ingredient_id === i.ingredient_id, title: i.ingredient_id },
+      `${label('category', i.category)} - ${i.name_zh}`)));
 
     function renderLines() {
       fill(lines, d.ingredients.map((line, n) => h('div', { class: 'row' },

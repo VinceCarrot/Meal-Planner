@@ -38,8 +38,9 @@ export const LABELS = {
   },
   strictness: { hard: '硬约束', soft: '软约束' },
   dish_type: { vegetarian: '素菜', mixed: '荤素搭配', meat: '大荤', soup: '汤' },
+  // Key order is the display order of ingredient categories.
   category: {
-    vegetable: '蔬菜', meat: '畜肉', poultry: '禽肉', seafood: '水产', egg: '蛋', soy: '豆制品',
+    meat: '畜肉', poultry: '禽肉', seafood: '水产', egg: '蛋', soy: '豆制品', vegetable: '蔬菜',
     mushroom: '菌菇', grain: '主食/谷物', seasoning: '调料', other: '其他',
   },
   cooking_method: {
@@ -59,6 +60,13 @@ export const LABELS = {
 export function label(group, value) {
   if (value === null || value === undefined) return '';
   return (LABELS[group] && LABELS[group][value]) || value;
+}
+
+// Ingredients ordered by category (LABELS.category order), then by Chinese name.
+export function sortIngredients(list) {
+  const rank = Object.fromEntries(Object.keys(LABELS.category).map((c, n) => [c, n]));
+  const r = (i) => rank[i.category] ?? Infinity;
+  return [...list].sort((a, b) => r(a) - r(b) || a.name_zh.localeCompare(b.name_zh, 'zh'));
 }
 
 export function badge(status) {

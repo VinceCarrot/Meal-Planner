@@ -605,7 +605,7 @@ ingredients:
     汤匙: 15.0
   notes: 按白砂糖计;绵白糖颗粒更细,同体积略重。
 - ingredient_id: ing_oyster_sauce
-  name_zh: 耗油
+  name_zh: 蚝油
   name_en: oyster sauce
   aliases:
   - 蚝油
@@ -616,7 +616,7 @@ ingredients:
     汤匙: 15.0
     茶匙: 5.0
     ml: 1.2
-  notes: “耗油”通常是“蚝油”的误写,按蚝油处理。
+  notes: null
 - ingredient_id: ing_white_pepper_powder
   name_zh: 白胡椒粉
   name_en: white pepper powder
@@ -1131,3 +1131,42 @@ ingredients:
     茶匙: 5.0
     ml: 1.0
   notes: 黑醋常指镇江香醋或山西陈醋,此处按常见的镇江香醋/陈醋计。
+- ingredient_id: ing_quail_egg
+  name_zh: 鹌鹑蛋
+  name_en: quail egg
+  aliases:
+  - 鹌鹑卵
+  category: egg
+  kcal_per_100g: 160.0
+  grams_per_unit:
+    个: 10.0
+  notes: 每个约10克(带壳约12克);热量按可食部分计。
+- ingredient_id: ing_baizhi
+  name_zh: 白芷
+  name_en: baizhi
+  aliases:
+  - 香白芷
+  - 川白芷
+  - 杭白芷
+  - 祁白芷
+  category: seasoning
+  kcal_per_100g: null
+  grams_per_unit:
+    片: 2.0
+    根: 5.0
+  notes: 干制香料/药材,用于卤味、火锅、炖汤去腥增香;用量宜少,味道较浓。
+- ingredient_id: ing_black_peppercorns
+  name_zh: 黑胡椒粒
+  name_en: black peppercorns
+  aliases:
+  - 黑胡椒
+  - 黑胡椒籽
+  - 胡椒粒
+  - 黑椒粒
+  category: seasoning
+  kcal_per_100g: 251.0
+  grams_per_unit:
+    茶匙: 3.0
+    勺: 6.0
+    颗: 0.05
+  notes: 指整粒黑胡椒,通常压碎或研磨后使用;若是黑胡椒粉,密度略有不同。
