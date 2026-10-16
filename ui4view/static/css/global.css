@@ -1,0 +1,40 @@
+/* Same light palette as the main planner UI (warm paper, muted ink blue). */
+:root {
+  --bg: #F5F4EF; --surface: #FFFFFF; --surface2: #EEEDE6;
+  --ink: #1E2229; --ink2: #3A3F47; --muted: #6A7079; --line: #DDDCD3; --line-soft: #E8E7E0;
+  --accent: #2F4F9C; --accent-ink: #FFFFFF; --accent-soft: #E7ECF7;
+  --banner: #EFE3C2; --banner-line: #DDCDA2; --banner-ink: #4A3A1A; --banner-note: #8A7246;
+  --c-meat: #A23E2F; --c-meat-soft: #F6E6E2;
+  --c-mixed: #B07515; --c-mixed-soft: #F6EDDA;
+  --c-veg: #3E7E4C; --c-veg-soft: #E3EFE5;
+  --c-soup: #2C7C78; --c-soup-soft: #DFEFEE;
+  --bad: #A23E2F; --bad-soft: #F6E6E2;
+  --shadow: 0 1px 2px rgba(30,34,41,.06), 0 6px 20px rgba(30,34,41,.06);
+  --serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "Microsoft YaHei", serif;
+  --sans: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { color-scheme: light; }
+body { margin: 0; font: 15px/1.6 var(--sans); color: var(--ink); background: var(--bg); -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { margin: 0; font-family: var(--serif); }
+h1 { font-size: 22px; letter-spacing: .02em; }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.topbar { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; padding: 16px; background: var(--banner); border-bottom: 1px solid var(--banner-line); }
+.topbar h1 { color: var(--banner-ink); }
+.topbar-note { font-size: 12px; color: var(--banner-note); letter-spacing: .06em; }
+.content { max-width: 1180px; margin: 0 auto; padding: 16px 16px 48px; }
+
+.hint { color: var(--muted); font-size: 13px; }
+.message { padding: 10px 14px; border-radius: 8px; border-left: 3px solid; }
+.message.error { background: var(--bad-soft); border-color: var(--bad); color: #6F2A20; }
+.empty { background: var(--surface); border: 1px dashed var(--line); border-radius: 12px; padding: 28px 20px; text-align: center; }
+.empty p { margin: 4px 0; }
+
+.tag { display: inline-block; padding: 0 6px; margin-right: 6px; border-radius: 5px; font-size: 11px; font-weight: 600; line-height: 1.6; vertical-align: 1px; background: var(--surface2); color: var(--muted); }
+.tag-meat { background: var(--c-meat-soft); color: var(--c-meat); }
+.tag-mixed { background: var(--c-mixed-soft); color: var(--c-mixed); }
+.tag-vegetarian { background: var(--c-veg-soft); color: var(--c-veg); }
+.tag-soup { background: var(--c-soup-soft); color: var(--c-soup); }

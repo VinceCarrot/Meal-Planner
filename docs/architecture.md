@@ -982,3 +982,21 @@ The vocabulary is an initial draft and can be extended through a code change.
 **Model.** Task `dish_analysis`, default `sonnet`, selectable on the settings page.
 
 **UI.** The edit dialogs for existing dishes and candidates use the same layout without the "分析" button, the web-search checkbox and the reference-link field; their method box is still parsed one step per line.
+
+### ADR-024 Main UI on this computer only; read-only LAN viewer — Confirmed (2026-10-16)
+
+**Requested by the user.** The planner UI can call Claude on the user's subscription, so nobody but this computer may use it. Family members on the home network get a separate page that only shows the current menu.
+
+**Main UI (`app.py`, `meal_planner/web`).**
+
+- Listens on `127.0.0.1` only.
+- Every request whose connection does not come from a loopback address is refused with 403 (`before_request` on `request.remote_addr`). This holds even if the server is started on `0.0.0.0`.
+- The existing Host check (`127.0.0.1`, `localhost`) stays, against DNS rebinding. On its own it is not an access control, because another device can send any Host header. It is also why an earlier attempt to open the UI to the LAN by setting `host="0.0.0.0"` failed: requests addressed to the LAN IP were rejected.
+
+**Viewer (`ui4view/`).**
+
+- A separate minimal Flask app, structured like the reference repository (`app.py`, `templates/index.html` + `templates/modules/`, `static/css`, `static/js`, `static/modules/<module>/`).
+- Runs on `0.0.0.0:5050` with Flask debug mode off; the Werkzeug debugger would let anyone on the network run code.
+- Routes: `GET /` and `GET /api/menu` only; no write endpoint.
+- Reads `data/menus/*/vNNN.yaml`, `dishes.yaml` and `ingredients.yaml` directly with PyYAML. It does not import `meal_planner`, so it has no path to the LLM backend. Tests check the imports and the allowed HTTP methods.
+- Shown menu: the newest version of the menu whose four weeks contain today; otherwise the next to start; otherwise the most recent.

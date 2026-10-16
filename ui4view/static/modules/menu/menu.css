@@ -1,0 +1,29 @@
+.week-tabs { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 4px 0 14px; }
+.week-tabs::-webkit-scrollbar { display: none; }
+.week-tabs button { flex: 0 0 auto; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 14px; color: var(--muted); font-weight: 500; white-space: nowrap; }
+.week-tabs button[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+
+.days { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
+.day { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; box-shadow: var(--shadow); }
+.day.today { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent), var(--shadow); }
+.day-head { display: flex; align-items: baseline; gap: 8px; padding-bottom: 6px; margin-bottom: 4px; border-bottom: 1px dashed var(--line); }
+.day-head b { font: 700 17px/1.2 var(--serif); }
+.day-head .date { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.chip-today { margin-left: auto; font-size: 11px; padding: 2px 7px; border-radius: 5px; background: var(--accent); color: var(--accent-ink); }
+
+.dishes { list-style: none; margin: 0; padding: 0; }
+.dishes li + li { border-top: 1px solid var(--line-soft); }
+.dish { display: block; width: 100%; text-align: left; background: none; border: 0; padding: 6px 0; line-height: 1.4; }
+.dish:hover { color: var(--accent); }
+
+.recipe { margin-top: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; box-shadow: var(--shadow); }
+.recipe-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.recipe h2 { font-size: 19px; }
+.recipe h3 { font-size: 15px; margin: 14px 0 6px; color: var(--ink2); }
+.recipe .close { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 4px 12px; font-size: 13px; color: var(--muted); }
+.recipe .hint { margin: 2px 0; }
+.ingredients { list-style: none; margin: 0; padding: 0; }
+.ingredients li { display: flex; justify-content: space-between; gap: 12px; padding: 5px 0; border-bottom: 1px solid var(--line-soft); }
+.ingredients .qty { color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+.recipe ol { margin: 0; padding-left: 22px; }
+.recipe ol li { margin: 4px 0; }

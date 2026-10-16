@@ -6,13 +6,20 @@ cannot send cross-site without a CORS preflight (CORS is not enabled), so other
 web pages cannot trigger writes on this local server. Only the Host names
 127.0.0.1 and localhost are accepted, which blocks DNS-rebinding pages that would
 otherwise count as same-origin.
+
+This UI can call Claude on the user's subscription, so it serves this computer
+only: every request whose connection does not come from a loopback address is
+refused (ADR-024). The Host check alone is not enough for that, because another
+device can send any Host header; this holds even if the server is started on
+0.0.0.0. The read-only viewer for other devices is the separate `ui4view` app.
 """
 
+import ipaddress
 import logging
 import mimetypes
 from pathlib import Path
 
-from flask import Flask, jsonify, render_template
+from flask import Flask, abort, jsonify, render_template, request
 from pydantic import ValidationError
 from werkzeug.exceptions import HTTPException
 
@@ -36,6 +43,12 @@ def create_app(data_dir: Path, llm_factory=None, video_source=None) -> Flask:
     app.config["TRUSTED_HOSTS"] = ["127.0.0.1", "localhost"]
     app.json.ensure_ascii = False
     app.json.sort_keys = False
+
+    @app.before_request
+    def this_computer_only():
+        if not _is_loopback(request.remote_addr):
+            log.warning("refused request from %s: only this computer may use this UI", request.remote_addr)
+            abort(403, "只允许本机访问")
 
     for module in (constraints, dishes, ingredients, menus, settings, videos):
         app.register_blueprint(module.bp, url_prefix="/api")
@@ -82,3 +95,10 @@ def create_app(data_dir: Path, llm_factory=None, video_source=None) -> Flask:
         return jsonify(error=e.name, issues=[e.description or ""]), e.code
 
     return app
+
+
+def _is_loopback(address: str | None) -> bool:
+    try:
+        return ipaddress.ip_address(address or "").is_loopback
+    except ValueError:
+        return False

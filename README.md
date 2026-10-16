@@ -41,7 +41,16 @@ python app.py --demo    # invented demo data in ./demo_data (100 dishes, 6 rules
 python app.py 5001      # another port
 ```
 
-Open http://127.0.0.1:5000. The server only accepts connections from this computer.
+Open http://127.0.0.1:5000. The server only accepts connections from this computer, because it can use Claude on your subscription; other devices get 403 even if the host setting is changed.
+
+### Menu viewer for other devices
+
+```bash
+conda activate meal
+python ui4view/app.py        # read-only; serves the home network on port 5050
+```
+
+It prints the address for phones and other computers, for example `http://192.168.1.10:5050`. The page only shows the current four-week menu and its recipes: no editing and no connection to Claude. The devices must be on the same network, and Windows Firewall must allow inbound connections for this environment's `python.exe`.
 
 ## First steps with your own data
 
