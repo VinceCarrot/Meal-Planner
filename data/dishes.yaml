@@ -1408,3 +1408,325 @@ dishes:
   uncertainty_notes: 用量按3-4人份估算;搜索结果为摘要,各版本大同小异,取最常见的无焯水、大火快炒做法。蒜量、鸡精和辣椒为估计或可选。
   created_at: '2026-10-15T16:04:02'
   updated_at: null
+- dish_id: dish_0019
+  name_zh: 土豆烧鸡块
+  name_en: Braised Chicken with Potato (lunchbox)
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: ing_whole_chicken_leg
+    unmatched_name: null
+    quantity: 200.0
+    unit: g
+    note: null
+  - ingredient_id: ing_potato
+    unmatched_name: null
+    quantity: 2.0
+    unit: 个
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dark_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_oyster_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_sugar
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_star_anise
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: g
+    note: null
+  servings: 1
+  steps:
+  - 鸡腿肉切 3cm 块，土豆去皮切块。
+  - 热油下姜蒜，鸡块中大火煎 3 分钟至表面金黄。
+  - 加 1 勺生抽、半勺老抽、1 勺蚝油、半小勺糖、1 颗八角、盐、土豆，加水刚没过，盖盖小火 15 分钟。
+  - 开盖大火收汁至浓稠。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_potato
+    cooking_method: braise
+    flavours:
+    - soy_sauce
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: approved
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：新增）；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: '2026-10-15T19:50:02'
+- dish_id: dish_0084
+  name_zh: 醋溜土豆丝
+  name_en: Vinegar Potato Shreds
+  dish_type: vegetarian
+  ingredients:
+  - ingredient_id: ing_potato
+    unmatched_name: null
+    quantity: 3.0
+    unit: 个
+    note: null
+  - ingredient_id: ing_black_vinegar
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_dried_chili_pepper
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 可不放
+  - ingredient_id: ing_peppercorn
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 可不放
+  servings: 4
+  steps:
+  - 土豆去皮切细丝，清水泡 5 分钟冲掉淀粉，沥干。
+  - 热油下蒜片（大人想吃辣可加 2 粒干辣椒），下土豆丝大火翻炒 2 分钟。
+  - 沿锅边淋 1 勺醋，加半小勺盐，再炒 1 分钟至脆嫩，撒葱花出锅。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_potato
+    cooking_method: stir_fry
+    flavours:
+    - sour
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: approved
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：常做）；家庭版不放辣。；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: '2026-10-15T19:54:10'
+- dish_id: dish_0085
+  name_zh: 青椒炒牛肉
+  name_en: Stir-Fried Beef with Green Chilli Peppers (lunchbox)
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: ing_lean_beef
+    unmatched_name: null
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: ing_green_bell_pepper
+    unmatched_name: null
+    quantity: 1.0
+    unit: 包
+    note: null
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: g
+    note: null
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: g
+    note: null
+  servings: 1
+  steps:
+  - 牛肉片用生抽、盐、白胡椒粉、淀粉腌制
+  - 大火炒至五七成熟盛出。
+  - 少许油爆香姜蒜末。
+  - 下青椒圈和少许盐炒软。
+  - 牛肉回锅拌匀，加一点生抽和少量水，炒到牛肉全熟。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_green_bell_pepper
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: approved
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：常做）；青椒只进主人饭盒（长的螺丝椒，不是灯笼椒）。牛肉孩子不吃。来源：WhatsApp
+    2026-06-29；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: '2026-10-15T19:54:10'
+- dish_id: dish_0086
+  name_zh: 青椒炒肉
+  name_en: Stir-Fried Pork with Green Chilli Peppers (lunchbox)
+  dish_type: mixed
+  ingredients:
+  - ingredient_id: ing_pork_tenderloin
+    unmatched_name: null
+    quantity: 150.0
+    unit: g
+    note: null
+  - ingredient_id: ing_green_bell_pepper
+    unmatched_name: null
+    quantity: 1.0
+    unit: 包
+    note: null
+  - ingredient_id: ing_light_soy_sauce
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_starch
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_cooking_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_ginger
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_garlic
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 1
+  steps:
+  - 猪肉片用生抽、盐、白胡椒粉、淀粉腌制
+  - 大火炒至五七成熟盛出。
+  - 少许油爆香姜蒜末。
+  - 下青椒圈和少许盐炒软。
+  - 牛肉回锅拌匀，加一点生抽和少量水，炒到牛肉全熟。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_green_bell_pepper
+    cooking_method: stir_fry
+    flavours:
+    - salty_savory
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: approved
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：常做）；主人最常带的饭盒菜（"green pepper with pork"）。青椒只进主人饭盒，用长的螺丝椒。来源：WhatsApp
+    日常指令（无文字做法）；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: '2026-10-15T19:54:10'
+- dish_id: dish_0050
+  name_zh: 紫菜蛋花汤
+  name_en: Seaweed and Egg Drop Soup
+  dish_type: soup
+  ingredients:
+  - ingredient_id: ing_egg
+    unmatched_name: null
+    quantity: 2.0
+    unit: 个
+    note: null
+  - ingredient_id: ing_dried_nori_laver
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_salt
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_sesame_oil
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  - ingredient_id: ing_white_pepper_powder
+    unmatched_name: null
+    quantity: null
+    unit: null
+    note: 适量
+  servings: 4
+  steps:
+  - 800ml 水煮开，撕入一把紫菜。
+  - 蛋液打散，转小火沿锅边细细淋入，不要搅，10 秒后轻推。
+  - 加盐、白胡椒、香油。
+  calories_kcal: null
+  calorie_basis: null
+  style:
+    main_ingredients:
+    - ing_egg
+    cooking_method: boil
+    flavours:
+    - light
+    cuisine: 家常
+  source: manual
+  source_url: null
+  review_status: approved
+  uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：新增）；快手汤，周五配面用。；类型、做法、口味、菜系由 Claude 判断，请检查
+  created_at: '2026-10-14T21:18:06'
+  updated_at: '2026-10-15T20:18:14'

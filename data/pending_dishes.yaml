@@ -144,87 +144,6 @@ dishes:
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
   updated_at: '2026-10-15T15:16:34'
-- dish_id: dish_0019
-  name_zh: 土豆烧鸡块
-  name_en: Braised Chicken with Potato (lunchbox)
-  dish_type: mixed
-  ingredients:
-  - ingredient_id: null
-    unmatched_name: 去骨鸡腿肉
-    quantity: 200.0
-    unit: g
-    note: null
-  - ingredient_id: ing_potato
-    unmatched_name: null
-    quantity: 2.0
-    unit: 个
-    note: null
-  - ingredient_id: ing_light_soy_sauce
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_dark_soy_sauce
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_oyster_sauce
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: null
-    unmatched_name: 料酒
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: null
-    unmatched_name: 糖
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_ginger
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_garlic
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_star_anise
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_scallion
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  servings: 1
-  steps:
-  - 鸡腿肉切 3cm 块，土豆去皮切块。
-  - 热油下姜蒜，鸡块中大火煎 3 分钟至表面金黄，加 1 勺料酒。
-  - 加 1 勺生抽、半勺老抽、1 勺蚝油、半小勺糖、1 颗八角、土豆，加水刚没过，盖盖小火 15 分钟。
-  - 开盖大火收汁至浓稠，撒葱花。
-  calories_kcal: null
-  calorie_basis: null
-  style:
-    main_ingredients:
-    - ing_potato
-    cooking_method: braise
-    flavours:
-    - soy_sauce
-    cuisine: 家常
-  source: manual
-  source_url: null
-  review_status: pending
-  uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：新增）；类型、做法、口味、菜系由 Claude 判断，请检查
-  created_at: '2026-10-14T21:18:06'
-  updated_at: null
 - dish_id: dish_0020
   name_zh: 土豆焖鸡腿
   name_en: Braised Chicken Thighs with Potato
@@ -297,10 +216,10 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：新增）；请柜台把鸡腿斩成块。；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T19:50:02'
 - dish_id: dish_0021
   name_zh: 姜葱蒸鸡腿
   name_en: Steamed Chicken Leg with Ginger-Scallion Sauce
@@ -361,11 +280,11 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；切姜葱要用熟食砧板和刀。来源：WhatsApp 2024-09-06
     PDF 第 1–2 页；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0022
   name_zh: 家常豆腐
   name_en: Home-Style Braised Tofu with Shiitake
@@ -653,11 +572,11 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：新增）；用一条巴当鱼的另一半切片，和煎巴当鱼同周。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0027
   name_zh: 手撕包菜
   name_en: Hand-Torn Cabbage
@@ -782,11 +701,11 @@ dishes:
     cuisine: 湘菜
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：加菜；原状态：常做）；吃了容易胃痛，不和麻婆豆腐同周，也不排在周一到周四。来源：WhatsApp
     2024-09-19；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0029
   name_zh: 毛血旺
   name_en: Chongqing Spicy Blood Curd Hotpot (adults only)
@@ -874,11 +793,11 @@ dishes:
     cuisine: 川菜
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：加菜；原状态：新增）；备选菜。猪血供应不稳定，Sheng Siong 有货才做。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0030
   name_zh: 水煮牛肉
   name_en: Sichuan Water-Boiled Beef (adults only)
@@ -1026,7 +945,7 @@ dishes:
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：常做）；海带结干的要提前泡 1 小时。；类型、做法、口味、菜系由 Claude
     判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T19:50:02'
 - dish_id: dish_0032
   name_zh: 清炒山药
   name_en: Stir-Fried Chinese Yam
@@ -1077,10 +996,10 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：新增）；备选菜。削皮戴手套。；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0033
   name_zh: 清炒杏鲍菇
   name_en: Pan-Seared King Oyster Mushroom
@@ -1271,11 +1190,11 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：试菜）；Sheng Siong 周末常有 lala。买回来先泡盐水 30 分钟吐沙。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0036
   name_zh: 烤鸡翅
   name_en: Oven-Roasted Chicken Wings
@@ -1337,10 +1256,10 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；咸香口，不刷蜂蜜。；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0038
   name_zh: 煎午鱼
   name_en: Pan-Fried Threadfin (Ikan Kurau)
@@ -1397,11 +1316,11 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：新增）；整条或 2 块鱼扒都可以，鱼扒更好煎。；类型、做法、口味、菜系由 Claude
     判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0039
   name_zh: 煎去骨鸡腿
   name_en: Crispy Pan-Fried Boneless Chicken Thigh
@@ -1509,11 +1428,11 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：新增）；一条巴当鱼请柜台分成两半：一半切厚块煎，一半切薄片做巴当鱼片汤，同一周用完。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0041
   name_zh: 煎鸡翅
   name_en: Pan-Fried Chicken Wings
@@ -2023,71 +1942,11 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：常做）；肉末用半盒，另一半同周做半荤菜。；类型、做法、口味、菜系由 Claude
     判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
-- dish_id: dish_0050
-  name_zh: 紫菜蛋花汤
-  name_en: Seaweed and Egg Drop Soup
-  dish_type: soup
-  ingredients:
-  - ingredient_id: ing_egg
-    unmatched_name: null
-    quantity: 2.0
-    unit: 个
-    note: null
-  - ingredient_id: ing_dried_nori_laver
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_salt
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_sesame_oil
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_scallion
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_white_pepper_powder
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_light_soy_sauce
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  servings: 4
-  steps:
-  - 800ml 水煮开，撕入一把紫菜，加半勺生抽。
-  - 蛋液打散，转小火沿锅边细细淋入，不要搅，10 秒后轻推。
-  - 加盐、白胡椒、葱花、香油。
-  calories_kcal: null
-  calorie_basis: null
-  style:
-    main_ingredients:
-    - ing_egg
-    cooking_method: boil
-    flavours:
-    - light
-    cuisine: 家常
-  source: manual
-  source_url: null
-  review_status: pending
-  uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：新增）；快手汤，周五配面用。；类型、做法、口味、菜系由 Claude 判断，请检查
-  created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0051
   name_zh: 红烧肉
   name_en: Red-Braised Pork Belly
@@ -2156,10 +2015,10 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；小孩爱吃，少放糖色就不甜。；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T20:18:14'
 - dish_id: dish_0052
   name_zh: 羊肚菌排骨汤
   name_en: Morel and Pork Rib Soup
@@ -2264,11 +2123,11 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：常做）；家里最常做的汤（steam minced pork soup）。用梅头肉自己剁更嫩。来源：WhatsApp
     2024-10-05；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0054
   name_zh: 肉末豆腐
   name_en: Minced Pork Tofu (extra meat, lunchbox)
@@ -2414,11 +2273,11 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：新增）；和同周另一道用肉末的菜共用一盒 300g 肉末。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0056
   name_zh: 腐竹炒肉片
   name_en: Sliced Pork with Beancurd Sticks and Shiitake
@@ -2476,11 +2335,11 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: http://xhslink.com/a/Ub1A5kyyVAT4
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：常做）；腐竹要提前至少 30 分钟泡软（加盐和几滴白醋，用碗压住）。芹菜段可加可不加。来源：WhatsApp
     2025-01-31；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0057
   name_zh: 芋头蒸排骨
   name_en: Steamed Pork Ribs on Yam
@@ -2551,11 +2410,11 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；芋头（Thai yam）FairPrice 有，一个约 500g。来源：WhatsApp
     2024-09-22；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0058
   name_zh: 芹菜炒牛肉
   name_en: Stir-Fried Beef with Chinese Celery (lunchbox)
@@ -2785,11 +2644,11 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：常做）；一节藕用一半，另一半同周做藕片炒肉片。花生可放可不放。来源：WhatsApp
     2024-09-25；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0062
   name_zh: 莴笋炒肉片
   name_en: Celtuce with Pork Slices
@@ -2851,11 +2710,11 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：新增）；莴笋在 Sheng Siong 买。叶子不要扔，可以当第二天的叶菜炒。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0063
   name_zh: 菠菜豆腐汤
   name_en: Spinach and Tofu Soup
@@ -2912,10 +2771,10 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：新增）；快手汤。用嫩豆腐。；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0064
   name_zh: 葱油白切鸡
   name_en: Poached Chicken with Spring Onion Oil
@@ -2978,11 +2837,11 @@ dishes:
     cuisine: 粤菜
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：新增）；半只鸡做菜，另半只炖香菇鸡汤。；类型、做法、口味、菜系由 Claude
     判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0065
   name_zh: 葱烧豆腐
   name_en: Spring Onion Braised Tofu
@@ -3040,11 +2899,11 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：新增）；买老豆腐（firm tofu）。；类型、做法、口味、菜系由 Claude
     判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0066
   name_zh: 蒜蓉蒸茄子
   name_en: Steamed Eggplant with Garlic Sauce
@@ -3106,10 +2965,10 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：新增）；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0067
   name_zh: 蒜蓉西兰花
   name_en: Garlic Broccoli
@@ -3156,10 +3015,10 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：新增）；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0068
   name_zh: 蒜香排骨
   name_en: Garlic Pork Ribs
@@ -3368,11 +3227,11 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：新增）；和莲藕排骨汤同周安排，一节藕两道菜用完。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0072
   name_zh: 蘑菇炒肉片
   name_en: Button Mushrooms with Pork Slices
@@ -3543,10 +3402,10 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：新增）；当晚吃完，不适合隔夜。；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0075
   name_zh: 裙带菜虾球汤
   name_en: Wakame and Prawn Soup
@@ -3723,10 +3582,10 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：新增）；备选菜。；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T19:54:26'
 - dish_id: dish_0078
   name_zh: 豉汁蒸排骨
   name_en: Steamed Pork Ribs with Black Bean Sauce
@@ -3798,11 +3657,11 @@ dishes:
     cuisine: 粤菜
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：新增）；请柜台把排骨切成 3cm 小段。；类型、做法、口味、菜系由 Claude
     判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0079
   name_zh: 酱油水豆腐鱼
   name_en: Bombay Duck in Soy Broth (Fujian style)
@@ -3869,11 +3728,11 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：试菜）；豆腐鱼不常有，买不到就做清蒸金目鲈。鱼肉极嫩，不要翻动太多。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0080
   name_zh: 酱油鸡腿
   name_en: Soy Sauce Chicken Thighs
@@ -3945,11 +3804,11 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：新增）；粤式酱油鸡做法，带骨鸡腿整只浸煮再斩块。；类型、做法、口味、菜系由 Claude
     判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0081
   name_zh: 酱焖鸡块
   name_en: Soybean-Paste Braised Chicken with Potato
@@ -4029,11 +3888,11 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；原做法有青椒红椒，全家版不放。来源：WhatsApp 2024-10-05；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0082
   name_zh: 酸菜嫩肉片
   name_en: Pickled Mustard Greens with Tender Pork Slices
@@ -4090,11 +3949,11 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: http://xhslink.com/a/x3OAQNWgSRV2
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：常做）；肉片先水煮再铺在酸菜上，很嫩。酸菜本身咸，盐要少放。来源：WhatsApp
     2025-01-03；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0083
   name_zh: 酸菜肉丝
   name_en: Stir-Fried Shredded Pork with Pickled Mustard Greens (lunchbox)
@@ -4152,205 +4011,11 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: http://xhslink.com/o/49OgXinUEiV
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：常做）；半包酸菜，剩的半包留给酸菜嫩肉片。酸菜只冲一遍水，保留酸味。来源：WhatsApp
     2026-06-22；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
-- dish_id: dish_0084
-  name_zh: 醋溜土豆丝
-  name_en: Vinegar Potato Shreds
-  dish_type: vegetarian
-  ingredients:
-  - ingredient_id: ing_potato
-    unmatched_name: null
-    quantity: 3.0
-    unit: 个
-    note: null
-  - ingredient_id: null
-    unmatched_name: 白醋
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_salt
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: null
-    unmatched_name: 糖
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_garlic
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_scallion
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_dried_chili_pepper
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 可不放
-  - ingredient_id: ing_peppercorn
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 可不放
-  servings: 4
-  steps:
-  - 土豆去皮切细丝，清水泡 5 分钟冲掉淀粉，沥干。
-  - 热油下蒜片（大人想吃辣可加 2 粒干辣椒），下土豆丝大火翻炒 2 分钟。
-  - 沿锅边淋 1 勺白醋，加半小勺盐、一点糖，再炒 1 分钟至脆嫩，撒葱花出锅。
-  calories_kcal: null
-  calorie_basis: null
-  style:
-    main_ingredients:
-    - ing_potato
-    cooking_method: stir_fry
-    flavours:
-    - sour
-    cuisine: 家常
-  source: manual
-  source_url: null
-  review_status: pending
-  uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：常做）；家庭版不放辣。；类型、做法、口味、菜系由 Claude 判断，请检查
-  created_at: '2026-10-14T21:18:06'
-  updated_at: null
-- dish_id: dish_0085
-  name_zh: 青椒炒牛肉
-  name_en: Stir-Fried Beef with Green Chilli Peppers (lunchbox)
-  dish_type: mixed
-  ingredients:
-  - ingredient_id: null
-    unmatched_name: 牛肉片
-    quantity: 150.0
-    unit: g
-    note: null
-  - ingredient_id: ing_green_bell_pepper
-    unmatched_name: null
-    quantity: 1.0
-    unit: 包
-    note: null
-  - ingredient_id: ing_ginger
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_garlic
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_light_soy_sauce
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_salt
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_cooking_oil
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  servings: 1
-  steps:
-  - 牛肉片大火炒至五七成熟盛出。
-  - 少许油爆香姜蒜末。
-  - 下青椒圈和少许盐炒软。
-  - 牛肉回锅拌匀，加一点生抽和少量水，炒到牛肉全熟。
-  calories_kcal: null
-  calorie_basis: null
-  style:
-    main_ingredients:
-    - ing_green_bell_pepper
-    cooking_method: stir_fry
-    flavours:
-    - salty_savory
-    cuisine: 家常
-  source: manual
-  source_url: null
-  review_status: pending
-  uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：常做）；青椒只进主人饭盒（长的螺丝椒，不是灯笼椒）。牛肉孩子不吃。来源：WhatsApp
-    2026-06-29；类型、做法、口味、菜系由 Claude 判断，请检查
-  created_at: '2026-10-14T21:18:06'
-  updated_at: null
-- dish_id: dish_0086
-  name_zh: 青椒炒肉
-  name_en: Stir-Fried Pork with Green Chilli Peppers (lunchbox)
-  dish_type: mixed
-  ingredients:
-  - ingredient_id: null
-    unmatched_name: 猪肉片
-    quantity: 150.0
-    unit: g
-    note: null
-  - ingredient_id: ing_green_bell_pepper
-    unmatched_name: null
-    quantity: 1.0
-    unit: 包
-    note: null
-  - ingredient_id: ing_light_soy_sauce
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_starch
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_cooking_oil
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_ginger
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_garlic
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_salt
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  servings: 1
-  steps:
-  - 肉片加生抽、淀粉、油腌 15 分钟。
-  - 肉片大火炒至变色盛出。
-  - 少许油爆香姜蒜末，下青椒圈和少许盐炒软。
-  - 肉回锅，加一点生抽和少量水，炒匀。
-  calories_kcal: null
-  calorie_basis: null
-  style:
-    main_ingredients:
-    - ing_green_bell_pepper
-    cooking_method: stir_fry
-    flavours:
-    - salty_savory
-    cuisine: 家常
-  source: manual
-  source_url: null
-  review_status: pending
-  uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：常做）；主人最常带的饭盒菜（"green pepper with pork"）。青椒只进主人饭盒，用长的螺丝椒。来源：WhatsApp
-    日常指令（无文字做法）；类型、做法、口味、菜系由 Claude 判断，请检查
-  created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0088
   name_zh: 香煎猪扒
   name_en: Pan-Fried Pork Tenderloin
@@ -4474,11 +4139,11 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：新增）；备选菜。叶菜用小白菜或菜心。；类型、做法、口味、菜系由 Claude
     判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0090
   name_zh: 香菇滑鸡
   name_en: Steamed Chicken with Shiitake
@@ -4555,11 +4220,11 @@ dishes:
     cuisine: 粤菜
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：新增）；替代炸鸡。鸡肉嫩，孩子容易吃。；类型、做法、口味、菜系由 Claude
     判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'
 - dish_id: dish_0091
   name_zh: 香菇蒸肉饼
   name_en: Steamed Minced Pork Patty with Shiitake and Seaweed
@@ -4761,8 +4426,8 @@ dishes:
     cuisine: 家常
   source: manual
   source_url: null
-  review_status: pending
+  review_status: rejected
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：常做）；要配一个素菜（用当晚耐放的素菜或半荤多做一份）。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: null
+  updated_at: '2026-10-15T22:23:56'

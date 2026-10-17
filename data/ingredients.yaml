@@ -1170,3 +1170,16 @@ ingredients:
     勺: 6.0
     颗: 0.05
   notes: 指整粒黑胡椒,通常压碎或研磨后使用;若是黑胡椒粉,密度略有不同。
+- ingredient_id: ing_pork_soup_bones
+  name_zh: 猪汤骨
+  name_en: pork soup bones
+  aliases:
+  - 猪骨
+  - 猪脊骨
+  - 汤骨
+  category: meat
+  kcal_per_100g: null
+  grams_per_unit:
+    块: 50.0
+    根: 300.0
+  notes: 指用于炖汤的猪骨(如筒骨、脊骨);含骨重量,可食部分热量因附带肉量而异,故不给出热量。
