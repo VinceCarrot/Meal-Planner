@@ -1183,3 +1183,69 @@ ingredients:
     块: 50.0
     根: 300.0
   notes: 指用于炖汤的猪骨(如筒骨、脊骨);含骨重量,可食部分热量因附带肉量而异,故不给出热量。
+- ingredient_id: ing_beef_ball
+  name_zh: 牛肉丸
+  name_en: beef ball
+  aliases:
+  - 牛丸
+  - 牛肉圆
+  - 潮汕牛肉丸
+  - 牛筋丸
+  category: meat
+  kcal_per_100g: 170.0
+  grams_per_unit:
+    个: 25.0
+    颗: 25.0
+  notes: 指熟制/速冻成品牛肉丸(如潮汕牛肉丸),热量因淀粉和脂肪含量而异。
+- ingredient_id: ing_cordyceps_militaris_flower
+  name_zh: 虫草花
+  name_en: cordyceps militaris flower
+  aliases:
+  - 蛹虫草
+  - 北虫草
+  - 虫草菇
+  category: mushroom
+  kcal_per_100g: null
+  grams_per_unit:
+    把: 10.0
+    勺: 3.0
+  notes: 通常使用干品(蛹虫草子实体),并非冬虫夏草;煲汤前需浸泡。热量未确定,干品与鲜品差异大。
+- ingredient_id: ing_black_chicken
+  name_zh: 乌鸡
+  name_en: black chicken
+  aliases:
+  - 乌骨鸡
+  - 黑脚鸡
+  - 竹丝鸡
+  - 药鸡
+  category: poultry
+  kcal_per_100g: 111.0
+  grams_per_unit:
+    只: 750.0
+    块: 40.0
+  notes: 常用于炖汤、滋补;整只带骨重量约600-900克,热量为可食部分生重。
+- ingredient_id: ing_morel_mushroom
+  name_zh: 羊肚菌
+  name_en: morel mushroom
+  aliases:
+  - 羊肚菇
+  - 羊肚蘑
+  - 草笠竹
+  - 编笠菌
+  category: mushroom
+  kcal_per_100g: null
+  grams_per_unit:
+    个: 5.0
+  notes: 常见为干品,使用前需泡发;鲜品与干品热量差异大,故未给出热量。必须充分煮熟。
+- ingredient_id: ing_wakame
+  name_zh: 裙带菜
+  name_en: wakame
+  aliases:
+  - 海带芽
+  - 若布
+  category: vegetable
+  kcal_per_100g: null
+  grams_per_unit:
+    勺: 3.0
+    把: 10.0
+  notes: 常见为干裙带菜,泡发后重量约增至10倍;热量因干/鲜/盐渍差异大,故未给出。
