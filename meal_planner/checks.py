@@ -34,6 +34,8 @@ def counted_by(dish: Dish, rule: CountRule, ingredients: Mapping[str, Ingredient
     if isinstance(rule, MatchingDishCount):
         if rule.dish_types and dish.dish_type not in rule.dish_types:
             return False
+        if not all(getattr(dish, tag) for tag in rule.tags):
+            return False
         if not rule.has_ingredient_filter:
             return True
         ids = set(dish.style.main_ingredients) if rule.as_main_ingredient else {
@@ -50,10 +52,11 @@ def describe_counted(rule: CountRule) -> str:
         return f"{rule.dish_type} dishes"
     if isinstance(rule, MatchingDishCount):
         types = f" among {', '.join(rule.dish_types)}" if rule.dish_types else ""
+        tagged = f" tagged {', '.join(rule.tags)}" if rule.tags else ""
         if not rule.has_ingredient_filter:
-            return f"dishes{types}"
+            return f"dishes{tagged}{types}"
         what = ", ".join([*rule.contains_categories, *rule.contains_ingredient_ids])
-        return f"dishes with {what}{' as main ingredient' if rule.as_main_ingredient else ''}{types}"
+        return f"dishes{tagged} with {what}{' as main ingredient' if rule.as_main_ingredient else ''}{types}"
     return "dishes"
 
 

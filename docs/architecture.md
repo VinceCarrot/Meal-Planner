@@ -110,7 +110,7 @@ AI may read this file but may not mutate it. Enforcement is structural (ADR-012)
 - `ingredients`: lines of `{ingredient_id, quantity, unit, note}`. `quantity` is optional (for example "适量" goes in `note`), but a quantity requires a unit. A line may instead carry `unmatched_name` for an ingredient that is not in the catalogue yet; this is allowed only in pending dishes and must be resolved before approval.
 - Optional `servings`, `steps`, `calories_kcal` with `calorie_basis` (`computed` or `estimated`).
 - `style`: `main_ingredients` (ingredient IDs), `cooking_method`, `flavours`, free-text `cuisine` (ADR-011).
-- `source` (`manual`, `ai_generated`, `video_imported`), optional `source_url`, `review_status`, `frequent` (常用菜, default `true`; only frequent dishes are offered to menu generation, ADR-026), `uncertainty_notes`, timestamps.
+- `source` (`manual`, `ai_generated`, `video_imported`), optional `source_url`, `review_status`, `frequent` (常用菜, default `true`; only frequent dishes are offered to menu generation, ADR-026), `lunchbox` (盒饭, default `false`, ADR-027), `uncertainty_notes`, timestamps.
 
 Do not conflate dish role with similarity features. Use stable IDs for references.
 
@@ -193,7 +193,7 @@ Implemented in `meal_planner/constraint_types.py`. Each executable type is a typ
 |---|---|---|
 | `dish_count` | `min`, `max`, `weekdays` | Dishes per dinner, soup included |
 | `dish_type_count` | `dish_type`, `min`, `max`, `weekdays` | Dishes of one type per dinner |
-| `matching_dish_count` | `dish_types`, `contains_categories`, `contains_ingredient_ids`, `as_main_ingredient`, `min`, `max`, `weekdays` | Dishes per dinner of the given types and/or containing given ingredients or categories, e.g. 3–4 dishes not counting soup (ADR-025) |
+| `matching_dish_count` | `dish_types`, `tags`, `contains_categories`, `contains_ingredient_ids`, `as_main_ingredient`, `min`, `max`, `weekdays` | Dishes per dinner of the given types, with the given tags (`lunchbox`) and/or containing given ingredients or categories, e.g. 3–4 dishes not counting soup, or at least two 盒饭 dishes (ADR-025, ADR-027) |
 | `any_of` | `alternatives` (2–4 count rules, no nesting), `weekdays` | At least one alternative holds in each dinner (ADR-025) |
 | `ingredient_exclusion` | `ingredient_ids`, `categories` | Dishes containing these are not used |
 | `no_shared_ingredients` | `ignore_categories` (default seasoning, aromatic), `only_categories` | No two dishes of one dinner use the same ingredient (ADR-025) |
@@ -677,7 +677,7 @@ Main endpoints:
 |---|---|
 | Menus | `POST /api/menus/plan`, `POST /api/menus`, `GET /api/menus`, `GET /api/menus/<id>?version=` |
 | Constraints | `GET/POST /api/constraints`, `PUT/DELETE /api/constraints/<id>`, `POST /api/constraints/parse`, `POST /api/task-constraints/parse`, `POST /api/constraints/effective` |
-| Dishes | `GET/POST /api/dishes`, `POST /api/dishes/suggest`, `PUT/DELETE /api/dishes/<id>`, `PUT /api/dishes/<id>/frequent` (delete is refused with 409 while a stored menu version or a feedback record uses the dish, so menu history stays loadable), `GET /api/pending`, `POST /api/review`, `POST /api/candidates/generate` |
+| Dishes | `GET/POST /api/dishes`, `POST /api/dishes/suggest`, `PUT/DELETE /api/dishes/<id>`, `PUT /api/dishes/<id>/frequent`, `PUT /api/dishes/<id>/lunchbox` (delete is refused with 409 while a stored menu version or a feedback record uses the dish, so menu history stays loadable), `GET /api/pending`, `POST /api/review`, `POST /api/candidates/generate` |
 | Ingredients | `GET/POST /api/ingredients`, `PUT/DELETE /api/ingredients/<id>` |
 | Settings and preferences | `GET/PUT /api/settings`, `GET /api/vocab`, `GET /api/preferences`, `PUT /api/preferences/diners` |
 
@@ -1047,3 +1047,12 @@ The vocabulary is an initial draft and can be extended through a code change.
 - Validation is not restricted: `ctx.dishes` still holds every approved dish, so a menu containing a non-frequent approved dish (for example after a manual change) is valid, and saving re-validates against all approved dishes.
 - If the frequent dishes cannot satisfy the hard constraints, planning reports the shortfall and how many approved dishes were left out as not frequent; it never widens the pool by itself.
 - **Default (not specified by the user):** menu adjustment may still choose any approved dish; only generation is restricted. This can be changed to restrict adjustments too.
+
+### ADR-027 Lunchbox tag (盒饭) — Confirmed (2026-10-18)
+
+**Requested by the user.** Every approved dish has a "盒饭" tag, shown as a checkbox column next to "常用" on the dish catalogue page, editable and saved immediately (`PUT /api/dishes/<id>/lunchbox`, the same validated save as the frequent flag).
+
+- `Dish.lunchbox: bool = False`. **Default (not specified by the user):** unticked, because the tag marks a chosen subset; existing YAML without the field loads as not lunchbox.
+- Constraints can count tagged dishes: `matching_dish_count` has `tags` (currently only `lunchbox`); a dish is counted only if it carries every listed tag. Example: 每顿饭有至少两个菜带有“盒饭”标签 -> `tags [lunchbox], min 2`. Verified with the real CLI on 2026-10-18.
+- A shortfall of tagged dishes is reported like any capacity gap. Generated candidate dishes are never tagged, so such a gap is closed by tagging more approved dishes, not by candidate generation.
+- Further lunchbox behaviour will be specified by the user later.

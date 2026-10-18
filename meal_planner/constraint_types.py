@@ -59,24 +59,31 @@ class DishTypeCount(_Range):
     dish_type: DishType
 
 
+DishTag = Literal["lunchbox"]  # user-set dish tags a rule can count by (lunchbox = 盒饭)
+
+
 class MatchingDishCount(_Range):
-    """Number of dishes in a dinner whose dish type is in dish_types (empty: all types) and, if
-    contains_categories or contains_ingredient_ids is given, that contain any of them. as_main_ingredient true
-    counts a dish only when the ingredient is one of its main ingredients; false counts any use. weekdays as
-    in dish_count. Examples: 每顿饭3-4个菜（不包含汤） -> dish_types [vegetarian, mixed, meat], min 3, max 4;
+    """Number of dishes in a dinner whose dish type is in dish_types (empty: all types), that carry every tag
+    in tags (lunchbox = the user's 盒饭 tag), and, if contains_categories or contains_ingredient_ids is given,
+    that contain any of them. as_main_ingredient true counts a dish only when the ingredient is one of its
+    main ingredients; false counts any use. weekdays as in dish_count. Examples:
+    每顿饭3-4个菜（不包含汤） -> dish_types [vegetarian, mixed, meat], min 3, max 4;
     每顿饭（不含汤）要有一道菜用绿叶菜 -> dish_types [vegetarian, mixed, meat], contains_categories
-    [leafy_green], as_main_ingredient true, min 1."""
+    [leafy_green], as_main_ingredient true, min 1;
+    每顿饭有至少两个菜带有“盒饭”标签 -> tags [lunchbox], min 2."""
 
     type: Literal["matching_dish_count"]
     dish_types: tuple[DishType, ...] = ()
+    tags: tuple[DishTag, ...] = ()
     contains_categories: tuple[IngredientCategory, ...] = ()
     contains_ingredient_ids: tuple[IngredientId, ...] = ()
     as_main_ingredient: bool = True
 
     @model_validator(mode="after")
     def _check_filter(self):
-        if not self.dish_types and not self.contains_categories and not self.contains_ingredient_ids:
-            raise ValueError("at least one of dish_types, contains_categories or contains_ingredient_ids is required")
+        if not (self.dish_types or self.tags or self.contains_categories or self.contains_ingredient_ids):
+            raise ValueError("at least one of dish_types, tags, contains_categories or contains_ingredient_ids is required")
+        _unique(self.tags, "tags")
         return self
 
     @property

@@ -89,16 +89,27 @@ def edit_dish(dish_id):
 @bp.put("/dishes/<dish_id>/frequent")
 def set_frequent(dish_id):
     """Mark a dish as frequent (常用菜) or not; only frequent dishes are offered to menu generation."""
+    return _set_tag(dish_id, "frequent")
+
+
+@bp.put("/dishes/<dish_id>/lunchbox")
+def set_lunchbox(dish_id):
+    """Tag a dish as suitable for a lunchbox (盒饭) or not."""
+    return _set_tag(dish_id, "lunchbox")
+
+
+def _set_tag(dish_id: str, tag: str):
+    """Save one boolean tag of an approved dish (validated whole-catalogue save)."""
     store, cat = load()
-    value = body().get("frequent")
+    value = body().get(tag)
     if not isinstance(value, bool):
-        raise ValueError("frequent must be true or false")
+        raise ValueError(f"{tag} must be true or false")
     if not any(d.dish_id == dish_id for d in cat.dishes.dishes):
         raise NotFound(f"菜品 {dish_id} 不存在")
-    items = tuple(Dish.model_validate(d.model_dump() | {"frequent": value}) if d.dish_id == dish_id else d
+    items = tuple(Dish.model_validate(d.model_dump() | {tag: value}) if d.dish_id == dish_id else d
                   for d in cat.dishes.dishes)
     store.save_dishes(cat, DishesFile(dishes=items))
-    return {"dish_id": dish_id, "frequent": value}
+    return {"dish_id": dish_id, tag: value}
 
 
 @bp.delete("/dishes/<dish_id>")

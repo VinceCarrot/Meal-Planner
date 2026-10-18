@@ -357,3 +357,44 @@ def test_prompt_explains_weekdays_alternatives_and_categories(view):
     system = llm.calls[0]["system"]
     assert "1=周一" in system and "any_of" in system and "leafy_green (绿叶菜)" in system
     assert "\n    " not in system  # type descriptions are one line each
+
+
+# --- Tags (lunchbox) --------------------------------------------------------------------
+
+
+@pytest.fixture
+def tagged_ctx(catalogue):
+    import dataclasses
+    from meal_planner.models import DishesFile
+    dishes = tuple(d.model_copy(update={"lunchbox": n % 3 == 0}) for n, d in enumerate(catalogue.dishes.dishes))
+    settings = Settings()
+    return make_context(dataclasses.replace(catalogue, dishes=DishesFile(dishes=dishes)),
+                        Settings(planner=settings.planner.model_copy(update={"time_limit_s": 10})), START)
+
+
+def test_tagged_dishes_are_counted(tagged_ctx):
+    dinners = plan(tagged_ctx, DISHES_4, ("hard", {"type": "matching_dish_count", "tags": ["lunchbox"], "min": 2}))
+    for d in dinners:
+        assert sum(tagged_ctx.dishes[k].lunchbox for k in d.dish_ids) >= 2
+
+
+def test_missing_tagged_dishes_are_reported(tagged_ctx):
+    untagged = [k for k, d in tagged_ctx.dishes.items() if not d.lunchbox]
+    dinners = [Dinner(date=day, dish_ids=(untagged[n], untagged[n + 20])) for n, day in enumerate(tagged_ctx.dates)]
+    [result] = validate_menu(dinners, tagged_ctx, effective(
+        ("hard", {"type": "matching_dish_count", "tags": ["lunchbox"], "min": 2}))).results
+    assert result.status == ResultStatus.FAILED and len(result.violations) == 20
+    assert "0 dishes tagged lunchbox" in result.violations[0]
+
+
+def test_unknown_tag_is_refused():
+    with pytest.raises(ValidationError):
+        EXECUTION.validate_python({"type": "matching_dish_count", "tags": ["breakfast"], "min": 1})
+
+
+def test_tag_rule_is_parsed(view):
+    parsed, llm = _parse(view, "每顿饭有至少两个菜带有“盒饭”标签", {
+        "parse_status": "executable", "strictness": "hard",
+        "execution": {"type": "matching_dish_count", "tags": ["lunchbox"], "min": 2}, "notes": ""})
+    assert parsed.parse_status == "executable" and parsed.execution.tags == ("lunchbox",)
+    assert "盒饭" in llm.calls[0]["system"]

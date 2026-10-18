@@ -126,3 +126,30 @@ def test_generation_endpoint_uses_frequent_dishes_only(client):
     planned = client.post("/api/menus/plan", json={"start_date": "2026-10-19"}).get_json()
     used = {x["dish_id"] for d in planned["dinners"] for x in d["dishes"]}
     assert used and all(int(k[5:]) % 2 == 0 for k in used)
+
+
+# --- Lunchbox tag (ADR-027) -------------------------------------------------------------
+
+
+def test_dishes_are_not_lunchbox_by_default():
+    assert not any(d.lunchbox for d in synthetic_catalogue(10).dishes.dishes)
+
+
+def test_lunchbox_tag_is_saved_immediately_and_independently(client):
+    client, data = client
+    response = client.put("/api/dishes/dish_0002/lunchbox", json={"lunchbox": True})
+    assert response.status_code == 200 and response.get_json() == {"dish_id": "dish_0002", "lunchbox": True}
+
+    saved = {d["dish_id"]: d for d in yaml.safe_load((data / "dishes.yaml").read_text(encoding="utf-8"))["dishes"]}
+    assert saved["dish_0002"]["lunchbox"] is True and saved["dish_0002"]["frequent"] is True
+    assert saved["dish_0003"]["lunchbox"] is False
+
+    form = {k: v for k, v in client.get("/api/dishes").get_json()[1].items() if k != "calories"}
+    assert client.put("/api/dishes/dish_0002", json=form | {"servings": 2}).get_json()["lunchbox"] is True
+
+
+def test_lunchbox_tag_rejects_bad_input(client):
+    client, _ = client
+    assert client.put("/api/dishes/dish_0002/lunchbox", json={"lunchbox": 1}).status_code == 400
+    assert client.put("/api/dishes/dish_0002/lunchbox", json={"frequent": True}).status_code == 400
+    assert client.put("/api/dishes/dish_9999/lunchbox", json={"lunchbox": True}).status_code == 404

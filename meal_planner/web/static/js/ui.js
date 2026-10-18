@@ -83,6 +83,8 @@ export function weekday(isoDate) {
 }
 
 // Human-readable summary of a constraint's structured interpretation.
+const DISH_TAG = { lunchbox: '盒饭' };
+
 const SIMILARITY_FEATURE = {
   overall: '整体相似度', main_ingredients: '主料相似度', ingredients: '食材相似度',
   cooking_method: '做法相同', flavours: '口味相似度', cuisine: '菜系相同',
@@ -99,8 +101,9 @@ export function describeExecution(e) {
       case 'matching_dish_count': {
         const what = [...(r.contains_categories || []).map((c) => label('category', c)), ...(r.contains_ingredient_ids || [])].join('、');
         const among = r.dish_types && r.dish_types.length ? `（只算${r.dish_types.map((t) => label('dish_type', t)).join('、')}）` : '';
-        if (!what) return `菜 ${range(r.min, r.max)} 道${among}`;
-        return `${r.as_main_ingredient ? '以' : '用到'}${what}${r.as_main_ingredient ? '为主料' : ''}的菜 ${range(r.min, r.max)} 道${among}`;
+        const tagged = (r.tags || []).map((t) => `带“${DISH_TAG[t] || t}”标签的`).join('');
+        if (!what) return `${tagged}菜 ${range(r.min, r.max)} 道${among}`;
+        return `${tagged}${r.as_main_ingredient ? '以' : '用到'}${what}${r.as_main_ingredient ? '为主料' : ''}的菜 ${range(r.min, r.max)} 道${among}`;
       }
       default: return r.type;
     }
