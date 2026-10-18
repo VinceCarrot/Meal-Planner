@@ -19,6 +19,7 @@ constraints:
     - vegetarian
     - mixed
     - meat
+    tags: []
     contains_categories: []
     contains_ingredient_ids: []
     as_main_ingredient: true
@@ -51,7 +52,7 @@ constraints:
   created_at: null
   updated_at: null
 - constraint_id: C003
-  description: 每顿饭的菜（不包括汤）里要有一个菜是绿叶菜作为食材
+  description: 每周一、三、五的菜（不包括汤）里要有一个菜是绿叶菜作为食材
   scope:
   - menu_generation
   - menu_adjustment
@@ -60,18 +61,22 @@ constraints:
   execution:
     min: 1
     max: null
-    weekdays: []
+    weekdays:
+    - 1
+    - 3
+    - 5
     type: matching_dish_count
     dish_types:
     - vegetarian
     - mixed
     - meat
+    tags: []
     contains_categories:
     - leafy_green
     contains_ingredient_ids: []
     as_main_ingredient: true
   parse_status: executable
-  parse_notes: 不含汤；绿叶菜须为主要食材；至少一道（理解为“至少一个”，未设上限）。
+  parse_notes: 周一、三、五（不含汤）至少一个菜以绿叶菜为主要食材（min 1，未设上限）；按示例取“作为主要食材”。其他日子不限制。
   overrides: []
   active: true
   created_at: null
@@ -255,6 +260,7 @@ constraints:
     dish_types:
     - meat
     - mixed
+    tags: []
     contains_categories: []
     contains_ingredient_ids: []
     as_main_ingredient: true
@@ -282,11 +288,52 @@ constraints:
     - vegetarian
     - mixed
     - meat
+    tags: []
     contains_categories: []
     contains_ingredient_ids: []
     as_main_ingredient: true
   parse_status: executable
   parse_notes: 周二、周四：不含汤的菜恰好4个（min=max=4）。
+  overrides: []
+  active: true
+  created_at: null
+  updated_at: null
+- constraint_id: C014
+  description: 每顿饭有至少两个菜带有“盒饭”标签
+  scope:
+  - menu_generation
+  - menu_adjustment
+  strictness: hard
+  source: persistent
+  execution:
+    min: 2
+    max: null
+    weekdays: []
+    type: matching_dish_count
+    dish_types: []
+    tags:
+    - lunchbox
+    contains_categories: []
+    contains_ingredient_ids: []
+    as_main_ingredient: true
+  parse_status: executable
+  parse_notes: 每顿饭（周一至周五）至少两个带“盒饭”标签的菜，不限菜品类型（含汤）；未设上限。
+  overrides: []
+  active: true
+  created_at: null
+  updated_at: null
+- constraint_id: C015
+  description: 相邻两周的菜品尽量不重复
+  scope:
+  - menu_generation
+  - menu_adjustment
+  strictness: soft
+  source: persistent
+  execution:
+    type: exact_repeat_window
+    weeks: 2
+  parse_status: executable
+  parse_notes: 按“尽量”设为软约束：同一道菜在2周内尽量不重复出现，即相邻两周不重复（同一周内也不重复）。
   overrides: []
   active: true
   created_at: null

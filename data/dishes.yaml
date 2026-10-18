@@ -60,60 +60,10 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 姜、葱、花椒、香油未写明用量,按"少许/适量"处理。盐焗鸡粉"1包约30g"由"一半约15g"推算。份数按每人一只鸡腿估计为3份。
   created_at: '2026-10-13T23:58:22'
-  updated_at: null
-- dish_id: dish_0002
-  name_zh: 番茄炒蛋
-  name_en: Stir-fried Tomato and Eggs
-  dish_type: mixed
-  ingredients:
-  - ingredient_id: ing_tomato
-    unmatched_name: null
-    quantity: 400.0
-    unit: g
-    note: null
-  - ingredient_id: ing_egg
-    unmatched_name: null
-    quantity: 4.0
-    unit: 个
-    note: null
-  - ingredient_id: ing_salt
-    unmatched_name: null
-    quantity: 3.0
-    unit: g
-    note: 蛋液约1g,调味约2g,可按口味增减
-  - ingredient_id: ing_cooking_oil
-    unmatched_name: null
-    quantity: 30.0
-    unit: ml
-    note: 炒蛋约20ml,炒番茄约10ml
-  servings: 3
-  steps:
-  - 番茄洗净,顶部划十字,用开水烫30秒后去皮,切成滚刀块
-  - 鸡蛋打入碗中,加1g盐,搅打均匀
-  - 锅烧热,倒入20ml油,中大火烧至油温较热
-  - 倒入蛋液,炒至七八成熟的大块,盛出备用
-  - 锅中补10ml油,中火放入番茄块翻炒
-  - 炒至番茄出汁变软,约2-3分钟,加2g盐调味
-  - 倒入炒好的鸡蛋,翻炒均匀,约30秒
-  - 出锅装盘
-  calories_kcal: null
-  calorie_basis: null
-  style:
-    main_ingredients:
-    - ing_tomato
-    - ing_egg
-    cooking_method: stir_fry
-    flavours:
-    - salty_savory
-    - sweet_sour
-    cuisine: 家常
-  source: manual
-  source_url: null
-  review_status: approved
-  uncertainty_notes: 家常做法有多种(如加水淀粉、番茄酱、先炒番茄等),这里选最常见的先炒蛋后炒番茄版本。盐糖用量为估算,可按口味调整。
-  created_at: '2026-10-14T11:26:35'
   updated_at: null
 - dish_id: dish_0004
   name_zh: 蒜蓉菜心
@@ -163,6 +113,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: false
   uncertainty_notes: 各来源做法略有不同:有的不焯水直接炒再盖锅焖,有的焯水后勾芡淋汁。这里选用最常见的焯水后蒜蓉清炒版本。用量为按3-4人份估算,可按口味调整。
   created_at: '2026-10-14T13:41:42'
   updated_at: null
@@ -232,6 +184,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 原文未写油量、蒜的用量和份数,油适量、蒜约3瓣、2人份为估计;苦瓜重量按一般大小估计。原文的“糖”按白糖处理,“半勺生抽”的勺大小未说明。
   created_at: '2026-10-14T20:04:32'
   updated_at: null
@@ -307,6 +261,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 搜索没有找到直接对应的菜谱,只找到虾滑煮娃娃菜汤等相近做法,所以本做法是按常规方法写的,用量为估算。名称里说的是「煮熟」,这里改用蒸以保持卷形完整。想煮的话,可以在清汤或高汤里小火煮6~8分钟。
   created_at: '2026-10-14T20:17:24'
   updated_at: null
@@ -374,6 +330,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: false
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：新增）；一包 3 棵用 2 棵，剩 1 棵给第二天的娃娃菜虾滑带饭。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -442,6 +400,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：新增）；备选菜。和冬瓜虾滑汤同周安排可以用完一块冬瓜。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -499,6 +459,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: false
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：新增）；虾滑用上周剩的半盒。；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
   updated_at: '2026-10-14T21:57:50'
@@ -565,6 +527,8 @@ dishes:
   source: manual
   source_url: https://youtu.be/OMFJxnYWkfU
   review_status: approved
+  frequent: true
+  lunchbox: false
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：新增）；备选。和莲藕排骨汤排同一周，一节藕两道用完。孩子那份不放辣。来源：WhatsApp
     2024-09-22（只有链接）；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -632,6 +596,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: false
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：试菜）；试菜，排在周六。鱼请柜台去鳞去内脏。；类型、做法、口味、菜系由 Claude
     判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -710,79 +676,9 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: false
+  lunchbox: false
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：待查教程）；请柜台切块。卤水不要倒，第二天加五花肉和鸡蛋再卤一次就是带饭的卤肉卤蛋。；类型、做法、口味、菜系由
-    Claude 判断，请检查
-  created_at: '2026-10-14T21:18:06'
-  updated_at: '2026-10-15T15:16:34'
-- dish_id: dish_0016
-  name_zh: 咸蛋黄蒸肉饼
-  name_en: Steamed Pork Patty with Salted Egg Yolk
-  dish_type: meat
-  ingredients:
-  - ingredient_id: ing_ground_pork
-    unmatched_name: null
-    quantity: 300.0
-    unit: g
-    note: null
-  - ingredient_id: ing_salted_egg_yolk
-    unmatched_name: null
-    quantity: 3.0
-    unit: 个
-    note: null
-  - ingredient_id: ing_light_soy_sauce
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_starch
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_ginger
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_scallion
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_white_pepper_powder
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_sesame_oil
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  - ingredient_id: ing_white_sugar
-    unmatched_name: null
-    quantity: null
-    unit: null
-    note: 适量
-  servings: 4
-  steps:
-  - 肉末加 1 勺生抽、1 勺淀粉、姜末、少许糖和白胡椒、3 勺水，顺一个方向搅到起胶。
-  - 摊入深盘约 2cm 厚，中间压三个小窝，放咸蛋黄。
-  - 水开后大火蒸 15 分钟，出锅撒葱花、淋香油。
-  calories_kcal: null
-  calorie_basis: null
-  style:
-    main_ingredients:
-    - ing_ground_pork
-    - ing_salted_egg_yolk
-    cooking_method: steam
-    flavours:
-    - salty_savory
-    cuisine: 家常
-  source: manual
-  source_url: null
-  review_status: approved
-  uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：新增）；肉末用一整盒。孩子吃肉饼部分，咸蛋黄给大人。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
   updated_at: '2026-10-15T15:16:34'
@@ -840,6 +736,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；虾一周一次，排周五周六。家里菜单上常出现（salted egg shrimp）。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -847,7 +745,7 @@ dishes:
 - dish_id: dish_0018
   name_zh: 土豆烧牛腩
   name_en: Braised Beef Brisket with Potato (lunchbox)
-  dish_type: mixed
+  dish_type: meat
   ingredients:
   - ingredient_id: ing_beef_brisket
     unmatched_name: null
@@ -918,14 +816,16 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：新增）；牛腩一包 500g 用一半，另一半冷冻下次用。牛肉只有主人吃。可以周日白天先炖好。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: '2026-10-15T15:38:25'
+  updated_at: '2026-10-18T22:48:43'
 - dish_id: dish_0026
   name_zh: 干锅花菜
   name_en: Dry-Wok Cauliflower with Pork Belly
-  dish_type: mixed
+  dish_type: vegetarian
   ingredients:
   - ingredient_id: ing_cauliflower
     unmatched_name: null
@@ -986,10 +886,12 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：常做）；家庭版不放辣；大人想吃辣，起锅前拨一半出来单独加干辣椒。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: '2026-10-15T15:38:25'
+  updated_at: '2026-10-18T22:48:55'
 - dish_id: dish_0037
   name_zh: 煎三文鱼
   name_en: Pan-Fried Salmon
@@ -1032,6 +934,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: false
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；只用油、盐、黑胡椒，不用照烧酱。全家每周都吃的菜。来源：WhatsApp
     2024-09-19；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -1092,6 +996,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：常做）；牛肉只有主人带饭吃，孩子不吃。；类型、做法、口味、菜系由 Claude
     判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -1149,6 +1055,8 @@ dishes:
   source: manual
   source_url: http://xhslink.com/a/zlnjq2CBfJV2
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：常做）；WhatsApp 里的香干版本，带肉；芹菜炒香干是不带肉的版本。来源：WhatsApp
     2025-01-12；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -1200,6 +1108,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: false
+  lunchbox: false
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：新增）；用做盐焗鸡或白切鸡剩下的半只鸡。；类型、做法、口味、菜系由 Claude
     判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -1270,6 +1180,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：加菜；原状态：常做）；肠胃不好时不吃；主人常带的便当菜（带饭时做一半量，配一个素菜）。给孩子做
     "tofu non spicy"：不放豆瓣酱，改做肉末豆腐。来源：WhatsApp 2024-09-25；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -1348,6 +1260,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：加菜；原状态：常做）；主人常带的便当菜。带饭时酱汁另装一小盒，第二天自己拌；可以加芹菜或香菜。藤椒油在
     RedMart 买。来源：WhatsApp 2026-05-13；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -1405,13 +1319,15 @@ dishes:
   source: manual
   source_url: https://m.xiachufang.com/recipe/100034004/
   review_status: approved
+  frequent: false
+  lunchbox: false
   uncertainty_notes: 用量按3-4人份估算;搜索结果为摘要,各版本大同小异,取最常见的无焯水、大火快炒做法。蒜量、鸡精和辣椒为估计或可选。
   created_at: '2026-10-15T16:04:02'
   updated_at: null
 - dish_id: dish_0019
   name_zh: 土豆烧鸡块
   name_en: Braised Chicken with Potato (lunchbox)
-  dish_type: mixed
+  dish_type: meat
   ingredients:
   - ingredient_id: ing_whole_chicken_leg
     unmatched_name: null
@@ -1481,9 +1397,11 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：新增）；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: '2026-10-15T19:50:02'
+  updated_at: '2026-10-18T22:49:21'
 - dish_id: dish_0084
   name_zh: 醋溜土豆丝
   name_en: Vinegar Potato Shreds
@@ -1536,6 +1454,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：常做）；家庭版不放辣。；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
   updated_at: '2026-10-15T19:54:10'
@@ -1608,6 +1528,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: false
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：常做）；青椒只进主人饭盒（长的螺丝椒，不是灯笼椒）。牛肉孩子不吃。来源：WhatsApp
     2026-06-29；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -1676,6 +1598,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: false
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：常做）；主人最常带的饭盒菜（"green pepper with pork"）。青椒只进主人饭盒，用长的螺丝椒。来源：WhatsApp
     日常指令（无文字做法）；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -1727,6 +1651,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: false
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：新增）；快手汤，周五配面用。；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
   updated_at: '2026-10-15T20:18:14'
@@ -1777,6 +1703,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: false
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：常做）；海带结干的要提前泡 1 小时。；类型、做法、口味、菜系由 Claude
     判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -1828,6 +1756,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: false
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：新增）；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
   updated_at: '2026-10-17T20:58:12'
@@ -1885,6 +1815,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: false
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：新增）；鱼请柜台去鳞去内脏。当天买当天吃，不留隔夜。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -1940,6 +1872,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；孩子爱吃，味道咸香不甜。；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
   updated_at: '2026-10-17T20:58:12'
@@ -2002,6 +1936,8 @@ dishes:
   source: manual
   source_url: http://xhslink.com/a/yVnD4OfBWQg3
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：常做）；主人带饭常配的素菜，也可以单独做一份进饭盒。秋葵先用盐搓洗再焯水，不会太黏。来源：WhatsApp
     2025-01-08；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -2049,6 +1985,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：常做）；小孩常备菜，每周可以有一次。；类型、做法、口味、菜系由 Claude
     判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -2132,6 +2070,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：新增）；不放青椒木耳，用香菇。买老豆腐（firm tofu）才好煎。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -2193,6 +2133,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：素；原状态：新增）；一颗包菜用半颗，另外半颗包保鲜膜放冰箱，同周带饭加量用。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -2274,6 +2216,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：加菜；原状态：常做）；孩子牛肉过敏，这道只给大人。孩子那晚吃其余三道菜。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -2330,6 +2274,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: false
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：常做）；孩子牛肉过敏，不喝这锅。给孩子换成虾滑或紫菜蛋花汤。家里常做（8 个牛肉丸）。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -2402,6 +2348,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: false
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：常做）；肉多版，小孩不吃所以只做带饭。要配一个素菜。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -2463,6 +2411,8 @@ dishes:
   source: manual
   source_url: http://xhslink.com/o/6twCCOoTJyU
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：常做）；牛肉只有主人带饭吃，孩子不吃。用本地芹菜（daun sup）。来源：WhatsApp
     2026-04-21；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -2524,6 +2474,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：常做）；不带肉的版本。WhatsApp 里发过的带肉版本见「香干炒肉」（肉片
     + 香干）。；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -2586,6 +2538,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：新增）；和同周另一道用肉片的菜共用一盒 300g 肉片。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -2633,6 +2587,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: false
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：新增）；西洋菜要炖到软烂才不苦。；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
   updated_at: '2026-10-18T00:25:47'
@@ -2694,6 +2650,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；用猪里脊，刀背拍松。不用照烧酱。带饭时按 1 人份做 1 到 2 片。来源：WhatsApp
     2024-10-22；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -2771,6 +2729,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；家里每周都做的菜（steam chicken leg with mushroom）。孩子一个人吃时蒸
     1 只就够。；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -2817,6 +2777,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: false
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：常做）；羊肚菌 RedMart 买干的，约 20g 一次。泡菇水要用。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -2888,6 +2850,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：新增）；请柜台切 4cm 段。先炸后炒，蒜要多。；类型、做法、口味、菜系由 Claude
     判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -2935,6 +2899,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: false
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：常做）；乌鸡 FairPrice 的 Pasar 盒装约 400g。虫草花干货常备。来源：WhatsApp
     2024-09-22；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -2987,6 +2953,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：荤；原状态：常做）；小红书原帖说是"儿子最喜欢的菜"。只用生抽蚝油腌，不是照烧。来源：WhatsApp
     2025-10-23；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -3042,6 +3010,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: false
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：常做）；虾只排周五周六。；类型、做法、口味、菜系由 Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
   updated_at: '2026-10-18T00:32:13'
@@ -3120,6 +3090,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：新增）；第 3 周用卤猪脚的卤水顺手卤；第 4 周单独卤一小锅。要配一个素菜。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -3166,6 +3138,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: false
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：新增）；一根山药用一半，另一半同周做山药炒肉片。削皮戴手套，山药黏液会痒。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -3238,6 +3212,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：新增）；和山药排骨汤同周安排，一根山药两道菜用完。削皮时戴手套，山药黏液会让手痒。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -3310,6 +3286,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：带饭；原状态：常做）；原青椒牛肉豆腐煲去青椒版。牛肉只有主人带饭吃。要配一个素菜。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -3350,6 +3328,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: false
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：汤；原状态：常做）；每周一次的清汤，孩子喝很好。；类型、做法、口味、菜系由 Claude
     判断，请检查
   created_at: '2026-10-14T21:18:06'
@@ -3408,6 +3388,8 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: false
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：常做）；家里常做的"steam pork patty with shiitake
     mushroom"，孩子爱吃。干香菇要提前泡 1 小时，女佣要留足时间。来源：WhatsApp 2024-09-06 PDF 第 3 页；类型、做法、口味、菜系由
     Claude 判断，请检查
@@ -3416,7 +3398,7 @@ dishes:
 - dish_id: dish_0045
   name_zh: 猪肉蛋饼
   name_en: Pork and Egg Pancake
-  dish_type: mixed
+  dish_type: meat
   ingredients:
   - ingredient_id: ing_ground_pork
     unmatched_name: null
@@ -3477,7 +3459,9 @@ dishes:
   source: manual
   source_url: null
   review_status: approved
+  frequent: true
+  lunchbox: true
   uncertainty_notes: 从《家常菜轮换表》导入（原分类：半荤；原状态：常做）；小孩爱吃。和同周另一道用肉末的菜共用一盒 300g 肉末。；类型、做法、口味、菜系由
     Claude 判断，请检查
   created_at: '2026-10-14T21:18:06'
-  updated_at: '2026-10-18T13:37:09'
+  updated_at: '2026-10-18T22:50:15'
