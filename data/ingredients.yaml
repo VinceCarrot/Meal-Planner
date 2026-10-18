@@ -275,7 +275,7 @@ ingredients:
   - 小白菜心
   - 迷你白菜
   - 娃娃白菜
-  category: vegetable
+  category: leafy_green
   kcal_per_100g: 16.0
   grams_per_unit:
     棵: 200.0
@@ -305,7 +305,7 @@ ingredients:
   - 细香葱
   - 青葱
   - 葱
-  category: vegetable
+  category: aromatic
   kcal_per_100g: 30.0
   grams_per_unit:
     根: 15.0
@@ -317,11 +317,9 @@ ingredients:
   name_zh: 香芹
   name_en: celery
   aliases:
-  - 西芹
-  - 洋芹
-  - 芹菜
   - 欧芹菜
-  category: vegetable
+  - 欧芹
+  category: aromatic
   kcal_per_100g: 16.0
   grams_per_unit:
     根: 40.0
@@ -334,7 +332,7 @@ ingredients:
   - 芫荽
   - 胡荽
   - 香荽
-  category: vegetable
+  category: aromatic
   kcal_per_100g: 33.0
   grams_per_unit:
     根: 3.0
@@ -363,7 +361,7 @@ ingredients:
   - 蕻菜
   - 藤藤菜
   - 竹叶菜
-  category: vegetable
+  category: leafy_green
   kcal_per_100g: 23.0
   grams_per_unit:
     把: 250.0
@@ -390,7 +388,7 @@ ingredients:
   - 绿花菜
   - 青花菜
   - 绿菜花
-  category: vegetable
+  category: leafy_green
   kcal_per_100g: 34.0
   grams_per_unit:
     颗: 300.0
@@ -404,7 +402,7 @@ ingredients:
   - 油菜心
   - 菜芯
   - 广东菜心
-  category: vegetable
+  category: leafy_green
   kcal_per_100g: 25.0
   grams_per_unit:
     根: 25.0
@@ -419,7 +417,7 @@ ingredients:
   - 老姜
   - 姜块
   - 黄姜
-  category: vegetable
+  category: aromatic
   kcal_per_100g: 41.0
   grams_per_unit:
     块: 15.0
@@ -434,7 +432,7 @@ ingredients:
   - 蒜
   - 大蒜头
   - 蒜瓣
-  category: vegetable
+  category: aromatic
   kcal_per_100g: 128.0
   grams_per_unit:
     瓣: 5.0
@@ -459,7 +457,7 @@ ingredients:
   - 圆葱
   - 葱头
   - 玉葱
-  category: vegetable
+  category: aromatic
   kcal_per_100g: 40.0
   grams_per_unit:
     个: 200.0
@@ -781,7 +779,7 @@ ingredients:
   - 结球甘蓝
   - 大头菜
   - 莲花白
-  category: vegetable
+  category: leafy_green
   kcal_per_100g: 24.0
   grams_per_unit:
     个: 1000.0
@@ -796,7 +794,7 @@ ingredients:
   - 散叶生菜
   - 玻璃生菜
   - 春菜
-  category: vegetable
+  category: leafy_green
   kcal_per_100g: 15.0
   grams_per_unit:
     棵: 300.0
@@ -810,7 +808,7 @@ ingredients:
   - 菠薐菜
   - 赤根菜
   - 波斯菜
-  category: vegetable
+  category: leafy_green
   kcal_per_100g: 28.0
   grams_per_unit:
     把: 250.0
@@ -895,7 +893,7 @@ ingredients:
   - 野山椒
   - 小辣椒
   - 七星椒
-  category: vegetable
+  category: aromatic
   kcal_per_100g: 40.0
   grams_per_unit:
     个: 3.0
@@ -1249,3 +1247,30 @@ ingredients:
     勺: 3.0
     把: 10.0
   notes: 常见为干裙带菜,泡发后重量约增至10倍;热量因干/鲜/盐渍差异大,故未给出。
+- ingredient_id: ing_chinese_yam
+  name_zh: 山药
+  name_en: Chinese yam
+  aliases:
+  - 淮山
+  - 怀山药
+  - 薯蓣
+  - 山薯
+  category: vegetable
+  kcal_per_100g: 57.0
+  grams_per_unit:
+    根: 300.0
+    段: 100.0
+    片: 10.0
+  notes: 默认指铁棍山药等常见食用山药;kcal为鲜品。去皮时黏液可能致手部发痒。
+- ingredient_id: ing_large_celery
+  name_zh: 西芹
+  name_en: large_celery
+  aliases:
+  - 芹菜
+  - 洋芹
+  category: vegetable
+  kcal_per_100g: 14.0
+  grams_per_unit:
+    根: 40.0
+    棵: 500.0
+  notes: 西芹指茎粗大肉厚的西洋芹(Western celery),区别于较细的本地芹菜;kcal为可食部生重。
