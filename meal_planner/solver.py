@@ -14,13 +14,15 @@ from datetime import date
 
 from ortools.sat.python import cp_model
 
-from .checks import exclusion_hits
+from .checks import counted_by, exclusion_hits, shared_ingredients
 from .constraint_types import (
+    COUNT_TYPES,
+    AnyOf,
     DishCount,
     DishSimilarity,
-    DishTypeCount,
     ExactRepeatWindow,
     IngredientExclusion,
+    NoSharedIngredients,
 )
 from .models import Constraint, Dinner
 from .plan_context import PlanContext
@@ -80,7 +82,8 @@ def solve(
 
     dates = ctx.dates
     fixed_ids = {k for ks in fixed.values() for k in ks}
-    dishes = sorted((set(ctx.dishes) - hard_excluded_dishes(ctx, constraints)) | fixed_ids)
+    candidates = {k for k in ctx.dishes if ctx.is_selectable(k)} - hard_excluded_dishes(ctx, constraints)
+    dishes = sorted(candidates | fixed_ids)
 
     m = cp_model.CpModel()
     x = {(i, k): m.new_bool_var(f"x_{i}_{k}") for i in range(len(dates)) for k in dishes}
@@ -106,8 +109,12 @@ def solve(
 
     for c in constraints:
         rule, hard = c.execution, c.strictness == Strictness.HARD
-        if isinstance(rule, (DishCount, DishTypeCount)):
+        if isinstance(rule, COUNT_TYPES):
             terms += _count(m, x, ctx, dates, dishes, rule, hard)
+        elif isinstance(rule, AnyOf):
+            terms += _any_of(m, x, ctx, dates, dishes, rule, hard)
+        elif isinstance(rule, NoSharedIngredients):
+            terms += _no_shared(m, x, ctx, dates, dishes, rule, hard)
         elif isinstance(rule, IngredientExclusion) and not hard:
             hits = [k for k in dishes if exclusion_hits(ctx.dishes[k], rule, ctx.ingredients)]
             terms += [(ctx.settings.penalty_soft_exclusion, x[i, k]) for i in range(len(dates)) for k in hits]
@@ -147,10 +154,16 @@ def solve(
     )
 
 
+def _members(ctx, dishes, rule) -> list[str]:
+    return [k for k in dishes if counted_by(ctx.dishes[k], rule, ctx.ingredients)]
+
+
 def _count(m, x, ctx, dates, dishes, rule, hard):
-    members = dishes if isinstance(rule, DishCount) else [k for k in dishes if ctx.dishes[k].dish_type == rule.dish_type]
+    members = _members(ctx, dishes, rule)
     terms = []
-    for i in range(len(dates)):
+    for i, d in enumerate(dates):
+        if not rule.applies_on(d.isoweekday()):
+            continue
         count = sum(x[i, k] for k in members)
         if hard:
             if rule.min is not None:
@@ -166,6 +179,50 @@ def _count(m, x, ctx, dates, dishes, rule, hard):
             over = m.new_int_var(0, len(members), f"over_{i}")
             m.add(over >= count - rule.max)
             terms.append((ctx.settings.penalty_soft_count, over))
+    return terms
+
+
+def _any_of(m, x, ctx, dates, dishes, rule: AnyOf, hard):
+    """Per dinner, one indicator per alternative; an alternative's bounds hold when its indicator is set."""
+    members = [_members(ctx, dishes, alt) for alt in rule.alternatives]
+    terms = []
+    for i, d in enumerate(dates):
+        if not rule.applies_on(d.isoweekday()):
+            continue
+        chosen = []
+        for n, (alt, alt_members) in enumerate(zip(rule.alternatives, members)):
+            h = m.new_bool_var(f"anyof_{i}_{n}")
+            count = sum(x[i, k] for k in alt_members)
+            if alt.min is not None:
+                m.add(count >= alt.min).only_enforce_if(h)
+            if alt.max is not None:
+                m.add(count <= alt.max).only_enforce_if(h)
+            chosen.append(h)
+        if hard:
+            m.add_bool_or(chosen)
+        else:
+            missed = m.new_bool_var(f"anyof_missed_{i}")
+            m.add_bool_or([*chosen, missed])
+            terms.append((ctx.settings.penalty_soft_count, missed))
+    return terms
+
+
+def _no_shared(m, x, ctx, dates, dishes, rule: NoSharedIngredients, hard):
+    pairs = [
+        (a, b)
+        for n, a in enumerate(dishes)
+        for b in dishes[n + 1:]
+        if shared_ingredients(ctx.dishes[a], ctx.dishes[b], rule, ctx.ingredients)
+    ]
+    terms = []
+    for i in range(len(dates)):
+        for a, b in pairs:
+            if hard:
+                m.add_bool_or([x[i, a].Not(), x[i, b].Not()])
+            else:
+                both = m.new_bool_var(f"shared_{i}_{a}_{b}")
+                m.add_bool_or([x[i, a].Not(), x[i, b].Not(), both])
+                terms.append((ctx.settings.penalty_shared_ingredient, both))
     return terms
 
 
@@ -206,6 +263,7 @@ def _max_dishes_per_dinner(constraints: Sequence[Constraint]) -> int | None:
         c.execution.max
         for c in constraints
         if isinstance(c.execution, DishCount) and c.strictness == Strictness.HARD and c.execution.max is not None
+        and not c.execution.weekdays  # a bound must hold on every dinner
     ]
     return min(maxima, default=None)
 
@@ -213,19 +271,25 @@ def _max_dishes_per_dinner(constraints: Sequence[Constraint]) -> int | None:
 def _similarity(m, x, ctx, dates, dishes, rule: DishSimilarity, hard, max_dishes: int | None):
     threshold = rule.max_similarity or ctx.settings.default_dish_similarity_threshold
     neighbours: dict[str, list[tuple[str, int]]] = {k: [] for k in dishes}  # dish -> [(similar dish, points)]
-    for n, a in enumerate(dishes):
-        for b in dishes[n + 1:]:
-            score = ctx.similarity(a, b)
+    compared = [k for k in dishes if ctx.dishes[k].dish_type not in rule.skip_dish_types]
+    for n, a in enumerate(compared):
+        for b in compared[n + 1:]:
+            score = ctx.similarity(a, b, rule.feature)
             if score is not None and score > threshold:
                 points = round(ctx.settings.penalty_dish_similarity * score)
                 neighbours[a].append((b, points))
                 neighbours[b].append((a, points))
 
+    # A dish served again on another dinner is as similar as it gets (score 1.0).
+    itself = round(ctx.settings.penalty_dish_similarity) if threshold < 1 else None
+    compared_set = set(compared)
     terms = []
-    for i, j in _day_pairs(dates, rule.window_weeks * 7, same_day=True):
+    for i, j in _day_pairs(dates, rule.days, same_day=rule.same_dinner):
         for a in dishes:
             # Same dinner: count each unordered pair once (b > a). Different dinners: a on i, b on j.
             similar = [(b, pts) for b, pts in neighbours[a] if i != j or b > a]
+            if i != j and itself is not None and a in compared_set:
+                similar.append((a, itself))
             if not similar:
                 continue
             if hard:

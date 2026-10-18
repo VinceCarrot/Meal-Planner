@@ -86,6 +86,21 @@ def edit_dish(dish_id):
     return dish_view(dish, _ingredients(cat))
 
 
+@bp.put("/dishes/<dish_id>/frequent")
+def set_frequent(dish_id):
+    """Mark a dish as frequent (常用菜) or not; only frequent dishes are offered to menu generation."""
+    store, cat = load()
+    value = body().get("frequent")
+    if not isinstance(value, bool):
+        raise ValueError("frequent must be true or false")
+    if not any(d.dish_id == dish_id for d in cat.dishes.dishes):
+        raise NotFound(f"菜品 {dish_id} 不存在")
+    items = tuple(Dish.model_validate(d.model_dump() | {"frequent": value}) if d.dish_id == dish_id else d
+                  for d in cat.dishes.dishes)
+    store.save_dishes(cat, DishesFile(dishes=items))
+    return {"dish_id": dish_id, "frequent": value}
+
+
 @bp.delete("/dishes/<dish_id>")
 def delete_dish(dish_id):
     """Refused while a stored menu version or a feedback record uses the dish (they must stay loadable)."""

@@ -68,7 +68,8 @@ def _first_improvement(ctx, effective, current, report, rules, editable, allowed
                 continue
             dish_type = ctx.dishes[dish_id].dish_type
             for candidate in sorted(ctx.dishes):
-                if ctx.dishes[candidate].dish_type != dish_type or candidate in dinner.dish_ids or not allowed(day, candidate):
+                if (ctx.dishes[candidate].dish_type != dish_type or candidate in dinner.dish_ids
+                        or not ctx.is_selectable(candidate) or not allowed(day, candidate)):
                     continue
                 ids = dinner.dish_ids[:pos] + (candidate,) + dinner.dish_ids[pos + 1:]
                 trial = current[:index] + [Dinner(date=day, dish_ids=ids)] + current[index + 1:]

@@ -11,7 +11,8 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, replace
 from datetime import date
 
-from .constraint_types import DishCount, DishTypeCount, ExactRepeatWindow
+from .checks import counted_by, describe_counted
+from .constraint_types import COUNT_TYPES, DishCount, DishTypeCount, ExactRepeatWindow, MatchingDishCount
 from .constraints import EffectiveConstraintSet
 from .models import Constraint, Dinner
 from .plan_context import PlanContext
@@ -32,6 +33,7 @@ class CatalogueGap:
     eligible_dishes: int
     max_uses_per_dish: int
     servings_needed: int
+    what: str | None = None  # what the rule counts, when more specific than the dish type
 
     @property
     def additional_dishes_needed(self) -> int:
@@ -39,7 +41,7 @@ class CatalogueGap:
         return math.ceil(shortfall / self.max_uses_per_dish)
 
     def describe(self) -> str:
-        what = f"{self.dish_type} dishes" if self.dish_type else "dishes"
+        what = self.what or (f"{self.dish_type} dishes" if self.dish_type else "dishes")
         return (
             f"{self.constraint_id}: needs {self.servings_needed} servings of {what}, but only "
             f"{self.eligible_dishes} eligible {what} can be served at most {self.max_uses_per_dish} time(s) each; "
@@ -74,12 +76,13 @@ def plan_menu(
     if not effective.ready:
         return PlanResult(PlanStatus.BLOCKED, messages=tuple(f"{', '.join(i.constraint_ids)}: {i.message}" for i in effective.issues))
     constraints = list(effective.constraints)
-    if not any(isinstance(c.execution, DishCount) and c.execution.min for c in constraints):
-        return PlanResult(PlanStatus.BLOCKED, messages=("specify how many dishes each dinner should have (a dish_count constraint with a minimum)",))
+    if not any(isinstance(c.execution, (DishCount, MatchingDishCount)) and c.execution.min for c in constraints):
+        return PlanResult(PlanStatus.BLOCKED, messages=(
+            "specify how many dishes each dinner should have (a dish_count or matching_dish_count constraint with a minimum)",))
 
     gaps = capacity_gaps(ctx, constraints)
     if gaps:
-        return PlanResult(PlanStatus.INFEASIBLE, messages=tuple(g.describe() for g in gaps), gaps=tuple(gaps))
+        return PlanResult(PlanStatus.INFEASIBLE, messages=tuple(g.describe() for g in gaps) + _not_frequent_note(ctx), gaps=tuple(gaps))
 
     result = solve(ctx, constraints, fixed=fixed, free_dates=free_dates, banned=banned, prefer=prefer)
     if result.status == "infeasible":
@@ -90,7 +93,8 @@ def plan_menu(
             else "no menu satisfies all hard constraints together"
             + ("; no single constraint is solely responsible" if diagnose else "")
         )
-        return PlanResult(PlanStatus.INFEASIBLE, messages=(message,), relaxation_candidates=tuple(candidates), solver=result)
+        return PlanResult(PlanStatus.INFEASIBLE, messages=(message,) + _not_frequent_note(ctx),
+                          relaxation_candidates=tuple(candidates), solver=result)
     if result.dinners is None:
         return PlanResult(
             PlanStatus.NO_SOLUTION_FOUND,
@@ -112,6 +116,13 @@ def plan_menu(
     return PlanResult(report.status, dinners=tuple(dinners), report=report, solver=result, repair=stats)
 
 
+def _not_frequent_note(ctx: PlanContext) -> tuple[str, ...]:
+    if ctx.selectable is None:
+        return ()
+    left_out = len(ctx.dishes) - len(ctx.selectable & ctx.dishes.keys())
+    return (f"{left_out} approved dish(es) not marked 常用 were not considered",) if left_out else ()
+
+
 def max_uses_per_dish(dates: Sequence[date], window_days: int | None) -> int:
     """How often one dish can appear in the plan when repeats must be `window_days` apart."""
     if window_days is None:
@@ -127,20 +138,27 @@ def capacity_gaps(ctx: PlanContext, constraints: Sequence[Constraint]) -> list[C
     """Proven shortfalls: hard count minimums that the eligible catalogue cannot cover."""
     hard = [c for c in constraints if c.strictness == Strictness.HARD]
     windows = [c.execution.weeks * 7 for c in hard if isinstance(c.execution, ExactRepeatWindow)]
-    uses = max_uses_per_dish(ctx.dates, max(windows, default=None))
+    window = max(windows, default=None)
     excluded = hard_excluded_dishes(ctx, hard)
-    eligible = [d for k, d in ctx.dishes.items() if k not in excluded]
+    eligible = [d for k, d in ctx.dishes.items() if k not in excluded and ctx.is_selectable(k)]
 
     gaps = []
     for c in hard:
         rule = c.execution
-        if not isinstance(rule, (DishCount, DishTypeCount)) or not rule.min:
+        if not isinstance(rule, COUNT_TYPES) or not rule.min:
             continue
-        dish_type = rule.dish_type if isinstance(rule, DishTypeCount) else None
-        count = sum(1 for d in eligible if dish_type is None or d.dish_type == dish_type)
-        needed = len(ctx.dates) * rule.min
+        dates = [d for d in ctx.dates if rule.applies_on(d.isoweekday())]
+        uses = max_uses_per_dish(dates, window)
+        if isinstance(rule, MatchingDishCount):
+            dish_type = rule.dish_types[0] if len(rule.dish_types) == 1 else None
+            what = describe_counted(rule)
+        else:
+            dish_type = rule.dish_type if isinstance(rule, DishTypeCount) else None
+            what = None
+        count = sum(1 for d in eligible if counted_by(d, rule, ctx.ingredients))
+        needed = len(dates) * rule.min
         if count * uses < needed:
-            gaps.append(CatalogueGap(c.constraint_id, dish_type, count, uses, needed))
+            gaps.append(CatalogueGap(c.constraint_id, dish_type, count, uses, needed, what))
     return gaps
 
 

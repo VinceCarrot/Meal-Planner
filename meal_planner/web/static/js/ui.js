@@ -40,7 +40,7 @@ export const LABELS = {
   dish_type: { vegetarian: '素菜', mixed: '荤素搭配', meat: '大荤', soup: '汤' },
   // Key order is the display order of ingredient categories.
   category: {
-    meat: '畜肉', poultry: '禽肉', seafood: '水产', egg: '蛋', soy: '豆制品', vegetable: '蔬菜',
+    meat: '畜肉', poultry: '禽肉', seafood: '水产', egg: '蛋', soy: '豆制品', leafy_green: '绿叶菜', vegetable: '蔬菜', aromatic: '调味菜',
     mushroom: '菌菇', grain: '主食/谷物', seasoning: '调料', other: '其他',
   },
   cooking_method: {
@@ -83,17 +83,48 @@ export function weekday(isoDate) {
 }
 
 // Human-readable summary of a constraint's structured interpretation.
+const SIMILARITY_FEATURE = {
+  overall: '整体相似度', main_ingredients: '主料相似度', ingredients: '食材相似度',
+  cooking_method: '做法相同', flavours: '口味相似度', cuisine: '菜系相同',
+};
+
 export function describeExecution(e) {
   if (!e) return '';
   const range = (min, max) => (min != null && max != null ? (min === max ? `${min}` : `${min}–${max}`) : min != null ? `至少 ${min}` : `至多 ${max}`);
+  const when = (w) => (w && w.length ? `每${w.map((d) => LABELS.weekday[d - 1]).join('、')}` : '每餐');
+  const counted = (r) => {
+    switch (r.type) {
+      case 'dish_count': return `${range(r.min, r.max)} 道菜`;
+      case 'dish_type_count': return `${label('dish_type', r.dish_type)} ${range(r.min, r.max)} 道`;
+      case 'matching_dish_count': {
+        const what = [...(r.contains_categories || []).map((c) => label('category', c)), ...(r.contains_ingredient_ids || [])].join('、');
+        const among = r.dish_types && r.dish_types.length ? `（只算${r.dish_types.map((t) => label('dish_type', t)).join('、')}）` : '';
+        if (!what) return `菜 ${range(r.min, r.max)} 道${among}`;
+        return `${r.as_main_ingredient ? '以' : '用到'}${what}${r.as_main_ingredient ? '为主料' : ''}的菜 ${range(r.min, r.max)} 道${among}`;
+      }
+      default: return r.type;
+    }
+  };
   switch (e.type) {
-    case 'dish_count': return `每餐 ${range(e.min, e.max)} 道菜`;
-    case 'dish_type_count': return `每餐${label('dish_type', e.dish_type)} ${range(e.min, e.max)} 道`;
+    case 'dish_count':
+    case 'dish_type_count':
+    case 'matching_dish_count':
+      return `${when(e.weekdays)} ${counted(e)}`;
+    case 'any_of': return `${when(e.weekdays)}满足其一：${e.alternatives.map(counted).join('；或 ')}`;
     case 'ingredient_exclusion':
       return `不用：${[...(e.categories || []).map((c) => label('category', c)), ...(e.ingredient_ids || [])].join('、')}`;
+    case 'no_shared_ingredients': {
+      const only = e.only_categories && e.only_categories.length ? `，只看${e.only_categories.map((c) => label('category', c)).join('、')}` : '';
+      const ignored = e.ignore_categories && e.ignore_categories.length ? `（不算${e.ignore_categories.map((c) => label('category', c)).join('、')}${only}）` : only ? `（${only.slice(1)}）` : '';
+      return `同一顿饭里的菜不用同一种食材${ignored}`;
+    }
     case 'exact_repeat_window': return `${e.weeks} 周内同一道菜不重复`;
-    case 'dish_similarity':
-      return `${e.window_weeks} 周内菜品相似度不超过 ${e.max_similarity ?? '默认阈值'}`;
+    case 'dish_similarity': {
+      const days = e.window_days ?? e.window_weeks * 7;
+      const scope = days === 1 ? '同一顿饭里' : days === 2 && !e.same_dinner ? '相邻两天' : `${e.same_dinner ? '同一顿及' : ''}${days} 天内`;
+      const skip = e.skip_dish_types && e.skip_dish_types.length ? `（不比较${e.skip_dish_types.map((t) => label('dish_type', t)).join('、')}）` : '';
+      return `${scope}菜品${SIMILARITY_FEATURE[e.feature || 'overall']}不超过 ${e.max_similarity ?? '默认阈值'}${skip}`;
+    }
     case 'meal_similarity':
       return `${e.window_weeks} 周内整餐相似度不超过 ${e.max_similarity ?? '默认阈值'}`;
     default: return e.type;

@@ -203,6 +203,20 @@ def test_persistent_constraint_lifecycle(client, llm):
     assert client.put("/api/constraints/C004", json={"active": True}).status_code == 404
 
 
+def test_selected_constraints_can_be_parsed_again(client, llm):
+    before = {c["constraint_id"]: c for c in ok(client.get("/api/constraints"))}
+    weekday_soup = {"type": "dish_type_count", "dish_type": "soup", "min": 1, "max": 1, "weekdays": [1, 3, 5]}
+    llm.response = {"results": [result("C002", execution=weekday_soup)]}
+
+    parsed = {c["constraint_id"]: c for c in ok(client.post("/api/constraints/parse", json={"constraint_ids": ["C002"]}))}
+
+    assert "C002" in llm.calls[-1]["prompt"] and "C001" not in llm.calls[-1]["prompt"]
+    assert parsed["C002"]["execution"]["weekdays"] == [1, 3, 5]
+    assert parsed["C001"] == before["C001"]
+    assert client.post("/api/constraints/parse", json={"constraint_ids": ["C999"]}).status_code == 404
+    assert client.post("/api/constraints/parse", json={"constraint_ids": "C002"}).status_code == 400
+
+
 def test_task_constraints_are_parsed_but_not_saved(client, llm, data_dir):
     before = (data_dir / "constraints.yaml").read_bytes()
     llm.response = {"results": [result("T001", execution={"type": "dish_type_count", "dish_type": "soup", "min": 2, "max": 2})]}

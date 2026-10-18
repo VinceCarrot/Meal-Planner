@@ -12,7 +12,7 @@ from typing import Any, TypeVar
 
 from pydantic import BaseModel, ValidationError
 
-from .constraint_types import IngredientExclusion
+from .constraint_types import AnyOf, IngredientExclusion, MatchingDishCount
 from .models import (
     Constraint,
     ConstraintSource,
@@ -137,9 +137,15 @@ def check_menu(menu: MenuVersion, cat: Catalogue, file: str) -> list[DataIssue]:
 
 def constraint_ref_errors(constraint: Constraint, ingredient_ids: set[str]) -> list[str]:
     """Catalogue references in a constraint's parameters that do not exist."""
-    if not isinstance(constraint.execution, IngredientExclusion):
-        return []
-    return [f"unknown ingredient_id '{i}'" for i in constraint.execution.ingredient_ids if i not in ingredient_ids]
+    e = constraint.execution
+    rules = e.alternatives if isinstance(e, AnyOf) else (e,)
+    refs = [
+        i
+        for rule in rules
+        for i in (rule.ingredient_ids if isinstance(rule, IngredientExclusion)
+                  else rule.contains_ingredient_ids if isinstance(rule, MatchingDishCount) else ())
+    ]
+    return [f"unknown ingredient_id '{i}'" for i in dict.fromkeys(refs) if i not in ingredient_ids]
 
 
 def _ingredient_refs(file: str, dish: Dish, ingredient_ids: set[str]) -> list[DataIssue]:

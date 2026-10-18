@@ -11,14 +11,17 @@ from datetime import date
 from enum import StrEnum
 
 from .calories import estimate_dish_calories
-from .checks import count_dish_types, exclusion_hits, find_repeats
+from .checks import counted_by, describe_counted, exclusion_hits, find_repeats, shared_ingredients
 from .constraint_types import (
+    AnyOf,
     DishCount,
     DishSimilarity,
     DishTypeCount,
     ExactRepeatWindow,
     IngredientExclusion,
+    MatchingDishCount,
     MealSimilarity,
+    NoSharedIngredients,
 )
 from .constraints import EffectiveConstraintSet
 from .models import Constraint, Dinner, Record
@@ -153,17 +156,46 @@ def _evaluate(c: Constraint, dinners: list[Dinner], ctx: PlanContext, effective:
 # Each evaluator returns (violations, soft penalty points, number of unknown similarity pairs).
 
 
-def _counts(rule: DishCount | DishTypeCount, dinners, ctx):
+def _count_deviation(rule, dinner: Dinner, ctx) -> tuple[int, int]:
+    """(actual count, dishes missing or in excess) of one count rule in one dinner."""
+    actual = sum(1 for i in dinner.dish_ids if counted_by(ctx.dishes[i], rule, ctx.ingredients))
+    return actual, max(0, (rule.min or 0) - actual) + (max(0, actual - rule.max) if rule.max is not None else 0)
+
+
+def _counts(rule: DishCount | DishTypeCount | MatchingDishCount, dinners, ctx):
     violations, units = [], 0
     for d in dinners:
-        dishes = [ctx.dishes[i] for i in d.dish_ids]
-        actual = count_dish_types(dishes)[rule.dish_type] if isinstance(rule, DishTypeCount) else len(dishes)
-        deviation = max(0, (rule.min or 0) - actual) + (max(0, actual - rule.max) if rule.max is not None else 0)
+        if not rule.applies_on(d.date.isoweekday()):
+            continue
+        actual, deviation = _count_deviation(rule, d, ctx)
         if deviation:
-            what = f"{rule.dish_type} dishes" if isinstance(rule, DishTypeCount) else "dishes"
-            violations.append(f"{d.date}: {actual} {what}")
+            violations.append(f"{d.date}: {actual} {describe_counted(rule)}")
             units += deviation
     return violations, units * ctx.settings.penalty_soft_count, 0
+
+
+def _any_of(rule: AnyOf, dinners, ctx):
+    violations = []
+    for d in dinners:
+        if not rule.applies_on(d.date.isoweekday()):
+            continue
+        outcomes = [_count_deviation(alt, d, ctx) for alt in rule.alternatives]
+        if all(deviation for _, deviation in outcomes):
+            found = "; ".join(f"{actual} {describe_counted(alt)}" for alt, (actual, _) in zip(rule.alternatives, outcomes))
+            violations.append(f"{d.date}: no alternative holds ({found})")
+    return violations, len(violations) * ctx.settings.penalty_soft_count, 0
+
+
+def _no_shared(rule: NoSharedIngredients, dinners, ctx):
+    violations = []
+    for d in dinners:
+        ids = d.dish_ids
+        for x in range(len(ids)):
+            for y in range(x + 1, len(ids)):
+                shared = shared_ingredients(ctx.dishes[ids[x]], ctx.dishes[ids[y]], rule, ctx.ingredients)
+                if shared:
+                    violations.append(f"{d.date}: {ids[x]} and {ids[y]} share {', '.join(shared)}")
+    return violations, len(violations) * ctx.settings.penalty_shared_ingredient, 0
 
 
 def _exclusion(rule: IngredientExclusion, dinners, ctx):
@@ -186,8 +218,11 @@ def _repeats(rule: ExactRepeatWindow, dinners, ctx):
 def _dish_similarity(rule: DishSimilarity, dinners, ctx):
     threshold = rule.max_similarity or ctx.settings.default_dish_similarity_threshold
     violations, penalty, unknown = [], 0, 0
-    for (d1, a), (d2, b) in _dish_pairs_in_window(dinners, rule.window_weeks):
-        score = ctx.similarity(a, b)
+    skipped = set(rule.skip_dish_types)
+    for (d1, a), (d2, b) in _dish_pairs_in_window(dinners, rule.days, rule.same_dinner):
+        if ctx.dishes[a].dish_type in skipped or ctx.dishes[b].dish_type in skipped:
+            continue
+        score = ctx.similarity(a, b, rule.feature)
         if score is None:
             unknown += 1
         elif score > threshold:
@@ -211,20 +246,21 @@ def _meal_similarity(rule: MealSimilarity, dinners, ctx):
     return violations, penalty, unknown
 
 
-def _dish_pairs_in_window(dinners: Sequence[Dinner], weeks: int):
-    """Pairs of different dishes served in the same dinner or within the window.
+def _dish_pairs_in_window(dinners: Sequence[Dinner], days: int, same_dinner: bool = True):
+    """Pairs of dishes served in the same dinner (if `same_dinner`) or on dinners less than `days` apart.
 
-    Serving the same dish twice is repetition, which is checked separately.
+    A dish served again on another dinner forms a pair with itself (similarity 1.0), so a
+    similarity rule is not satisfied by simply repeating one dish.
     """
     for i, d1 in enumerate(dinners):
-        for d2 in dinners[i:]:
-            if (d2.date - d1.date).days >= weeks * 7:
+        for d2 in dinners[i if same_dinner else i + 1:]:
+            if (d2.date - d1.date).days >= days:
                 break
             if d1 is d2:
                 ids = d1.dish_ids
                 pairs = [(ids[x], ids[y]) for x in range(len(ids)) for y in range(x + 1, len(ids))]
             else:
-                pairs = [(a, b) for a in d1.dish_ids for b in d2.dish_ids if a != b]
+                pairs = [(a, b) for a in d1.dish_ids for b in d2.dish_ids]
             for a, b in pairs:
                 yield (d1.date, a), (d2.date, b)
 
@@ -232,6 +268,9 @@ def _dish_pairs_in_window(dinners: Sequence[Dinner], weeks: int):
 _EVALUATORS = {
     DishCount: _counts,
     DishTypeCount: _counts,
+    MatchingDishCount: _counts,
+    AnyOf: _any_of,
+    NoSharedIngredients: _no_shared,
     IngredientExclusion: _exclusion,
     ExactRepeatWindow: _repeats,
     DishSimilarity: _dish_similarity,

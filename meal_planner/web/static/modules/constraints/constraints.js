@@ -38,6 +38,21 @@ function build() {
         }, '添加'))),
     h('div', { class: 'row' },
       h('button', { onclick: () => run(() => post('/api/constraints/parse', {}, '正在用 Claude 解析未解析的约束…'), '解析完成') }, '用 Claude 解析所有“未解析”的约束'),
+      h('button', {
+        onclick: async () => {
+          let ids;
+          try {
+            ids = (await get('/api/constraints')).filter((c) => !['unparsed', 'executable'].includes(c.parse_status)).map((c) => c.constraint_id);
+          } catch (err) {
+            showError(messages, err);
+            return;
+          }
+          if (!ids.length) { toast('没有需要重新解析的约束'); return; }
+          if (window.confirm(`用 Claude 重新解析 ${ids.join('、')}？原来的解释会被替换。`)) {
+            run(() => post('/api/constraints/parse', { constraint_ids: ids }, '正在用 Claude 重新解析约束…'), '重新解析完成');
+          }
+        },
+      }, '重新解析“不支持 / 近似 / 需澄清”的约束'),
       h('span', { class: 'hint' }, '解析结果由程序校验；无法表达的约束会如实标为“不支持”或“需澄清”。')),
     table);
 }
@@ -94,6 +109,11 @@ function render(constraints) {
             if (description && description.trim() !== c.description) run(() => put(`/api/constraints/${c.constraint_id}`, { description: description.trim() }));
           },
         }, '改描述'),
+        ' ',
+        h('button', {
+          class: 'small',
+          onclick: () => run(() => post('/api/constraints/parse', { constraint_ids: [c.constraint_id] }, `正在用 Claude 重新解析 ${c.constraint_id}…`), '重新解析完成'),
+        }, '重新解析'),
         ' ',
         h('button', {
           class: 'small danger',

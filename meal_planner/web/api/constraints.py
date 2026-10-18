@@ -1,6 +1,6 @@
 """Persistent constraints and task-constraint parsing."""
 
-from flask import Blueprint
+from flask import Blueprint, request
 
 from ...constraint_parser import parse_constraints
 from ...constraints import (
@@ -66,9 +66,15 @@ def delete_constraint(constraint_id):
 
 @bp.post("/constraints/parse")
 def parse_persistent():
-    """Parse every persistent constraint that is still unparsed."""
+    """Parse every persistent constraint that is still unparsed, or re-parse the given `constraint_ids`."""
     store, cat = load()
-    cat = parse_unparsed_persistent(store, cat, llm(LLMTask.CONSTRAINT_PARSING))
+    ids = (request.get_json(silent=True) or {}).get("constraint_ids")
+    if ids is not None and (not isinstance(ids, list) or not all(isinstance(i, str) for i in ids)):
+        raise ValueError("constraint_ids must be a list of constraint IDs")
+    try:
+        cat = parse_unparsed_persistent(store, cat, llm(LLMTask.CONSTRAINT_PARSING), ids)
+    except KeyError as e:
+        raise NotFound(f"约束 {e.args[0]} 不存在") from None
     return [dump(c) for c in cat.constraints.constraints]
 
 

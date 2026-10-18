@@ -1,4 +1,4 @@
-// Approved dish catalogue: browse, add manually, edit, delete.
+// Approved dish catalogue: browse, add manually, edit, delete, mark as frequent (常用菜).
 
 import { get, post, put, del } from '../../js/api.js';
 import { h, fill, label, dishTypeTag, showError, toast, LABELS } from '../../js/ui.js';
@@ -55,10 +55,13 @@ function kcalText(d) {
 function renderList() {
   const text = search.value.trim();
   const shown = dishes.filter((d) => (!typeFilter.value || d.dish_type === typeFilter.value) && (!text || d.name_zh.includes(text)));
-  fill(list, h('p', { class: 'hint' }, `共 ${dishes.length} 道，显示 ${shown.length} 道`),
+  const frequent = dishes.filter((d) => d.frequent).length;
+  fill(list, h('p', { class: 'hint' }, `共 ${dishes.length} 道（常用 ${frequent} 道），显示 ${shown.length} 道。生成新菜单时只从勾选了“常用”的菜里选。`),
     h('table', {},
-      h('tr', {}, ['ID', '名称', '类型', '主料', '做法 / 口味', '估算热量', '来源', ''].map((t) => h('th', {}, t))),
+      h('tr', {}, ['常用', 'ID', '名称', '类型', '主料', '做法 / 口味', '估算热量', '来源', ''].map((t) => h('th', {}, t))),
       shown.map((d) => h('tr', { class: 'clickable', onclick: () => renderDetail(d) },
+        h('td', { onclick: (e) => e.stopPropagation() },
+          h('input', { type: 'checkbox', checked: d.frequent, title: '常用菜：生成新菜单时可以选用', onchange: (e) => setFrequent(d, e.target) })),
         h('td', {}, d.dish_id),
         h('td', {}, d.name_zh),
         h('td', {}, dishTypeTag(d.dish_type)),
@@ -67,6 +70,23 @@ function renderList() {
         h('td', {}, kcalText(d)),
         h('td', {}, label('source', d.source)),
         h('td', {}, h('button', { class: 'small danger', onclick: (e) => { e.stopPropagation(); deleteDish(d); } }, '删除'))))));
+}
+
+async function setFrequent(d, box) {
+  const value = box.checked;
+  box.disabled = true;
+  fill(messages);
+  try {
+    await put(`/api/dishes/${d.dish_id}/frequent`, { frequent: value });
+    d.frequent = value;
+    toast(`${d.name_zh}：${value ? '已设为常用' : '已取消常用'}`);
+    renderList();
+  } catch (err) {
+    box.checked = !value;
+    showError(messages, err);
+  } finally {
+    box.disabled = false;
+  }
 }
 
 async function deleteDish(d) {

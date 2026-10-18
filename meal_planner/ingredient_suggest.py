@@ -47,7 +47,7 @@ Fields:
 given name. Empty list if none.
 - category: one of {", ".join(c.value for c in IngredientCategory)}. Meat is red meat (pork, beef, lamb); \
 poultry is chicken, duck, goose; soy is tofu and other soy products; grain covers rice, flour, noodles; \
-seasoning covers sauces, spices, oil, salt, sugar.
+leafy_green is a vegetable eaten mainly for its green leaves and tender stems (spinach, choy sum, \nwater spinach, lettuce); other vegetables are vegetable; aromatic is fresh produce used in small amounts for flavour (scallion, ginger, garlic, coriander, fresh chili); \nseasoning covers sauces, spices, oil, salt, sugar.
 - kcal_per_100g: energy per 100 g of the raw edible part, from standard food composition tables. null if you \
 are not confident.
 - grams_per_unit: typical gram weight of the household units used for this ingredient in Chinese recipes, \

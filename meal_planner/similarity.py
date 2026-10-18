@@ -81,9 +81,13 @@ def _same(x, y) -> float | None:
     return 1.0 if x == y else 0.0
 
 
+# Used in small amounts in most dishes, so they say little about how alike two dishes are.
+_NOT_CORE = {IngredientCategory.SEASONING, IngredientCategory.AROMATIC}
+
+
 def _core_ingredients(dish: Dish, ingredients: Mapping[str, Ingredient]) -> set[str]:
     ids = {line.ingredient_id for line in dish.ingredients if line.ingredient_id}
-    return {i for i in ids if i in ingredients and ingredients[i].category != IngredientCategory.SEASONING}
+    return {i for i in ids if i in ingredients and ingredients[i].category not in _NOT_CORE}
 
 
 def _known_method(dish: Dish) -> CookingMethod | None:

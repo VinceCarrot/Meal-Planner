@@ -98,7 +98,7 @@ Menu versions are never overwritten. The latest version is the current menu; a n
 ### 4.1 Ingredient Records
 
 - `ingredient_id` (`ing_<slug>`), `name_zh`, optional `name_en`, `aliases`, `notes`.
-- `category`: fixed enum `vegetable`, `meat`, `poultry`, `seafood`, `egg`, `soy`, `mushroom`, `grain`, `seasoning`, `other` (ADR-010).
+- `category`: fixed enum `leafy_green` (绿叶菜), `vegetable`, `aromatic` (调味菜: scallion, ginger, garlic, coriander, fresh chili), `meat`, `poultry`, `seafood`, `egg`, `soy`, `mushroom`, `grain`, `seasoning`, `other` (ADR-010).
 - Optional `kcal_per_100g` and `grams_per_unit` (for example `{个: 150}`) (ADR-008).
 
 AI may read this file but may not mutate it. Enforcement is structural (ADR-012): AI workflows receive only `ReadOnlyCatalogue`, which holds an in-memory snapshot, has no reference to the data directory or `DataStore`, and returns immutable records or copies. Only `DataStore.save_ingredients` writes the file, and it is called only for an explicit user edit.
@@ -110,7 +110,7 @@ AI may read this file but may not mutate it. Enforcement is structural (ADR-012)
 - `ingredients`: lines of `{ingredient_id, quantity, unit, note}`. `quantity` is optional (for example "适量" goes in `note`), but a quantity requires a unit. A line may instead carry `unmatched_name` for an ingredient that is not in the catalogue yet; this is allowed only in pending dishes and must be resolved before approval.
 - Optional `servings`, `steps`, `calories_kcal` with `calorie_basis` (`computed` or `estimated`).
 - `style`: `main_ingredients` (ingredient IDs), `cooking_method`, `flavours`, free-text `cuisine` (ADR-011).
-- `source` (`manual`, `ai_generated`, `video_imported`), optional `source_url`, `review_status`, `uncertainty_notes`, timestamps.
+- `source` (`manual`, `ai_generated`, `video_imported`), optional `source_url`, `review_status`, `frequent` (常用菜, default `true`; only frequent dishes are offered to menu generation, ADR-026), `uncertainty_notes`, timestamps.
 
 Do not conflate dish role with similarity features. Use stable IDs for references.
 
@@ -191,12 +191,17 @@ Implemented in `meal_planner/constraint_types.py`. Each executable type is a typ
 
 | Type | Parameters | Meaning |
 |---|---|---|
-| `dish_count` | `min`, `max` | Dishes per dinner, soup included |
-| `dish_type_count` | `dish_type`, `min`, `max` | Dishes of one type per dinner |
+| `dish_count` | `min`, `max`, `weekdays` | Dishes per dinner, soup included |
+| `dish_type_count` | `dish_type`, `min`, `max`, `weekdays` | Dishes of one type per dinner |
+| `matching_dish_count` | `dish_types`, `contains_categories`, `contains_ingredient_ids`, `as_main_ingredient`, `min`, `max`, `weekdays` | Dishes per dinner of the given types and/or containing given ingredients or categories, e.g. 3–4 dishes not counting soup (ADR-025) |
+| `any_of` | `alternatives` (2–4 count rules, no nesting), `weekdays` | At least one alternative holds in each dinner (ADR-025) |
 | `ingredient_exclusion` | `ingredient_ids`, `categories` | Dishes containing these are not used |
+| `no_shared_ingredients` | `ignore_categories` (default seasoning, aromatic), `only_categories` | No two dishes of one dinner use the same ingredient (ADR-025) |
 | `exact_repeat_window` | `weeks` (1–4) | Same dish not repeated within the window |
-| `dish_similarity` | `max_similarity` (optional), `window_weeks` | Discourage similar dishes |
+| `dish_similarity` | `max_similarity` (optional), `window_weeks` or `window_days`, `same_dinner`, `feature`, `skip_dish_types` | Discourage similar dishes in one dinner and/or on nearby days, overall or by one aspect (ADR-025) |
 | `meal_similarity` | `max_similarity` (optional), `window_weeks` | Discourage similar whole dinners |
+
+`weekdays` is a list of 1 (Monday) … 5 (Friday); empty means every dinner. The docstrings of these models are the type descriptions sent to the parser.
 
 Every type supports both `hard` and `soft` strictness. Calorie constraints are not registered (ADR-008). Validators and optimizer contributions for each type are added in Phases 3–4.
 
@@ -209,7 +214,7 @@ Do not interpret arbitrary LLM-generated code as a constraint implementation. Ad
   - A reference to an unknown ingredient ID turns the result into `needs_clarification`.
   - `conflict` is never accepted from the model.
 - The parser proposes `strictness`. New constraints start as `hard` before parsing, so that nothing is relaxed silently. The user can change strictness afterwards.
-- Persistent constraints are added, edited, removed and parsed through `constraints.py`. Changing the description resets the constraint to `unparsed`.
+- Persistent constraints are added, edited, removed and parsed through `constraints.py`. Changing the description resets the constraint to `unparsed`. `POST /api/constraints/parse` parses all `unparsed` constraints, or re-parses the IDs given in `constraint_ids` (used after new types are added, to re-read rules marked `unsupported`, `approximated` or `needs_clarification`).
 - Task constraints use IDs `T001`, `T002`, … and the scope of exactly one task (generation or adjustment). They are never saved to `constraints.yaml`. A task constraint replaces a persistent one only when it lists that constraint in `overrides`.
 - `build_effective_set(persistent, task_constraints, task)` does the following:
   - selects the active persistent constraints for the task;
@@ -218,7 +223,11 @@ Do not interpret arbitrary LLM-generated code as a constraint implementation. Ad
 - Conflicts are detected deterministically:
   - disjoint `dish_count` ranges;
   - disjoint `dish_type_count` ranges for the same type;
-  - per-type minimums that add up to more than a total maximum.
+  - per-type minimums that add up to more than a total maximum;
+  - a `matching_dish_count` minimum above a total maximum;
+  - an `any_of` none of whose alternatives fits the per-type minimums and total maximum, or all of whose alternatives contradict a per-type minimum.
+
+  Each check is made per weekday, so rules on different weekdays never conflict; the message names the weekdays when not all are affected. Only provable conflicts are reported; other infeasible combinations are found by the solver, whose diagnosis names the hard constraints whose relaxation would help.
   
   Conflicts are reported, never resolved automatically. `unsupported` constraints do not block planning but are listed so that they can be reported.
 
@@ -355,13 +364,14 @@ These modules are deterministic and do not call an LLM:
   - **Missing data is listed, not guessed.** A line is listed with its reason when it has no quantity, no gram weight for its unit, or no `kcal_per_100g`.
   - **Totals only when complete.** `total_kcal` and `per_serving_kcal` are given only when every line was converted. Otherwise only `known_kcal` and `coverage` are reported.
 - `checks.py`:
-  - Dish-type counting and range checks for `dish_count` and `dish_type_count`.
+  - `counted_by` decides which dishes a count rule counts (`dish_count`, `dish_type_count`, `matching_dish_count`); the solver and the validator both use it.
+  - `shared_ingredients` lists the ingredients two dishes share under a `no_shared_ingredients` rule.
   - Exclusion hits, by ingredient ID or by category.
   - Exact repeats in a sliding calendar window of `weeks × 7` days (ADR-016). Earlier menus can be included in the input.
 - `similarity.py`:
   - **Dish similarity** is the weighted average of these feature scores:
     - Jaccard of `main_ingredients`;
-    - Jaccard of recipe ingredients with seasonings excluded;
+    - Jaccard of recipe ingredients with seasonings and aromatics excluded;
     - same `cooking_method`;
     - Jaccard of `flavours`;
     - same `cuisine`.
@@ -667,7 +677,7 @@ Main endpoints:
 |---|---|
 | Menus | `POST /api/menus/plan`, `POST /api/menus`, `GET /api/menus`, `GET /api/menus/<id>?version=` |
 | Constraints | `GET/POST /api/constraints`, `PUT/DELETE /api/constraints/<id>`, `POST /api/constraints/parse`, `POST /api/task-constraints/parse`, `POST /api/constraints/effective` |
-| Dishes | `GET/POST /api/dishes`, `POST /api/dishes/suggest`, `PUT/DELETE /api/dishes/<id>` (delete is refused with 409 while a stored menu version or a feedback record uses the dish, so menu history stays loadable), `GET /api/pending`, `POST /api/review`, `POST /api/candidates/generate` |
+| Dishes | `GET/POST /api/dishes`, `POST /api/dishes/suggest`, `PUT/DELETE /api/dishes/<id>`, `PUT /api/dishes/<id>/frequent` (delete is refused with 409 while a stored menu version or a feedback record uses the dish, so menu history stays loadable), `GET /api/pending`, `POST /api/review`, `POST /api/candidates/generate` |
 | Ingredients | `GET/POST /api/ingredients`, `PUT/DELETE /api/ingredients/<id>` |
 | Settings and preferences | `GET/PUT /api/settings`, `GET /api/vocab`, `GET /api/preferences`, `PUT /api/preferences/diners` |
 
@@ -769,7 +779,7 @@ Follows the structural approach of the reference repository (§11), adapted to t
 
 ### ADR-010 Ingredient categories — Confirmed (2026-10-12)
 
-- `category` is a fixed enum, so that exclusion constraints such as "no seafood" can be evaluated: `vegetable`, `meat`, `poultry`, `seafood`, `egg`, `soy`, `mushroom`, `grain`, `seasoning`, `other`.
+- `category` is a fixed enum, so that exclusion constraints such as "no seafood" can be evaluated: `leafy_green`, `vegetable`, `aromatic`, `meat`, `poultry`, `seafood`, `egg`, `soy`, `mushroom`, `grain`, `seasoning`, `other`. `leafy_green` (绿叶菜) was added on 2026-10-18 at the user's request for vegetables eaten mainly for their green leaves and tender stems; it counts as a core ingredient for similarity like `vegetable`. `aromatic` (调味菜) was added on 2026-10-18 at the user's request for fresh produce used in small amounts for flavour; like `seasoning`, it is left out of the shared-ingredient similarity feature.
 
 ### ADR-011 Dish style vocabulary — Confirmed (2026-10-12)
 
@@ -846,7 +856,7 @@ The vocabulary is an initial draft and can be extended through a code change.
   | Feature | Weight |
   |---|---|
   | `main_ingredients` | 0.35 |
-  | `ingredients` (core combination, seasonings excluded) | 0.20 |
+  | `ingredients` (core combination, seasonings and aromatics excluded) | 0.20 |
   | `cooking_method` | 0.20 |
   | `flavours` | 0.15 |
   | `cuisine` | 0.10 |
@@ -1000,3 +1010,40 @@ The vocabulary is an initial draft and can be extended through a code change.
 - Routes: `GET /` and `GET /api/menu` only; no write endpoint.
 - Reads `data/menus/*/vNNN.yaml`, `dishes.yaml` and `ingredients.yaml` directly with PyYAML. It does not import `meal_planner`, so it has no path to the LLM backend. Tests check the imports and the allowed HTTP methods.
 - Shown menu: the newest version of the menu whose four weeks contain today; otherwise the next to start; otherwise the most recent.
+
+### ADR-025 Weekday rules, matching counts, alternatives, shared ingredients and aspect similarity — Confirmed (2026-10-18)
+
+**Requested by the user.** Six rules could not be expressed: soup on Monday, Wednesday and Friday; a leafy-green dish in every dinner (soups excluded); one major meat dish or two mixed dishes; no repeated ingredient within a dinner (aromatics excluded); dissimilar flavours within a dinner; dissimilar ingredients on adjacent days. Instead of one special type per rule, existing types were generalized and three types added (§5.2). All of them are linear in the CP-SAT model, so the plan stays one global optimization.
+
+**Solver.**
+
+- Count rules with `weekdays` apply only on those dinners. `matching_dish_count` counts the dishes for which `counted_by` is true.
+- `any_of`: one indicator per alternative and dinner; an alternative's bounds are enforced when its indicator is set; hard: at least one indicator; soft: otherwise a miss costs `penalty_soft_count`.
+- `no_shared_ingredients`: dish pairs sharing a counted ingredient are precomputed; hard: never both in one dinner; soft: `penalty_shared_ingredient` (new setting, default 100) per pair.
+- `dish_similarity` uses `PlanContext.similarity(a, b, feature)`, which returns the overall score or one feature's score. Pairs come from the same dinner (`same_dinner`) and from dinners less than `window_days` calendar days apart.
+- A dish served again on another dinner within a similarity window counts as a pair with similarity 1.0. Before this change identical dishes were skipped as "repetition", so a plan repeating one dish every day satisfied a similarity rule; that was found on the real catalogue and fixed in both solver and validator.
+
+**Defaults chosen during implementation (the user agreed to the plan without answering the open questions; each is a parameter the parser can set differently when the rule says so).**
+
+- Weekday rules leave other weekdays unconstrained.
+- "用绿叶菜" counts a dish only when a leafy green is a main ingredient (`as_main_ingredient: true`).
+- "要有一个" means at least one.
+- Shared ingredients are compared by ingredient ID (pork belly and pork loin differ); seasonings and aromatics are ignored.
+- Flavour similarity within a dinner skips soups.
+- "相邻两天" means adjacent calendar days: Friday and the next Monday are not adjacent.
+
+**Parser.** The prompt lists every type with its one-line description and examples, the categories with their Chinese labels, weekday numbering, and the instructions to use `any_of` for "A 或 B" and to keep written exclusions in the matching field. Output is validated as before; ingredient IDs inside `matching_dish_count` and `any_of` alternatives are checked against the catalogue. Verified on 2026-10-18 with the real CLI: all six rules were parsed to the intended types and parameters, and a menu satisfying all of them was found on the real catalogue.
+
+**Counting without soup.** `matching_dish_count` may filter by `dish_types` alone, so "3–4 dishes, soup not included" is `dish_types [vegetarian, mixed, meat], min 3, max 4`. Such a rule with a minimum also satisfies the planner's requirement that some rule fixes how many dishes a dinner has (before, only `dish_count` did).
+
+**Known limitation.** Without an `exact_repeat_window` rule, dishes still repeat on non-adjacent days; the adjacent-day similarity rule only covers neighbouring days.
+
+### ADR-026 Frequent dishes (常用菜) — Confirmed (2026-10-18)
+
+**Requested by the user.** Every approved dish has a "常用菜" flag, shown as a checkbox column on the dish catalogue page, ticked by default and saved as soon as it is changed. Generating a four-week menu only uses frequent dishes as candidates.
+
+- `Dish.frequent: bool = True`. Existing YAML without the field loads as frequent; new manual dishes and approved candidates are frequent unless the user unticks them. `PUT /api/dishes/<id>/frequent` with `{"frequent": true|false}` saves one flag (validated whole-catalogue save, with backup); editing a dish keeps the flag.
+- `PlanContext.selectable` holds the dishes the planner may newly choose. `make_context(..., frequent_only=True)` sets it to the frequent dishes; `menus.prepare` does so for menu generation only. The solver, the capacity-gap check and meal-similarity repair use it.
+- Validation is not restricted: `ctx.dishes` still holds every approved dish, so a menu containing a non-frequent approved dish (for example after a manual change) is valid, and saving re-validates against all approved dishes.
+- If the frequent dishes cannot satisfy the hard constraints, planning reports the shortfall and how many approved dishes were left out as not frequent; it never widens the pool by itself.
+- **Default (not specified by the user):** menu adjustment may still choose any approved dish; only generation is restricted. This can be changed to restrict adjustments too.

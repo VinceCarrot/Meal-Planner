@@ -62,7 +62,9 @@ def prepare(
     task_constraints: Sequence[Constraint], task: TaskScope, exclude_menu: str | None = None,
 ) -> tuple[PlanContext, EffectiveConstraintSet]:
     history = menu_history(store, cat, start_date, exclude_menu)
-    ctx = make_context(cat, settings, start_date, history, menu_id=exclude_menu)
+    # New menus are built from frequent dishes only (ADR-026); adjustments may use any approved dish.
+    ctx = make_context(cat, settings, start_date, history, menu_id=exclude_menu,
+                       frequent_only=task == TaskScope.MENU_GENERATION)
     return ctx, build_effective_set(cat.constraints.constraints, task_constraints, task)
 
 

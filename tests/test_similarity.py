@@ -1,7 +1,7 @@
 import pytest
 from pydantic import ValidationError
 
-from meal_planner.models import Dish
+from meal_planner.models import Dish, Ingredient
 from meal_planner.similarity import (
     SimilarityWeights,
     dish_similarity,
@@ -67,6 +67,14 @@ def test_partial_ingredient_overlap(dishes, ingredients):
 def test_seasonings_do_not_count_as_shared_ingredients(dishes, ingredients):
     a = _copy(dishes["dish_0003"], ingredients=[{"ingredient_id": "ing_bok_choy"}, {"ingredient_id": "ing_soy_sauce"}])
     b = _copy(dishes["dish_0004"], "dish_0998", ingredients=[{"ingredient_id": "ing_potato"}, {"ingredient_id": "ing_soy_sauce"}])
+    assert dish_similarity(a, b, ingredients).components["ingredients"] == 0.0
+
+
+def test_aromatics_do_not_count_as_shared_ingredients(dishes, ingredients):
+    garlic = Ingredient(ingredient_id="ing_garlic", name_zh="大蒜", category="aromatic")
+    ingredients = ingredients | {"ing_garlic": garlic}
+    a = _copy(dishes["dish_0003"], ingredients=[{"ingredient_id": "ing_bok_choy"}, {"ingredient_id": "ing_garlic"}])
+    b = _copy(dishes["dish_0004"], "dish_0998", ingredients=[{"ingredient_id": "ing_potato"}, {"ingredient_id": "ing_garlic"}])
     assert dish_similarity(a, b, ingredients).components["ingredients"] == 0.0
 
 

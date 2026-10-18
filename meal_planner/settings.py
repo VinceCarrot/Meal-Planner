@@ -51,6 +51,7 @@ class PlannerSettings(Record):
     penalty_soft_count: int = Field(100, ge=0)  # per dish outside a soft count range, per dinner
     penalty_soft_exclusion: int = Field(100, ge=0)  # per serving of a soft-excluded dish
     penalty_soft_repeat: int = Field(50, ge=0)  # per pair of servings inside a soft repeat window
+    penalty_shared_ingredient: int = Field(100, ge=0)  # per dish pair sharing an ingredient in one dinner (soft)
     penalty_dish_similarity: int = Field(100, ge=0)  # x similarity, per similar dish pair in the window
     penalty_meal_similarity: int = Field(100, ge=0)  # x normalized score, per similar dinner pair
     penalty_disliked: int = Field(200, ge=0)  # per serving of a dish with dislike feedback

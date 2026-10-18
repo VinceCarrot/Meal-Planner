@@ -12,7 +12,7 @@ from dataclasses import dataclass, field
 
 from .catalogue import Catalogue
 from .constraint_parser import parse_constraints
-from .constraint_types import DishCount, DishTypeCount
+from .constraint_types import AnyOf, DishCount, DishTypeCount, MatchingDishCount
 from .llm import LLMBackend
 from .models import Constraint, ConstraintsFile
 from .readonly import ReadOnlyCatalogue
@@ -70,9 +70,14 @@ def remove_persistent(store: DataStore, cat: Catalogue, constraint_id: str) -> C
     return store.save_constraints(cat, ConstraintsFile(constraints=kept))
 
 
-def parse_unparsed_persistent(store: DataStore, cat: Catalogue, llm: LLMBackend) -> Catalogue:
-    """Parse every persistent constraint that is still `unparsed` and save the results."""
-    todo = [c for c in cat.constraints.constraints if c.parse_status == ParseStatus.UNPARSED]
+def parse_unparsed_persistent(
+    store: DataStore, cat: Catalogue, llm: LLMBackend, constraint_ids: Sequence[str] | None = None
+) -> Catalogue:
+    """Parse every persistent constraint that is still `unparsed`, or re-parse the given ones, and save the results."""
+    if constraint_ids is None:
+        todo = [c for c in cat.constraints.constraints if c.parse_status == ParseStatus.UNPARSED]
+    else:
+        todo = [_find(cat.constraints.constraints, cid) for cid in dict.fromkeys(constraint_ids)]
     parsed = parse_constraints(llm, todo, ReadOnlyCatalogue(cat))
     return _save_replacing(store, cat, {c.constraint_id: c for c in parsed})
 
@@ -177,32 +182,81 @@ def build_effective_set(
     )
 
 
+WEEKDAYS = (1, 2, 3, 4, 5)
+
+
 def find_conflicts(constraints: Sequence[Constraint]) -> list[ConstraintIssue]:
-    """Deterministic checks for count rules that cannot all hold in the same dinner."""
-    counts = [(c, c.execution) for c in constraints if isinstance(c.execution, DishCount)]
-    type_counts = [(c, c.execution) for c in constraints if isinstance(c.execution, DishTypeCount)]
-    issues = []
+    """Deterministic checks for count rules that cannot all hold in the same dinner.
 
-    for i, (a, ea) in enumerate(counts):
-        for b, eb in counts[i + 1:]:
-            if _disjoint(ea, eb):
-                issues.append(_conflict((a, b), f"dish count {_range(ea)} vs {_range(eb)}"))
-    for i, (a, ea) in enumerate(type_counts):
-        for b, eb in type_counts[i + 1:]:
-            if ea.dish_type == eb.dish_type and _disjoint(ea, eb):
-                issues.append(_conflict((a, b), f"{ea.dish_type} count {_range(ea)} vs {_range(eb)}"))
+    Only provable conflicts are reported, per weekday. Subtler combinations (for
+    example several any_of rules together) are left to the solver, whose
+    infeasibility diagnosis names the hard constraints involved.
+    """
+    found: dict[tuple[tuple[str, ...], str], set[int]] = {}  # (ids, what) -> weekdays
 
-    # The per-type minimums together must fit within every total-dish maximum.
-    required = {}
-    for c, e in type_counts:
-        if e.min and e.min > required.get(e.dish_type, (None, 0))[1]:
-            required[e.dish_type] = (c, e.min)
-    total_min = sum(m for _, m in required.values())
-    for c, e in counts:
-        if e.max is not None and total_min > e.max:
-            involved = (c, *(rc for rc, _ in required.values()))
-            issues.append(_conflict(involved, f"dish types need at least {total_min} dishes, but at most {e.max} are allowed"))
-    return issues
+    def conflict(involved, what, weekday):
+        ids = tuple(dict.fromkeys(c.constraint_id for c in involved))
+        found.setdefault((ids, what), set()).add(weekday)
+
+    for weekday in WEEKDAYS:
+        rules = [(c, c.execution) for c in constraints if c.execution is not None and _applies(c.execution, weekday)]
+        counts = [(c, e) for c, e in rules if isinstance(e, DishCount)]
+        type_counts = [(c, e) for c, e in rules if isinstance(e, DishTypeCount)]
+        matching = [(c, e) for c, e in rules if isinstance(e, MatchingDishCount)]
+        any_ofs = [(c, e) for c, e in rules if isinstance(e, AnyOf)]
+
+        for i, (a, ea) in enumerate(counts):
+            for b, eb in counts[i + 1:]:
+                if _disjoint(ea, eb):
+                    conflict((a, b), f"dish count {_range(ea)} vs {_range(eb)}", weekday)
+        for i, (a, ea) in enumerate(type_counts):
+            for b, eb in type_counts[i + 1:]:
+                if ea.dish_type == eb.dish_type and _disjoint(ea, eb):
+                    conflict((a, b), f"{ea.dish_type} count {_range(ea)} vs {_range(eb)}", weekday)
+
+        # The per-type minimums together must fit within every total-dish maximum.
+        required = {}
+        for c, e in type_counts:
+            if e.min and e.min > required.get(e.dish_type, (None, 0))[1]:
+                required[e.dish_type] = (c, e.min)
+        base = {t: m for t, (_, m) in required.items()}
+        total_min = sum(base.values())
+        base_rules = tuple(rc for rc, _ in required.values())
+        for c, e in counts:
+            if e.max is None:
+                continue
+            if total_min > e.max:
+                conflict((c, *base_rules), f"dish types need at least {total_min} dishes, but at most {e.max} are allowed", weekday)
+            for mc, me in matching:
+                if me.min and me.min > e.max:
+                    conflict((c, mc), f"{me.min} matching dishes needed, but at most {e.max} dishes are allowed", weekday)
+            for ac, ae in any_ofs:
+                if all(_dishes_needed(alt, base, total_min) > e.max for alt in ae.alternatives):
+                    conflict((c, ac, *base_rules), f"no alternative of {ac.constraint_id} fits within {e.max} dishes", weekday)
+        for ac, ae in any_ofs:
+            if all(_dishes_needed(alt, base, total_min) == float("inf") for alt in ae.alternatives):
+                conflict((ac, *base_rules), f"every alternative of {ac.constraint_id} contradicts the dish type counts", weekday)
+
+    return [
+        _conflict_ids(ids, what + ("" if days == set(WEEKDAYS) else f" (weekdays {', '.join(map(str, sorted(days)))})"))
+        for (ids, what), days in found.items()
+    ]
+
+
+def _applies(execution, weekday: int) -> bool:
+    applies = getattr(execution, "applies_on", None)
+    return applies(weekday) if applies else True
+
+
+def _dishes_needed(alt, base: dict, total_min: int) -> float:
+    """Fewest dishes a dinner needs if `alt` holds on top of the per-type minimums (inf: impossible)."""
+    if alt.max is not None:
+        own = base.get(alt.dish_type, 0) if isinstance(alt, DishTypeCount) else total_min if isinstance(alt, DishCount) else 0
+        if own > alt.max:
+            return float("inf")
+    if isinstance(alt, DishTypeCount):
+        return total_min - base.get(alt.dish_type, 0) + max(base.get(alt.dish_type, 0), alt.min or 0)
+    return max(total_min, alt.min or 0)
 
 
 def _disjoint(a, b) -> bool:
@@ -215,8 +269,7 @@ def _range(e) -> str:
     return f"{e.min if e.min is not None else 0}-{e.max if e.max is not None else '∞'}"
 
 
-def _conflict(constraints: Sequence[Constraint], what: str) -> ConstraintIssue:
-    ids = tuple(c.constraint_id for c in constraints)
+def _conflict_ids(ids: tuple[str, ...], what: str) -> ConstraintIssue:
     return ConstraintIssue("conflict", ids, f"{', '.join(ids)} cannot all hold: {what}")
 
 

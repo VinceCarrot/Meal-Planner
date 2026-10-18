@@ -7,6 +7,7 @@ instead of being guessed. `conflict` is never taken from the model; conflicts
 are detected deterministically in `constraints.py`.
 """
 
+import inspect
 from collections.abc import Sequence
 from typing import Literal
 
@@ -19,6 +20,13 @@ from .models import Constraint
 from .readonly import ReadOnlyCatalogue
 from .vocab import DishType, IngredientCategory, ParseStatus
 
+
+CATEGORY_LABELS = {
+    IngredientCategory.LEAFY_GREEN: "绿叶菜", IngredientCategory.VEGETABLE: "蔬菜", IngredientCategory.AROMATIC: "调味菜",
+    IngredientCategory.MEAT: "畜肉", IngredientCategory.POULTRY: "禽肉", IngredientCategory.SEAFOOD: "水产",
+    IngredientCategory.EGG: "蛋", IngredientCategory.SOY: "豆制品", IngredientCategory.MUSHROOM: "菌菇",
+    IngredientCategory.GRAIN: "主食/谷物", IngredientCategory.SEASONING: "调料", IngredientCategory.OTHER: "其他",
+}
 
 DISH_TYPE_LABELS = {
     DishType.VEGETARIAN: "素菜",
@@ -60,6 +68,13 @@ Rules:
 use an ingredient category if that matches the intent exactly; otherwise use needs_clarification.
 - execution must be null unless parse_status is executable or approximated.
 - strictness: "hard" for must/must-not rules (必须, 不吃, 不要, 一定), "soft" for preferences (尽量, 最好, 别太, 少).
+- Weekdays are numbered 1=周一 ... 5=周五. A rule for some weekdays only sets weekdays; leave the other days \
+unconstrained unless the rule says otherwise.
+- "A 或 B" between count requirements is one any_of rule, not two rules and not needs_clarification.
+- Exclusions written into a rule (不包括汤, 不算调味菜) go into the matching field (dish_types, \
+skip_dish_types, ignore_categories); do not drop them.
+- Where the wording leaves a parameter open, follow the examples in the type descriptions and state the \
+choice in notes so that the user can check it.
 - Write notes in the language of the rule, briefly.
 
 Supported types:
@@ -146,7 +161,7 @@ def _first_error(e: ValidationError) -> str:
 
 
 def _system_prompt(view: ReadOnlyCatalogue) -> str:
-    types = "\n".join(f"- {name}: {model.__doc__.strip()}" for name, model in CONSTRAINT_TYPES.items())
+    types = "\n".join(f"- {name}: {' '.join(inspect.cleandoc(model.__doc__).split())}" for name, model in CONSTRAINT_TYPES.items())
     ingredients = "\n".join(
         f"{i.ingredient_id} {i.name_zh}" + (f" ({', '.join(i.aliases)})" if i.aliases else "") + f" [{i.category}]"
         for i in view.ingredients()
@@ -154,7 +169,7 @@ def _system_prompt(view: ReadOnlyCatalogue) -> str:
     return SYSTEM_PROMPT.format(
         types=types,
         dish_types=", ".join(f"{t.value} ({DISH_TYPE_LABELS[t]})" for t in DishType),
-        categories=", ".join(c.value for c in IngredientCategory),
+        categories=", ".join(f"{c.value} ({CATEGORY_LABELS[c]})" for c in IngredientCategory),
         ingredients=ingredients or "(empty)",
     )
 

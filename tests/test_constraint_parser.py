@@ -46,10 +46,10 @@ def test_executable_examples_are_accepted(view, description, execution):
     assert parsed.parse_notes == "ok"
 
 
-def test_registry_covers_the_initial_types():
+def test_registry_covers_the_supported_types():
     assert set(CONSTRAINT_TYPES) == {
-        "dish_count", "dish_type_count", "ingredient_exclusion",
-        "exact_repeat_window", "dish_similarity", "meal_similarity",
+        "dish_count", "dish_type_count", "matching_dish_count", "any_of", "ingredient_exclusion",
+        "no_shared_ingredients", "exact_repeat_window", "dish_similarity", "meal_similarity",
     }
 
 

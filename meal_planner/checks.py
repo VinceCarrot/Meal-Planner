@@ -1,4 +1,4 @@
-"""Deterministic meal composition, ingredient exclusion and repetition checks.
+"""Deterministic meal composition, ingredient and repetition checks.
 
 These are the building blocks of the menu validator (Phase 4). Each returns
 enough detail to explain its result to the user.
@@ -9,7 +9,7 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from datetime import date
 
-from .constraint_types import DishCount, DishTypeCount, IngredientExclusion
+from .constraint_types import DishCount, DishTypeCount, IngredientExclusion, MatchingDishCount, NoSharedIngredients
 from .models import Dinner, Dish, Ingredient
 from .vocab import DishType
 
@@ -24,11 +24,42 @@ def count_dish_types(dishes: Sequence[Dish]) -> Counter[DishType]:
     return Counter(d.dish_type for d in dishes)
 
 
-def check_count(dishes: Sequence[Dish], rule: DishCount | DishTypeCount) -> CheckResult:
+CountRule = DishCount | DishTypeCount | MatchingDishCount
+
+
+def counted_by(dish: Dish, rule: CountRule, ingredients: Mapping[str, Ingredient]) -> bool:
+    """Whether `rule` counts `dish` (the solver and the validator both use this)."""
     if isinstance(rule, DishTypeCount):
-        actual, what = count_dish_types(dishes)[rule.dish_type], f"{rule.dish_type} dishes"
-    else:
-        actual, what = len(dishes), "dishes"
+        return dish.dish_type == rule.dish_type
+    if isinstance(rule, MatchingDishCount):
+        if rule.dish_types and dish.dish_type not in rule.dish_types:
+            return False
+        if not rule.has_ingredient_filter:
+            return True
+        ids = set(dish.style.main_ingredients) if rule.as_main_ingredient else {
+            line.ingredient_id for line in dish.ingredients if line.ingredient_id}
+        return any(
+            i in rule.contains_ingredient_ids or (i in ingredients and ingredients[i].category in rule.contains_categories)
+            for i in ids
+        )
+    return True
+
+
+def describe_counted(rule: CountRule) -> str:
+    if isinstance(rule, DishTypeCount):
+        return f"{rule.dish_type} dishes"
+    if isinstance(rule, MatchingDishCount):
+        types = f" among {', '.join(rule.dish_types)}" if rule.dish_types else ""
+        if not rule.has_ingredient_filter:
+            return f"dishes{types}"
+        what = ", ".join([*rule.contains_categories, *rule.contains_ingredient_ids])
+        return f"dishes with {what}{' as main ingredient' if rule.as_main_ingredient else ''}{types}"
+    return "dishes"
+
+
+def check_count(dishes: Sequence[Dish], rule: CountRule, ingredients: Mapping[str, Ingredient] | None = None) -> CheckResult:
+    actual = sum(1 for d in dishes if counted_by(d, rule, ingredients or {}))
+    what = describe_counted(rule)
     passed = (rule.min is None or actual >= rule.min) and (rule.max is None or actual <= rule.max)
     bounds = f"{rule.min if rule.min is not None else 0}-{rule.max if rule.max is not None else '∞'}"
     return CheckResult(passed, f"{actual} {what}, allowed {bounds}")
@@ -42,6 +73,22 @@ def exclusion_hits(dish: Dish, rule: IngredientExclusion, ingredients: Mapping[s
         if line.ingredient_id in rule.ingredient_ids or (ing is not None and ing.category in rule.categories):
             hits.append(line.ingredient_id)
     return list(dict.fromkeys(hits))
+
+
+def counted_ingredients(dish: Dish, rule: NoSharedIngredients, ingredients: Mapping[str, Ingredient]) -> set[str]:
+    """Ingredient IDs of `dish` that `rule` compares; ingredients unknown to the catalogue are left out."""
+    result = set()
+    for line in dish.ingredients:
+        ing = ingredients.get(line.ingredient_id) if line.ingredient_id else None
+        if ing is None or ing.category in rule.ignore_categories:
+            continue
+        if not rule.only_categories or ing.category in rule.only_categories:
+            result.add(ing.ingredient_id)
+    return result
+
+
+def shared_ingredients(a: Dish, b: Dish, rule: NoSharedIngredients, ingredients: Mapping[str, Ingredient]) -> list[str]:
+    return sorted(counted_ingredients(a, rule, ingredients) & counted_ingredients(b, rule, ingredients))
 
 
 @dataclass(frozen=True)

@@ -107,6 +107,7 @@ class Dish(Record):
     source: DishSource
     source_url: str | None = None
     review_status: ReviewStatus
+    frequent: bool = True  # 常用菜: offered by menu generation (ADR-026)
     uncertainty_notes: str | None = None
     created_at: datetime | None = None
     updated_at: datetime | None = None

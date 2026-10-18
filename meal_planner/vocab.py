@@ -10,6 +10,8 @@ IngredientId = Annotated[str, Field(pattern=r"^ing_[a-z0-9_]+$")]
 
 class IngredientCategory(StrEnum):
     VEGETABLE = "vegetable"
+    LEAFY_GREEN = "leafy_green"  # 绿叶菜：以绿色叶片/嫩茎为主要食用部分的蔬菜，如菠菜、菜心、空心菜
+    AROMATIC = "aromatic"  # 调味菜：葱、姜、蒜、香菜、小米辣等少量用于调味的鲜菜
     MEAT = "meat"
     POULTRY = "poultry"
     SEAFOOD = "seafood"
